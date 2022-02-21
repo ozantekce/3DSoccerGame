@@ -86,6 +86,27 @@ public class Movement : MonoBehaviour
 
     }
 
+    
+    public void SetSpecificAxisVelocity(Axis axis,float value)
+    {
+        tempVelocity = GetVelocity();
+        if (axis == Axis.x)
+        {
+            tempVelocity.x = value;  
+        }
+        else if(axis == Axis.y)
+        {
+            tempVelocity.y = value;
+        }
+        else
+        {
+            tempVelocity.z = value;
+        }
+
+        rb.velocity = tempVelocity;
+
+    }
+
     public void GiveForce(Vector3 force)
     {
 
