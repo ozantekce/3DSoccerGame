@@ -19,19 +19,28 @@ public class BallVision : MonoBehaviour
     void Start()
     {
         targetMask.value = 64;
-        StartCoroutine("FindTargetsWithDelay", .5f);
+        StartCoroutine("FindTargetsWithDelay", .1f);
+        cooldownWaitToTakeBall = new CooldownManualReset(500f);
     }
 
+
+    private CooldownManualReset cooldownWaitToTakeBall;
+
+    public CooldownManualReset CooldownWaitToTakeBall { get => cooldownWaitToTakeBall; set => cooldownWaitToTakeBall = value; }
 
     IEnumerator FindTargetsWithDelay(float delay)
     {
         while (true)
         {
             yield return new WaitForSeconds(delay);
-            FindVisibleTargets();
+
+            if(cooldownWaitToTakeBall.TimeOver())
+                FindVisibleTargets();
+        
         }
 
     }
+
 
     void FindVisibleTargets()
     {
@@ -50,7 +59,8 @@ public class BallVision : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, dirToTarget, distanceToTarget, obstacleMask))
                 {
-                    ballTransform = target;;
+                    ballTransform = target;
+
                     Ball.Instance.Owner = this.gameObject;
 
                 }

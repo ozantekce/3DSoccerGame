@@ -228,6 +228,61 @@ public class Movement : MonoBehaviour
     }
 
 
+    private float spinValue;
+    private Vector3 eulerAng;
+
+    public float spinSpeed = 500;
+    public float slightGap = 10;//ignore low differences
+
+    public void SpinToZXVector(Vector2 angleVector)
+    {
+
+        eulerAng = transform.eulerAngles;
+        float targetAngle = CalculateAngle(angleVector);
+
+        float gap = Mathf.Abs(targetAngle - eulerAng.y);
+
+        if (targetAngle == -1 || gap < slightGap)
+            return;
+
+        float speed = Mathf.Clamp(spinSpeed * Time.deltaTime, 0, gap);
+
+        bool condition = gap < 180;
+
+        spinValue = 0;
+
+        if (eulerAng.y < targetAngle)
+        {
+            if (condition)
+                spinValue = speed;
+            else
+                spinValue = -speed;
+        }
+        else
+        {
+            if (condition)
+                spinValue = -speed;
+            else
+                spinValue = speed;
+        }
+
+        Spin(spinValue, Axis.y);
+
+        //transform.eulerAngles = eulerAng;
+
+    }
+
+    private static float CalculateAngle(Vector2 vector)
+    {
+        if (vector == Vector2.zero) return -1;
+
+        float angle = Mathf.Atan2(vector.y, vector.x);
+        angle = Mathf.Rad2Deg * angle;
+        if (angle < 0)
+            angle += 360;
+
+        return angle;
+    }
 
 
 }

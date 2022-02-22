@@ -49,9 +49,31 @@ public abstract class Inputter : MonoBehaviour
         return Horizontal;
     }
 
+
+    public float GetJoyStickHorizontalValueRaw()
+    {
+        if (Horizontal > 0)
+            return 1;
+        else if (Horizontal < 0)
+            return -1;
+        else
+            return 0;
+    }
+
+
     public float GetJoyStickVerticalValue()
     {
         return Vertical;
+    }
+
+    public float GetJoyStickVerticalValueRaw()
+    {
+        if (Vertical > 0)
+            return 1;
+        else if (Vertical < 0)
+            return -1;
+        else
+            return 0;
     }
 
     public float GetButtonShootValue()

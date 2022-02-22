@@ -33,12 +33,13 @@ public class Ball : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    private GameObject owner;
+    public GameObject owner;
 
     private Movement movement;
     private void Start()
     {
         movement = GetComponent<Movement>();
+        cooldownToSetVelocity = new Cooldown(500f);
     }
 
     private void Update()
@@ -50,6 +51,21 @@ public class Ball : MonoBehaviour
         }
 
     }
+
+
+
+    private Cooldown cooldownToSetVelocity;
+    public void SetVelocity(Axis axis, float value)
+    {
+
+        if(cooldownToSetVelocity.Ready())
+            movement.SetSpecificAxisVelocity(axis, value);
+
+
+    }
+
+
+
 
 
     public void Shoot(Vector3 velocity)

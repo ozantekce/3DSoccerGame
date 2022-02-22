@@ -13,6 +13,7 @@ public class Tester : MonoBehaviour
 
     private Inputter inputter;
 
+    private BallVision ballVision;
 
     public Ball ball;
 
@@ -27,6 +28,7 @@ public class Tester : MonoBehaviour
         movement = GetComponent<Movement>();
         inputter = GetComponent<Inputter>();
         shoot = GetComponent<Shoot>();
+        ballVision = GetComponent<BallVision>();
         ball = Ball.Instance;
 
     }
@@ -40,10 +42,31 @@ public class Tester : MonoBehaviour
 
 
 
-        SetVelocity(Axis.x, 15 * -inputter.GetJoyStickVerticalValue());
-        SetVelocity(Axis.z, 15 * inputter.GetJoyStickHorizontalValue());
+        if(ball.owner == this.gameObject)
+        {
+            if(inputter.GetJoyStickVerticalValueRaw()!=0)
+                ball.SetVelocity(Axis.x, 12 * -inputter.GetJoyStickVerticalValueRaw());
+            if (inputter.GetJoyStickHorizontalValueRaw() != 0)
+                ball.SetVelocity(Axis.z, 12 * inputter.GetJoyStickHorizontalValueRaw());
 
-        SpinToZXVector(new Vector2(inputter.GetJoyStickHorizontalValue(), -inputter.GetJoyStickVerticalValue()));
+            CloseDistamceWithBall();
+
+
+
+
+        }
+        else
+        {
+
+            SetVelocity(Axis.x, 15 * -inputter.GetJoyStickVerticalValue());
+            SetVelocity(Axis.z, 15 * inputter.GetJoyStickHorizontalValue());
+
+            SpinToZXVector(new Vector2(inputter.GetJoyStickHorizontalValue(), -inputter.GetJoyStickVerticalValue()));
+
+
+        }
+
+
 
 
 
@@ -51,7 +74,9 @@ public class Tester : MonoBehaviour
 
         if (inputter.GetButtonShootValue() > 0 && shootCooldown.Ready())
         {
-            shoot.Shoot_(20*transform.forward*inputter.GetButtonShootValue(),0.3f);
+            ballVision.CooldownWaitToTakeBall.Reset();
+            shoot.Shoot_(40*transform.forward*inputter.GetButtonShootValue(),0.3f);
+        
         }
 
         if (inputter.GetButtonPassValue() > 0)
@@ -68,8 +93,20 @@ public class Tester : MonoBehaviour
     }
 
 
+    private float minDistance = 1.6f;
+    public void CloseDistamceWithBall()
+    {
 
+        if(minDistance < Vector3.Distance(transform.position, ball.transform.position))
+        {
+            movement.MyMovePositionWithoutY_Axis(ball.transform.position,10f); // speed must be linear with distance
+        }
+        else
+        {
+            movement.SetVelocity(Vector3.zero);
+        }
 
+    }
 
 
     public void SetVelocity(Axis axis, float value)
