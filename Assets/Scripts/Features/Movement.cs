@@ -170,7 +170,7 @@ public class Movement : MonoBehaviour
 
 
 
-    public void MyMovePosition(Vector3 position, float speed, bool canPassMaxSpeed)
+    public void MyMovePosition(Vector3 position, float speed)
     {
 
         if (transform.position != position)
@@ -182,6 +182,22 @@ public class Movement : MonoBehaviour
         }
 
     }
+
+    public void MyMovePositionWithoutY_Axis(Vector3 position, float speed)
+    {
+
+        if (transform.position != position)
+        {
+            Vector3 directionVector = position - transform.position;
+            directionVector = directionVector.normalized;
+            directionVector.y = 0;
+            SetVelocity(directionVector * speed);
+
+        }
+
+    }
+
+
     public void MovePosition(Vector3 position)
     {
 
