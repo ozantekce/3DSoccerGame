@@ -7,20 +7,26 @@ public class Tester : MonoBehaviour
 
 
 
+
     private Movement movement;
+    private Shoot shoot;
 
     private Inputter inputter;
 
 
     public GameObject ball;
 
+    private Cooldown shootCooldown ;
+
+
 
     void Start()
     {
-     
+
+        shootCooldown = new Cooldown(500f);
         movement = GetComponent<Movement>();
         inputter = GetComponent<Inputter>();
-
+        shoot = GetComponent<Shoot>();
 
     }
 
@@ -31,18 +37,20 @@ public class Tester : MonoBehaviour
         if (inputter == null)
             return;
 
-        //movement.MyMovePositionWithoutY_Axis(ball.transform.position, 10);
-
-        SpinForBall();
-        
-        SetVelocity(Axis.x, 10 * -inputter.GetJoyStickVerticalValue());
-        SetVelocity(Axis.z, 10 * inputter.GetJoyStickHorizontalValue());   
-        
 
 
-        if (inputter.GetButtonShootValue() > 0)
+        SetVelocity(Axis.x, 15 * -inputter.GetJoyStickVerticalValue());
+        SetVelocity(Axis.z, 15 * inputter.GetJoyStickHorizontalValue());
+
+        SpinToZXVector(new Vector2(inputter.GetJoyStickHorizontalValue(), -inputter.GetJoyStickVerticalValue()));
+
+
+
+
+
+        if (inputter.GetButtonShootValue() > 0 && shootCooldown.Ready())
         {
-            
+            shoot.Shoot_(20*transform.forward*inputter.GetButtonShootValue(),0.3f);
         }
 
         if (inputter.GetButtonPassValue() > 0)

@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Inputter : MonoBehaviour
 {
     [SerializeField]
-    protected float sensivity = 0.001f;
+    protected float sensivity = 0.01f;
 
     protected float Horizontal;
     protected float Vertical;

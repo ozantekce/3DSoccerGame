@@ -14,9 +14,6 @@ public class Movement : MonoBehaviour
     private float maxVelocity;
     private float sqrMaxVelocity;
 
-    private Vector3 lastVelocity;
-
-
 
 
     private Rigidbody rb;
