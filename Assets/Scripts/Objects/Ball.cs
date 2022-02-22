@@ -5,22 +5,71 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
 
-    public GameObject owner;
+    //Singleton
+    private static Ball instance = null;
 
-    // Start is called before the first frame update
-    void Start()
+    public static Ball Instance
     {
-        
+        get
+        {
+            return instance;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField]
+    private float maxDistanceWithOwner = 10f;
+
+    public GameObject Owner { get => owner; set => owner = value; }
+
+    private void Awake()
+    {
+
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    private GameObject owner;
+
+    private Movement movement;
+    private void Start()
+    {
+        movement = GetComponent<Movement>();
+    }
+
+    private void Update()
     {
         
+        if(distanceWithOwner() > maxDistanceWithOwner)
+        {
+            owner = null;
+        }
+
     }
 
 
+    public void Shoot(Vector3 velocity)
+    {
+        owner = null;
+        movement.GiveVelocity(velocity);
 
+    }
+
+
+    
+
+    private float distanceWithOwner() {
+
+        if (owner == null)
+            return -1;
+        else
+            return Vector3.Distance(owner.transform.position,this.transform.position); 
+    
+    }
 
 
 }

@@ -14,7 +14,7 @@ public class Tester : MonoBehaviour
     private Inputter inputter;
 
 
-    public GameObject ball;
+    public Ball ball;
 
     private Cooldown shootCooldown ;
 
@@ -27,6 +27,7 @@ public class Tester : MonoBehaviour
         movement = GetComponent<Movement>();
         inputter = GetComponent<Inputter>();
         shoot = GetComponent<Shoot>();
+        ball = Ball.Instance;
 
     }
 
@@ -96,6 +97,8 @@ public class Tester : MonoBehaviour
         SpinToZXVector(-angleVector);
 
     }
+
+
 
     private float spinValue;
     private Vector3 eulerAng;
