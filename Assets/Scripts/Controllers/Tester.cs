@@ -20,6 +20,9 @@ public class Tester : MonoBehaviour
     private Cooldown shootCooldown ;
 
 
+    private Jump jump;
+
+
 
     void Start()
     {
@@ -29,6 +32,7 @@ public class Tester : MonoBehaviour
         inputter = GetComponent<Inputter>();
         shoot = GetComponent<Shoot>();
         ballVision = GetComponent<BallVision>();
+        jump = GetComponent<Jump>();
         ball = Ball.Instance;
 
     }
@@ -87,6 +91,12 @@ public class Tester : MonoBehaviour
         if (inputter.GetButtonSlideValue() > 0)
         {
             
+        }
+
+
+        if (inputter.GetButtonJumpValue() > 0)
+        {
+            jump.Jump_(Vector3.up*1);
         }
 
 

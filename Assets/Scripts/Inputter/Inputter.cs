@@ -116,6 +116,17 @@ public abstract class Inputter : MonoBehaviour
         return buttonRunValue;
     }
 
+    public float GetButtonJumpValue()
+    {
+        if (JumpButtonPressed())
+        {
+            return 0;
+        }
+        return buttonJumpValue;
+    }
+
+
+
 
     protected abstract bool LeftButtonPressed();
     protected abstract bool RightButtonPressed();
