@@ -20,6 +20,9 @@ public class Shoot : MonoBehaviour
     public void Shoot_(Vector3 velocity, float wait)
     {
 
+        if(ball == null)
+            ball = Ball.Instance;
+
         if (shootFinished && ball.Owner == this.gameObject)
         {
             StartCoroutine(Shoot__(velocity,wait));

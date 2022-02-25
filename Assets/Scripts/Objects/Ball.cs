@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,8 @@ public class Ball : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
+
+
 
     public GameObject owner;
 
@@ -87,6 +90,12 @@ public class Ball : MonoBehaviour
     
     }
 
+
+
+    public Vector3 GetVelocity()
+    {
+        return movement.GetVelocity();
+    }
 
 }
 

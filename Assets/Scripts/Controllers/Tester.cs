@@ -40,6 +40,8 @@ public class Tester : MonoBehaviour
     void Update()
     {
 
+        if (ball == null)
+            ball = Ball.Instance;
 
         if (inputter == null)
             return;
