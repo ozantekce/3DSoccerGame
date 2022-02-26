@@ -45,7 +45,7 @@ public class Deneme : MonoBehaviour
         if (NeedJump(requireVelocity))
         {
             Debug.Log(requireVelocity);
-            jump.Jump_(requireVelocity);
+            jump.Jump_(requireVelocity,0.3f);
         }
         else
         {

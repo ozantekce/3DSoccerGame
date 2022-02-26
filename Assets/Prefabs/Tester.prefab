@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: -3956941786711598427}
   - component: {fileID: 9007611509949547965}
   - component: {fileID: -5723513630394257703}
+  - component: {fileID: 6198703763327274319}
+  - component: {fileID: -2072353773377481477}
   m_Layer: 7
   m_Name: Tester
   m_TagString: Untagged
@@ -150,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   includeY_axisForMaxVelocity: 0
-  maxVelocity: 15
+  maxVelocity: 50
   spinSpeed: 500
   slightGap: 10
 --- !u!114 &5639154086306291415
@@ -205,6 +207,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
+  cdToTakeBall: 500
   ballTransform: {fileID: 0}
 --- !u!114 &9007611509949547965
 MonoBehaviour:
@@ -231,6 +234,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onGround: 1
+--- !u!114 &6198703763327274319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639154086306291247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f64ab334884d684ca190536b2cbecf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 0}
+--- !u!114 &-2072353773377481477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5639154086306291247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd38afbe0db1a344abd73518b0f5b148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5639154086447153862
 GameObject:
   m_ObjectHideFlags: 0

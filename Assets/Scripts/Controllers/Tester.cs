@@ -19,6 +19,11 @@ public class Tester : MonoBehaviour
 
     private Cooldown shootCooldown ;
 
+    private Dribbling dribbling;
+
+    private Pass pass;
+
+    private Slide slide;
 
     private Jump jump;
 
@@ -33,6 +38,9 @@ public class Tester : MonoBehaviour
         shoot = GetComponent<Shoot>();
         ballVision = GetComponent<BallVision>();
         jump = GetComponent<Jump>();
+        dribbling = GetComponent<Dribbling>();
+        pass = GetComponent<Pass>();
+        slide = GetComponent<Slide>();
         ball = Ball.Instance;
 
     }
@@ -55,39 +63,12 @@ public class Tester : MonoBehaviour
             
 
             if(inputter.GetJoyStickVerticalValueRaw()!=0)
-                ball.SetVelocity(Axis.x, 12 * -inputter.GetJoyStickVerticalValueRaw(),Vector3.Distance(transform.position,ball.transform.position));
+                dribbling.Dribbling_(Axis.x, 12 * -inputter.GetJoyStickVerticalValueRaw(),Vector3.Distance(transform.position,ball.transform.position));
             if (inputter.GetJoyStickHorizontalValueRaw() != 0)
-                ball.SetVelocity(Axis.z, 12 * inputter.GetJoyStickHorizontalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
-            
-
-            /*
-
-            // up,down,left,right
-            // upleft, upright , downleft , downright
-
-            if (inputter.GetJoyStickHorizontalValueRaw() > 0)
-            {
-                ball.MyMovePosition(this.transform.position + Vector3.forward*2f, 7f * inputter.GetJoyStickHorizontalValueRaw());
-            }
-            else if(inputter.GetJoyStickHorizontalValueRaw() < 0)
-            {
-                ball.MyMovePosition(this.transform.position + Vector3.back * 2f, 7f * -inputter.GetJoyStickHorizontalValueRaw());
-
-            }
+                dribbling.Dribbling_(Axis.z, 12 * inputter.GetJoyStickHorizontalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
 
 
-            if (inputter.GetJoyStickVerticalValueRaw() > 0)
-            {
-                ball.MyMovePosition(this.transform.position + Vector3.left * 2f, 7f * inputter.GetJoyStickVerticalValueRaw());
-            }
-            else if (inputter.GetJoyStickVerticalValueRaw() < 0)
-            {
-                ball.MyMovePosition(this.transform.position + Vector3.right * 2f, 7f * -inputter.GetJoyStickVerticalValueRaw());
-            }
-
-
-            */
-            CloseDistanceWithBall();
+            dribbling.CloseDistanceWithBall(2f);
 
 
 
@@ -95,9 +76,10 @@ public class Tester : MonoBehaviour
         }
         else
         {
-
-            SetVelocity(Axis.x, 15 * -inputter.GetJoyStickVerticalValue());
-            SetVelocity(Axis.z, 15 * inputter.GetJoyStickHorizontalValue());
+            if (inputter.GetJoyStickVerticalValueRaw() != 0)
+                SetVelocity(Axis.x, 15 * -inputter.GetJoyStickVerticalValue());
+            if (inputter.GetJoyStickHorizontalValue() != 0)
+                SetVelocity(Axis.z, 15 * inputter.GetJoyStickHorizontalValue());
 
             SpinToZXVector(new Vector2(inputter.GetJoyStickHorizontalValue(), -inputter.GetJoyStickVerticalValue()));
 
@@ -121,38 +103,25 @@ public class Tester : MonoBehaviour
 
         if (inputter.GetButtonPassValue() > 0)
         {
-            
+            pass.Pass_(new Vector3(0,0,0),10f,0.3f);
         }
 
         if (inputter.GetButtonSlideValue() > 0)
         {
-            
+            slide.Slide_(ball.transform.position, 40f, 0.1f);
         }
 
 
         if (inputter.GetButtonJumpValue() > 0)
         {
-            jump.Jump_(Vector3.up*1);
+            jump.Jump_(Vector3.up*1,0.3f);
         }
 
 
     }
 
 
-    private float minDistance = 2.2f;
-    public void CloseDistanceWithBall()
-    {
 
-        if(minDistance < Vector3.Distance(transform.position, ball.transform.position))
-        {
-            movement.MyMovePositionWithoutY_Axis(ball.transform.position,10f); // speed must be linear with distance
-        }
-        else
-        {
-            movement.SetVelocity(Vector3.zero);
-        }
-
-    }
 
 
     public void SetVelocity(Axis axis, float value)
@@ -235,5 +204,9 @@ public class Tester : MonoBehaviour
 
         return angle;
     }
+
+
+
+
 
 }

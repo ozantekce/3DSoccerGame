@@ -195,7 +195,11 @@ public class Movement : MonoBehaviour
             directionVector = directionVector.normalized;
             directionVector.y = 0;
             SetVelocity(directionVector * speed);
-
+            Debug.Log("1");
+        }
+        else
+        {
+            Debug.Log("2");
         }
 
     }

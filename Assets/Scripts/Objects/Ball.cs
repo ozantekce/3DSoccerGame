@@ -18,7 +18,8 @@ public class Ball : MonoBehaviour
     }
 
     [SerializeField]
-    private float maxDistanceWithOwner = 10f;
+    private float maxDistanceWithOwner = 5f;
+
 
     public GameObject Owner { get => owner; set => owner = value; }
 
@@ -62,7 +63,7 @@ public class Ball : MonoBehaviour
 
     private Cooldown cooldownToSetVelocity;
     private Axis lastAxis = Axis.y;
-    public void SetVelocity(Axis axis, float value, float distanceWithOwner)
+    public void Dribbling(Axis axis, float value, float distanceWithOwner)
     {
 
         if (cooldownToSetVelocity.Ready())

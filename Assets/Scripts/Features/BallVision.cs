@@ -11,9 +11,12 @@ public class BallVision : MonoBehaviour
     public float visionAngle = 60f;
 
 
+
     private LayerMask targetMask; // it must be only ball layer
     public LayerMask obstacleMask;
 
+    private CooldownManualReset cooldownWaitToTakeBall;
+    public float cdToTakeBall = 500f;
 
     public Transform ballTransform;
 
@@ -21,11 +24,11 @@ public class BallVision : MonoBehaviour
     {
         targetMask.value = 64;
         StartCoroutine("FindTargetsWithDelay", .1f);
-        cooldownWaitToTakeBall = new CooldownManualReset(500f);
+        cooldownWaitToTakeBall = new CooldownManualReset(cdToTakeBall);
     }
 
 
-    private CooldownManualReset cooldownWaitToTakeBall;
+    
 
     public CooldownManualReset CooldownWaitToTakeBall { get => cooldownWaitToTakeBall; set => cooldownWaitToTakeBall = value; }
 

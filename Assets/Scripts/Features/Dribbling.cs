@@ -44,5 +44,26 @@ public class Dribbling : MonoBehaviour
     }
 
 
+    public void Dribbling_(Axis axis, float value, float distanceWithOwner)
+    {
+
+        ball.Dribbling(axis, value, distanceWithOwner);
+
+    }
+
+    public void CloseDistanceWithBall(float minDistance)
+    {
+
+        if (minDistance < Vector3.Distance(transform.position, ball.transform.position))
+        {
+            movement.MyMovePositionWithoutY_Axis(ball.transform.position, 10f); // speed must be linear with distance
+        }
+        else
+        {
+            movement.SetVelocity(Vector3.zero);
+        }
+
+    }
+
 
 }
