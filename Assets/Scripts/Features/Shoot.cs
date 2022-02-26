@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class Shoot : MonoBehaviour
 {
 
@@ -19,9 +22,6 @@ public class Shoot : MonoBehaviour
 
     public void Shoot_(Vector3 velocity, float wait)
     {
-
-        if(ball == null)
-            ball = Ball.Instance;
 
         if (shootFinished && ball.Owner == this.gameObject)
         {

@@ -149,6 +149,12 @@ public class Movement : MonoBehaviour
     public float GetMass(){return rb.mass;}
 
     public Vector3 GetVelocity(){return rb.velocity;}
+
+    public float GetDrag()
+    {
+        return rb.drag;
+    }
+
     // GET Rigidbody END
 
 

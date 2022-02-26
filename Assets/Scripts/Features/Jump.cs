@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(Movement))]
 public class Jump : MonoBehaviour
 {
 
 
 
-    private bool onGround = true;
+    public bool onGround = true;
     private Movement movement;
 
 
@@ -22,7 +24,7 @@ public class Jump : MonoBehaviour
 
         if (onGround)
         {
-            movement.GiveVelocity(vector3);
+            movement.SetVelocity(vector3);
         }
         else
         {

@@ -16,7 +16,8 @@ public class GoalkeeperCalculater
         if (
                float.IsNaN(velocity.x)
             || float.IsNaN(velocity.y)
-            || float.IsNaN(velocity.z))
+            || float.IsNaN(velocity.z)
+            || velocity.y < 0)
         {
             return Vector3.zero;
         }
@@ -51,6 +52,8 @@ public class GoalkeeperCalculater
 
     private static float FindMeetingTime(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
     {
+        
+
         float angle = Vector3.Angle(goalkeeperPosition, ballPosition);
 
         float distance = Mathf.Cos(angle)* Vector3.Distance(goalkeeperPosition,ballPosition);
@@ -61,6 +64,10 @@ public class GoalkeeperCalculater
 
         //return (goalkeeperPosition.z - ballPosition.z) / ballVelocity.z;
     }
+
+
+
+
 
 
 

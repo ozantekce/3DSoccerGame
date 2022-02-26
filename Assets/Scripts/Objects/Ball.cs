@@ -42,7 +42,10 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         movement = GetComponent<Movement>();
-        cooldownToSetVelocity = new Cooldown(500f);
+        cooldownToSetVelocity = new Cooldown(100f);
+
+
+
     }
 
     private void Update()
@@ -58,17 +61,48 @@ public class Ball : MonoBehaviour
 
 
     private Cooldown cooldownToSetVelocity;
-    public void SetVelocity(Axis axis, float value)
+    private Axis lastAxis = Axis.y;
+    public void SetVelocity(Axis axis, float value, float distanceWithOwner)
     {
 
-        if(cooldownToSetVelocity.Ready())
-            movement.SetSpecificAxisVelocity(axis, value);
+        if (cooldownToSetVelocity.Ready())
+        {
+            
+
+            if(lastAxis == axis)
+            {
+                if (distanceWithOwner <= 2.5f)
+                {
+                    movement.SetVelocity(movement.GetVelocity() / 2);
+                    movement.SetSpecificAxisVelocity(axis, value);
+                    lastAxis = axis;
+                }
+                    
+            }
+            else
+            {
+                movement.SetVelocity(movement.GetVelocity() / 2);
+                movement.SetSpecificAxisVelocity(axis, value);
+                lastAxis = axis;
+            }
+                
+            
+        }
+
+        
 
 
     }
 
 
+    public void MyMovePosition(Vector3 position, float value)
+    {
 
+        if (cooldownToSetVelocity.Ready())
+            movement.MyMovePositionWithoutY_Axis(position , value);
+
+
+    }
 
 
     public void Shoot(Vector3 velocity)
@@ -79,7 +113,14 @@ public class Ball : MonoBehaviour
     }
 
 
-    
+    public void Pass(Vector3 targetPosition,float velocity)
+    {
+
+        owner = null;
+        movement.MyMovePosition(targetPosition, velocity);
+
+    }
+
 
     private float distanceWithOwner() {
 
@@ -95,6 +136,11 @@ public class Ball : MonoBehaviour
     public Vector3 GetVelocity()
     {
         return movement.GetVelocity();
+    }
+
+    public float GetDrag()
+    {
+        return movement.GetDrag();
     }
 
 }

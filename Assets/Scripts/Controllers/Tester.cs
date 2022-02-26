@@ -37,6 +37,8 @@ public class Tester : MonoBehaviour
 
     }
 
+
+    public Vector3 shootVector;
     void Update()
     {
 
@@ -50,12 +52,42 @@ public class Tester : MonoBehaviour
 
         if(ball.owner == this.gameObject)
         {
-            if(inputter.GetJoyStickVerticalValueRaw()!=0)
-                ball.SetVelocity(Axis.x, 12 * -inputter.GetJoyStickVerticalValueRaw());
-            if (inputter.GetJoyStickHorizontalValueRaw() != 0)
-                ball.SetVelocity(Axis.z, 12 * inputter.GetJoyStickHorizontalValueRaw());
+            
 
-            CloseDistamceWithBall();
+            if(inputter.GetJoyStickVerticalValueRaw()!=0)
+                ball.SetVelocity(Axis.x, 12 * -inputter.GetJoyStickVerticalValueRaw(),Vector3.Distance(transform.position,ball.transform.position));
+            if (inputter.GetJoyStickHorizontalValueRaw() != 0)
+                ball.SetVelocity(Axis.z, 12 * inputter.GetJoyStickHorizontalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
+            
+
+            /*
+
+            // up,down,left,right
+            // upleft, upright , downleft , downright
+
+            if (inputter.GetJoyStickHorizontalValueRaw() > 0)
+            {
+                ball.MyMovePosition(this.transform.position + Vector3.forward*2f, 7f * inputter.GetJoyStickHorizontalValueRaw());
+            }
+            else if(inputter.GetJoyStickHorizontalValueRaw() < 0)
+            {
+                ball.MyMovePosition(this.transform.position + Vector3.back * 2f, 7f * -inputter.GetJoyStickHorizontalValueRaw());
+
+            }
+
+
+            if (inputter.GetJoyStickVerticalValueRaw() > 0)
+            {
+                ball.MyMovePosition(this.transform.position + Vector3.left * 2f, 7f * inputter.GetJoyStickVerticalValueRaw());
+            }
+            else if (inputter.GetJoyStickVerticalValueRaw() < 0)
+            {
+                ball.MyMovePosition(this.transform.position + Vector3.right * 2f, 7f * -inputter.GetJoyStickVerticalValueRaw());
+            }
+
+
+            */
+            CloseDistanceWithBall();
 
 
 
@@ -81,8 +113,10 @@ public class Tester : MonoBehaviour
         if (inputter.GetButtonShootValue() > 0 && shootCooldown.Ready())
         {
             ballVision.CooldownWaitToTakeBall.Reset();
-            shoot.Shoot_(40*transform.forward*inputter.GetButtonShootValue(),0.3f);
-        
+            shootVector = new Vector3(0f, 0.7f, 0f);
+            //print((transform.forward + shootVector));
+            shoot.Shoot_(15*(transform.forward+shootVector)*inputter.GetButtonShootValue(),0.3f);
+            //shoot.Shoot_(shootVector,0.3f);
         }
 
         if (inputter.GetButtonPassValue() > 0)
@@ -105,8 +139,8 @@ public class Tester : MonoBehaviour
     }
 
 
-    private float minDistance = 1.6f;
-    public void CloseDistamceWithBall()
+    private float minDistance = 2.2f;
+    public void CloseDistanceWithBall()
     {
 
         if(minDistance < Vector3.Distance(transform.position, ball.transform.position))

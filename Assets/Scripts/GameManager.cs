@@ -1,9 +1,12 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+
 
 
     //Singleton
@@ -35,6 +38,10 @@ public class GameManager : MonoBehaviour
 
 
 
+    public Camera camera;
+    private CinemachineVirtualCamera virtualCamera;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,15 +56,20 @@ public class GameManager : MonoBehaviour
                 , objectsInfo[i].startPosition,objectsInfo[i].angles));
 
         }
-        
+
+        virtualCamera = camera.GetComponentInChildren<CinemachineVirtualCamera>();
+        if (virtualCamera.LookAt == null)
+        {
+
+            virtualCamera.LookAt = Ball.Instance.transform;
+            virtualCamera.Follow = Ball.Instance.transform;
+
+        }
+
+
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 
 
