@@ -83,7 +83,15 @@ public class Movement : MonoBehaviour
 
     }
 
-    
+    public void SetVelocityWithoutY(Vector3 velocity)
+    {
+        velocity.y = rb.velocity.y;
+        rb.velocity = velocity;
+        
+
+    }
+
+    // x,y,z , xz, xz_
     public void SetSpecificAxisVelocity(Axis axis,float value)
     {
         tempVelocity = GetVelocity();
@@ -95,12 +103,73 @@ public class Movement : MonoBehaviour
         {
             tempVelocity.y = value;
         }
-        else
+        else if(axis == Axis.z)
         {
             tempVelocity.z = value;
         }
+        else if(axis == Axis.xz)
+        {
+            tempVelocity.x = value * 0.65f;
+            tempVelocity.z = value * 0.65f;
+        }
+        else if(axis == Axis.xz_)
+        {
+            tempVelocity.x = value * 0.65f;
+            tempVelocity.z = -value * 0.65f;
+        }
 
         rb.velocity = tempVelocity;
+
+    }
+
+
+
+    public void SetSpecificDirectionVelocity(Directions direction, float value)
+    {
+        value = Mathf.Abs(value);
+
+        if(direction == Directions.forward)
+        {
+            SetSpecificAxisVelocity(Axis.z, value);
+        }
+        else if (direction == Directions.backward)
+        {
+            SetSpecificAxisVelocity(Axis.z, -value);
+
+        }
+        else if(direction == Directions.left)
+        {
+            SetSpecificAxisVelocity(Axis.x, -value);
+        }
+        else if(direction == Directions.right)
+        {
+            SetSpecificAxisVelocity(Axis.x, value);
+        }
+        else if (direction == Directions.forwardRight)
+        {
+            SetSpecificAxisVelocity(Axis.z, value*0.52f);
+            SetSpecificAxisVelocity(Axis.x, value*0.52f);
+        }
+        else if (direction == Directions.forwardLeft)
+        {
+            SetSpecificAxisVelocity(Axis.z, value * 0.52f);
+            SetSpecificAxisVelocity(Axis.x, -value * 0.52f);
+        }
+        else if (direction == Directions.backwardRight)
+        {
+            SetSpecificAxisVelocity(Axis.z, -value * 0.52f);
+            SetSpecificAxisVelocity(Axis.x, value * 0.52f);
+        }
+        else if (direction == Directions.backwardLeft)
+        {
+            SetSpecificAxisVelocity(Axis.z, -value * 0.52f);
+            SetSpecificAxisVelocity(Axis.x, -value * 0.52f);
+        }
+        else
+        {
+            //SetSpecificAxisVelocity(Axis.z, 0);
+            //SetSpecificAxisVelocity(Axis.x, 0);
+        }
 
     }
 
@@ -195,12 +264,9 @@ public class Movement : MonoBehaviour
             directionVector = directionVector.normalized;
             directionVector.y = 0;
             SetVelocity(directionVector * speed);
-            Debug.Log("1");
+
         }
-        else
-        {
-            Debug.Log("2");
-        }
+
 
     }
 

@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 2587094548513364449}
   - component: {fileID: 2587094548513364448}
   - component: {fileID: 2587094548513364463}
+  - component: {fileID: -1699422113133205225}
   m_Layer: 0
   m_Name: Goalkeeper
   m_TagString: Untagged
@@ -206,7 +207,7 @@ Rigidbody:
   m_GameObject: {fileID: 7900853111987251225}
   serializedVersion: 2
   m_Mass: 50
-  m_Drag: 0.5
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -227,8 +228,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minBallVelocityToJump: 10
   minDistanceToJump: 50
-  maxJumpVelocityX: 30
-  maxJumpVelocityY: 30
+  maxJumpVelocityX: 10
+  maxJumpVelocityY: 10
+  maxJumpVelocityZ: 0
 --- !u!114 &2587094548513364449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +248,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
+  cdToTakeBall: 500
   ballTransform: {fileID: 0}
 --- !u!114 &2587094548513364448
 MonoBehaviour:
@@ -276,3 +279,16 @@ MonoBehaviour:
   maxVelocity: 50
   spinSpeed: 500
   slightGap: 10
+--- !u!114 &-1699422113133205225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7900853111987251225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae8a1cea314ac54aaaef3eebf806dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: 1.2

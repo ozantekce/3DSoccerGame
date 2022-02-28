@@ -33,7 +33,8 @@ public class Pass : MonoBehaviour
         passFinished = false;
 
         yield return new WaitForSeconds(wait);
-        ball.Pass(targetPosition, velocityMagnitude);
+        ball.owner = null;
+        ball.Movement.MyMovePosition(targetPosition, velocityMagnitude);
 
         passFinished = true;
 

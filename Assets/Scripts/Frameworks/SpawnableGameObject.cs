@@ -40,10 +40,15 @@ public class SpawnableGameObject
     }
 
 
+    private Rigidbody rb;
     public void ResetPosition()
     {
         GameObject_.transform.position = startPosition;
         GameObject_.transform.rotation = startRotation;
+        rb = GameObject_.GetComponent<Rigidbody>();
+        if (rb != null)
+            rb.velocity = Vector3.zero;
+
     }
 
 

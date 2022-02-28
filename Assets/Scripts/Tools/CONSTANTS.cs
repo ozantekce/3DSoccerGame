@@ -18,4 +18,16 @@ public static class CONSTANTS
     }
 
 
+
+    public static float Linear(float value , float minValue , float maxValue)
+    {
+
+        value = minValue + (maxValue - minValue) * value;
+
+
+        return value;
+
+    }
+
+
 }

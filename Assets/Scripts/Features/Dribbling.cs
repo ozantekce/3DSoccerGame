@@ -14,6 +14,9 @@ public class Dribbling : MonoBehaviour
     {
         ball = Ball.Instance;
         movement = GetComponent<Movement>();
+
+        cooldownToDribbling = new Cooldown(100f);
+
     }
 
 
@@ -44,23 +47,49 @@ public class Dribbling : MonoBehaviour
     }
 
 
+    private Cooldown cooldownToDribbling;
+    private Axis lastAxis = Axis.y;
     public void Dribbling_(Axis axis, float value, float distanceWithOwner)
     {
+        if (cooldownToDribbling.Ready())
+        {
+            if (lastAxis == axis)
+            {
+                if (distanceWithOwner <= 2.7f)
+                {
+                    ball.Movement.SetVelocityWithoutY(movement.GetVelocity() / 2);
+                    ball.Movement.SetSpecificAxisVelocity(axis, value);
+                    lastAxis = axis;
+                }
 
-        ball.Dribbling(axis, value, distanceWithOwner);
+            }
+            else
+            {
+                ball.Movement.SetVelocityWithoutY(Vector3.zero);
+                ball.Movement.SetSpecificAxisVelocity(axis, value / 2);
+                lastAxis = axis;
+            }
+        }
 
     }
 
-    public void CloseDistanceWithBall(float minDistance)
+
+    public void StopTheBall()
+    {
+
+        ball.Movement.SetVelocityWithoutY(Vector3.zero);
+    }
+
+    public void CloseDistanceWithBall(float minDistance,float speed)
     {
 
         if (minDistance < Vector3.Distance(transform.position, ball.transform.position))
         {
-            movement.MyMovePositionWithoutY_Axis(ball.transform.position, 10f); // speed must be linear with distance
+            movement.MyMovePositionWithoutY_Axis(ball.transform.position, speed); // speed must be linear with distance
         }
         else
         {
-            movement.SetVelocity(Vector3.zero);
+            movement.SetVelocityWithoutY(Vector3.zero);
         }
 
     }

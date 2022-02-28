@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    private void ResetAllPositions()
+    public void ResetAllPositions()
     {
 
         for(int i = 0;i < handler.Count; i++)
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void ResetPosition(string name)
+    public void ResetPosition(string name)
     {
 
         for (int i = 0; i < handler.Count; i++)

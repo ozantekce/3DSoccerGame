@@ -16,7 +16,7 @@ public class BallVision : MonoBehaviour
     public LayerMask obstacleMask;
 
     private CooldownManualReset cooldownWaitToTakeBall;
-    public float cdToTakeBall = 500f;
+    public float cdToTakeBall = 2000f;
 
     public Transform ballTransform;
 

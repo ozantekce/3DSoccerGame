@@ -16,7 +16,7 @@ public class Deneme : MonoBehaviour
 
     public float maxJumpVelocityX;
     public float maxJumpVelocityY;
-
+    public float maxJumpVelocityZ;
 
     // Start is called before the first frame update
     void Start()
@@ -44,17 +44,9 @@ public class Deneme : MonoBehaviour
 
         if (NeedJump(requireVelocity))
         {
-            Debug.Log(requireVelocity);
-            jump.Jump_(requireVelocity,0.3f);
+            //Debug.Log(requireVelocity);
+            jump.Jump_(requireVelocity,0.01f);
         }
-        else
-        {
-            /*
-            if(requireVelocity != Vector3.zero && Mathf.Abs(requireVelocity.z)<=1f)
-                Debug.Log(requireVelocity);
-            */
-        }
-
 
     }
 
@@ -62,13 +54,16 @@ public class Deneme : MonoBehaviour
     private bool NeedJump(Vector3 requireVelocity)
     {
 
-        bool c_noRequireVelocity = requireVelocity != Vector3.zero;
-        bool c_velocity = ball.GetVelocity().magnitude >= minBallVelocityToJump;
-        bool c_reqVelocity = Mathf.Abs(requireVelocity.x) <= maxJumpVelocityX && Mathf.Abs(requireVelocity.y) <= maxJumpVelocityY;
-        bool c_dontJumpZAxis = Mathf.Abs(requireVelocity.z) <= 1f;
+        bool c_ballFrontOfThis = VectorCalculater.CheckVector2FrontOfVector1(transform.position, ball.transform.position);
+
+        
+        bool c_requireVelocityLowThenMax = Mathf.Abs(requireVelocity.x) < maxJumpVelocityX && Mathf.Abs(requireVelocity.y) < maxJumpVelocityY && Mathf.Abs(requireVelocity.z)< maxJumpVelocityZ;
+
+        bool c_ballHasNoOwner = ball.owner == null;
+
         
 
-        return c_noRequireVelocity && c_velocity && c_reqVelocity && c_dontJumpZAxis;
+        return c_ballFrontOfThis && c_requireVelocityLowThenMax && c_ballHasNoOwner;
 
     }
 

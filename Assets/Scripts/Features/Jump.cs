@@ -14,23 +14,30 @@ public class Jump : MonoBehaviour
     private bool jumpFinished = true;
 
 
+
+
+
+
     private void Start()
     {
         movement = GetComponent<Movement>();
+        
     }
 
 
     public void Jump_(Vector3 vector3,float wait)
     {
-
+        
         if (onGround && jumpFinished)
         {
-            StartCoroutine(Jump__(vector3,wait));
+            StartCoroutine(Jump__(vector3.normalized,wait));
         }
         else
         {
             return;
         }
+
+
 
     }
 

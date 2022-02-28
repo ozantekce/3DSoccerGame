@@ -22,6 +22,7 @@ public class Ball : MonoBehaviour
 
 
     public GameObject Owner { get => owner; set => owner = value; }
+    public Movement Movement { get => movement; set => movement = value; }
 
     private void Awake()
     {
@@ -40,6 +41,8 @@ public class Ball : MonoBehaviour
     public GameObject owner;
 
     private Movement movement;
+
+    private Cooldown cooldownToSetVelocity;
     private void Start()
     {
         movement = GetComponent<Movement>();
@@ -61,40 +64,6 @@ public class Ball : MonoBehaviour
 
 
 
-    private Cooldown cooldownToSetVelocity;
-    private Axis lastAxis = Axis.y;
-    public void Dribbling(Axis axis, float value, float distanceWithOwner)
-    {
-
-        if (cooldownToSetVelocity.Ready())
-        {
-            
-
-            if(lastAxis == axis)
-            {
-                if (distanceWithOwner <= 2.5f)
-                {
-                    movement.SetVelocity(movement.GetVelocity() / 2);
-                    movement.SetSpecificAxisVelocity(axis, value);
-                    lastAxis = axis;
-                }
-                    
-            }
-            else
-            {
-                movement.SetVelocity(movement.GetVelocity() / 2);
-                movement.SetSpecificAxisVelocity(axis, value);
-                lastAxis = axis;
-            }
-                
-            
-        }
-
-        
-
-
-    }
-
 
     public void MyMovePosition(Vector3 position, float value)
     {
@@ -102,25 +71,10 @@ public class Ball : MonoBehaviour
         if (cooldownToSetVelocity.Ready())
             movement.MyMovePositionWithoutY_Axis(position , value);
 
-
     }
 
 
-    public void Shoot(Vector3 velocity)
-    {
-        owner = null;
-        movement.GiveVelocity(velocity);
 
-    }
-
-
-    public void Pass(Vector3 targetPosition,float velocity)
-    {
-
-        owner = null;
-        movement.MyMovePosition(targetPosition, velocity);
-
-    }
 
 
     private float distanceWithOwner() {

@@ -38,8 +38,10 @@ public class Shoot : MonoBehaviour
         shootFinished = false;
 
         yield return new WaitForSeconds(wait);
-        ball.Shoot(velocity);
-        
+
+        ball.owner = null;
+        ball.Movement.GiveVelocity(velocity);
+
         shootFinished = true;
 
     }

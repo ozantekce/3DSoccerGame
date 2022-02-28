@@ -60,15 +60,34 @@ public class Tester : MonoBehaviour
 
         if(ball.owner == this.gameObject)
         {
-            
 
-            if(inputter.GetJoyStickVerticalValueRaw()!=0)
-                dribbling.Dribbling_(Axis.x, 12 * -inputter.GetJoyStickVerticalValueRaw(),Vector3.Distance(transform.position,ball.transform.position));
-            if (inputter.GetJoyStickHorizontalValueRaw() != 0)
-                dribbling.Dribbling_(Axis.z, 12 * inputter.GetJoyStickHorizontalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
+            // v = 1 or -1 h = 0 -> x
+            // v = 0       h = 1 or -1 -> z 
+            // (v= 1  and h = 1) or (v = -1 and h =-1) -> xz
+            // (v=-1 and h = 1) or (v=1 and h = -1) -> xz_
+            // v=0 and h =0 -> 0
 
 
-            dribbling.CloseDistanceWithBall(2f);
+            float v = -inputter.GetJoyStickVerticalValueRaw();
+            float h = inputter.GetJoyStickHorizontalValueRaw();
+
+
+            if( (v==1 || v==-1) && h ==0)
+                dribbling.Dribbling_(Axis.x, 14 * -inputter.GetJoyStickVerticalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
+            else if ((h == 1 || h == -1) && v == 0)
+                dribbling.Dribbling_(Axis.z, 14 * inputter.GetJoyStickHorizontalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
+            else if((v == 1 && h == 1) || (v == -1 && h == -1))
+                dribbling.Dribbling_(Axis.xz, 14 * -inputter.GetJoyStickVerticalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
+            else if ((v == -1 && h == 1) ||(v == 1 && h == -1))
+                dribbling.Dribbling_(Axis.xz_, 14 * -inputter.GetJoyStickHorizontalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
+            else
+            {
+                dribbling.StopTheBall();
+            }
+
+
+
+            dribbling.CloseDistanceWithBall(2.2f,14f);
 
 
 
