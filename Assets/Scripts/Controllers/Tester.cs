@@ -21,6 +21,7 @@ public class Tester : MonoBehaviour
 
     private Dribbling dribbling;
 
+
     private Pass pass;
 
     private Slide slide;
@@ -47,6 +48,7 @@ public class Tester : MonoBehaviour
 
 
     public Vector3 shootVector;
+
     void Update()
     {
 
@@ -61,34 +63,24 @@ public class Tester : MonoBehaviour
         if(ball.owner == this.gameObject)
         {
 
-            // v = 1 or -1 h = 0 -> x
-            // v = 0       h = 1 or -1 -> z 
-            // (v= 1  and h = 1) or (v = -1 and h =-1) -> xz
-            // (v=-1 and h = 1) or (v=1 and h = -1) -> xz_
-            // v=0 and h =0 -> 0
+            float inputVertical = -inputter.GetJoyStickVerticalValueRaw();
+            float inputHorizotal = inputter.GetJoyStickHorizontalValueRaw();
 
-
-            float v = -inputter.GetJoyStickVerticalValueRaw();
-            float h = inputter.GetJoyStickHorizontalValueRaw();
-
-
-            if( (v==1 || v==-1) && h ==0)
-                dribbling.Dribbling_(Axis.x, 14 * -inputter.GetJoyStickVerticalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
-            else if ((h == 1 || h == -1) && v == 0)
-                dribbling.Dribbling_(Axis.z, 14 * inputter.GetJoyStickHorizontalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
-            else if((v == 1 && h == 1) || (v == -1 && h == -1))
-                dribbling.Dribbling_(Axis.xz, 14 * -inputter.GetJoyStickVerticalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
-            else if ((v == -1 && h == 1) ||(v == 1 && h == -1))
-                dribbling.Dribbling_(Axis.xz_, 14 * -inputter.GetJoyStickHorizontalValueRaw(), Vector3.Distance(transform.position, ball.transform.position));
-            else
+            if (inputVertical == 0 && inputHorizotal == 0)
             {
                 dribbling.StopTheBall();
+                dribbling.CloseDistanceWithBall(2.7f, 5f);
             }
+            else
+            {
+                Vector3 vector3 = Vector3.right * inputVertical;
+                vector3 += Vector3.forward * inputHorizotal;
+                vector3 = vector3.normalized;
 
 
-
-            dribbling.CloseDistanceWithBall(2.2f,14f);
-
+                dribbling.Dribbling_(vector3 * 50, Vector3.Distance(transform.position, ball.transform.position));
+                dribbling.CloseDistanceWithBall(2.2f, 14f);
+            }
 
 
 
@@ -96,18 +88,14 @@ public class Tester : MonoBehaviour
         else
         {
             if (inputter.GetJoyStickVerticalValueRaw() != 0)
-                SetVelocity(Axis.x, 15 * -inputter.GetJoyStickVerticalValue());
+                movement.SetSpecificAxisVelocity(Axis.x, 15 * -inputter.GetJoyStickVerticalValue());
             if (inputter.GetJoyStickHorizontalValue() != 0)
-                SetVelocity(Axis.z, 15 * inputter.GetJoyStickHorizontalValue());
+                movement.SetSpecificAxisVelocity(Axis.z, 15 * inputter.GetJoyStickHorizontalValue());
 
             SpinToZXVector(new Vector2(inputter.GetJoyStickHorizontalValue(), -inputter.GetJoyStickVerticalValue()));
 
 
         }
-
-
-
-
 
 
 
@@ -143,32 +131,8 @@ public class Tester : MonoBehaviour
 
 
 
-    public void SetVelocity(Axis axis, float value)
-    {
-        
-        movement.SetSpecificAxisVelocity(axis, value);
-
-
-    }
-
-
-
-
-
     public float spinSpeed = 500;
     public float slightGap = 10;//ignore low differences
-    private void SpinForBall()
-    {
-        
-        Vector3 temp = transform.position - ball.transform.position;
-        temp =  temp.normalized;
-        Vector2 angleVector = new Vector2();
-        angleVector.x = temp.z;
-        angleVector.y = temp.x;
-        SpinToZXVector(-angleVector);
-
-    }
-
 
 
     private float spinValue;

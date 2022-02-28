@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
   shootVector: {x: 0, y: 0, z: 0}
+  mesafe: 0
   spinSpeed: 500
   slightGap: 0
 --- !u!54 &5639154086306291245
@@ -235,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onGround: 1
+  maxJumpMagnitude: 0
 --- !u!114 &6198703763327274319
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class Jump : MonoBehaviour
     private Movement movement;
     private bool jumpFinished = true;
 
+    [SerializeField]
+    private float maxJumpMagnitude;
 
 
 
@@ -27,10 +29,14 @@ public class Jump : MonoBehaviour
 
     public void Jump_(Vector3 vector3,float wait)
     {
-        
+
+        if (vector3.magnitude > maxJumpMagnitude)
+            vector3 = vector3.normalized * maxJumpMagnitude;
+
+
         if (onGround && jumpFinished)
         {
-            StartCoroutine(Jump__(vector3.normalized,wait));
+            StartCoroutine(Jump__(vector3,wait));
         }
         else
         {
@@ -47,6 +53,7 @@ public class Jump : MonoBehaviour
         jumpFinished = false;
         yield return new WaitForSeconds(wait);
         movement.SetVelocity(vector3);
+        //print(vector3);
         jumpFinished = true;
 
     }

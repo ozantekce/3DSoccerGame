@@ -48,36 +48,22 @@ public class Dribbling : MonoBehaviour
 
 
     private Cooldown cooldownToDribbling;
-    private Axis lastAxis = Axis.y;
-    public void Dribbling_(Axis axis, float value, float distanceWithOwner)
+    public void Dribbling_(Vector3 vector3, float distanceWithOwner)
     {
         if (cooldownToDribbling.Ready())
         {
-            if (lastAxis == axis)
-            {
-                if (distanceWithOwner <= 2.7f)
-                {
-                    ball.Movement.SetVelocityWithoutY(movement.GetVelocity() / 2);
-                    ball.Movement.SetSpecificAxisVelocity(axis, value);
-                    lastAxis = axis;
-                }
+            if (distanceWithOwner < 2.7f)
+                ball.Movement.GiveForce(vector3);
 
-            }
-            else
-            {
-                ball.Movement.SetVelocityWithoutY(Vector3.zero);
-                ball.Movement.SetSpecificAxisVelocity(axis, value / 2);
-                lastAxis = axis;
-            }
         }
 
     }
-
 
     public void StopTheBall()
     {
 
         ball.Movement.SetVelocityWithoutY(Vector3.zero);
+        movement.SetVelocity(Vector3.zero);
     }
 
     public void CloseDistanceWithBall(float minDistance,float speed)

@@ -263,6 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onGround: 1
+  maxJumpMagnitude: 50
 --- !u!114 &2587094548513364463
 MonoBehaviour:
   m_ObjectHideFlags: 0
