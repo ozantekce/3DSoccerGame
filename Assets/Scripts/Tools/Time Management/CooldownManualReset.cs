@@ -35,7 +35,7 @@ public class CooldownManualReset
 
     }
 
-    public void Reset()
+    public void ResetTimer()
     {
         first = false;
         lastTime = Time.realtimeSinceStartup;

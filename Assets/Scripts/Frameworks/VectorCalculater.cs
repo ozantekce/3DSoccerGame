@@ -26,7 +26,14 @@ public class VectorCalculater
     }
 
 
+    public static Vector3 PreventToPassMaxMagnitude(Vector3 vector3, float max)
+    {
 
+        if (vector3.magnitude > max)
+            vector3 = vector3.normalized * max;
+        return vector3;
+
+    }
 
 
 

@@ -60,7 +60,7 @@ public class Tester : MonoBehaviour
 
 
 
-        if(ball.owner == this.gameObject)
+        if(ball.IsOwner(this.gameObject))
         {
 
             float inputVertical = -inputter.GetJoyStickVerticalValueRaw();
@@ -69,14 +69,14 @@ public class Tester : MonoBehaviour
             if (inputVertical == 0 && inputHorizotal == 0)
             {
                 dribbling.StopTheBall();
-                dribbling.CloseDistanceWithBall(2.7f, 5f);
+                dribbling.CloseDistanceWithBall(2.7f, 14f);
             }
             else
             {
                 Vector3 vector3 = Vector3.right * inputVertical;
                 vector3 += Vector3.forward * inputHorizotal;
-                vector3 = vector3.normalized;
-
+                //vector3 = vector3.normalized;
+                
 
                 dribbling.Dribbling_(vector3 * 50, Vector3.Distance(transform.position, ball.transform.position));
                 dribbling.CloseDistanceWithBall(2.2f, 14f);
@@ -101,7 +101,7 @@ public class Tester : MonoBehaviour
 
         if (inputter.GetButtonShootValue() > 0 && shootCooldown.Ready())
         {
-            ballVision.CooldownWaitToTakeBall.Reset();
+            ballVision.CooldownWaitToTakeBall.ResetTimer();
             shootVector = new Vector3(0f, 0.7f, 0f);
             //print((transform.forward + shootVector));
             shoot.Shoot_(15*(transform.forward+shootVector)*inputter.GetButtonShootValue(),0.3f);

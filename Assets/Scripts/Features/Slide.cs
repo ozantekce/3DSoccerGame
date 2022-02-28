@@ -11,6 +11,7 @@ public class Slide : MonoBehaviour
     private Movement movement;
 
 
+
     private void Start()
     {
         ball = Ball.Instance;
@@ -21,7 +22,7 @@ public class Slide : MonoBehaviour
     {
 
 
-        if (slideFinished && ball.Owner != this.gameObject)
+        if (slideFinished && !ball.IsOwner(gameObject))
         {
             StartCoroutine(Slide__(targetPosition, velocityMagnitude, wait));
         }
@@ -37,6 +38,7 @@ public class Slide : MonoBehaviour
         slideFinished = false;
 
         yield return new WaitForSeconds(wait);
+
         movement.MyMovePositionWithoutY_Axis(targetPosition, velocityMagnitude);
 
         slideFinished = true;

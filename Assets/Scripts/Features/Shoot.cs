@@ -11,19 +11,26 @@ public class Shoot : MonoBehaviour
 
     public Ball ball;
 
+    [SerializeField]
+    private float maxShootMagnitude;
+    [SerializeField]
+    private float cooldownTimeShoot = 500f;
+    private CooldownManualReset cooldownForShoot;
     
 
     // Start is called before the first frame update
     void Start()
     {
         ball = Ball.Instance;
+        cooldownForShoot = new CooldownManualReset(cooldownTimeShoot);
+
     }
 
 
     public void Shoot_(Vector3 velocity, float wait)
     {
 
-        if (shootFinished && ball.Owner == this.gameObject)
+        if (cooldownForShoot.TimeOver() && shootFinished && ball.IsOwner(gameObject))
         {
             StartCoroutine(Shoot__(velocity,wait));
         }
@@ -39,8 +46,11 @@ public class Shoot : MonoBehaviour
 
         yield return new WaitForSeconds(wait);
 
-        ball.owner = null;
+        ball.RemoveOwner(gameObject);
+        velocity = VectorCalculater.PreventToPassMaxMagnitude(velocity, maxShootMagnitude);
         ball.Movement.GiveVelocity(velocity);
+
+        cooldownForShoot.ResetTimer();
 
         shootFinished = true;
 

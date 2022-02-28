@@ -59,7 +59,7 @@ public class Deneme : MonoBehaviour
         
         bool c_requireVelocityLowThenMax = Mathf.Abs(requireVelocity.x) < maxJumpVelocityX && Mathf.Abs(requireVelocity.y) < maxJumpVelocityY && Mathf.Abs(requireVelocity.z)< maxJumpVelocityZ;
 
-        bool c_ballHasNoOwner = ball.owner == null;
+        bool c_ballHasNoOwner = ball.CountOfOwners() == 0;
 
         
 

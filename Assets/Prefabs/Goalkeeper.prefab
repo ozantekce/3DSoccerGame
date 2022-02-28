@@ -91,7 +91,7 @@ BoxCollider:
   m_GameObject: {fileID: 7900853111895405808}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -230,7 +230,7 @@ MonoBehaviour:
   minDistanceToJump: 50
   maxJumpVelocityX: 10
   maxJumpVelocityY: 10
-  maxJumpVelocityZ: 0
+  maxJumpVelocityZ: 3
 --- !u!114 &2587094548513364449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGround: 1
   maxJumpMagnitude: 50
+  cooldownTimePass: 500
 --- !u!114 &2587094548513364463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,4 +293,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae8a1cea314ac54aaaef3eebf806dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 1.2
+  localGravity: 0
+  gravityType: 0

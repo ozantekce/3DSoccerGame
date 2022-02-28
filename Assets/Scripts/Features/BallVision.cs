@@ -6,7 +6,7 @@ using UnityEngine;
 public class BallVision : MonoBehaviour
 {
 
-    public float visionRadius = 2.3f;
+    public float visionRadius = 3f;
     [Range(0f, 360f)]
     public float visionAngle = 60f;
 
@@ -67,7 +67,7 @@ public class BallVision : MonoBehaviour
                 {
                     ballTransform = target;
 
-                    Ball.Instance.Owner = this.gameObject;
+                    Ball.Instance.AddOwner(gameObject);
 
                 }
 

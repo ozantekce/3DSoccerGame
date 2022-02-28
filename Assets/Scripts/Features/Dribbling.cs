@@ -10,12 +10,20 @@ public class Dribbling : MonoBehaviour
     private Ball ball;
     private Movement movement;
 
+    [SerializeField]
+    private float minDistanceToAddForce = 2.7f;
+
+    [SerializeField]
+    private float cooldownDribbling = 100f;
+
+    private Cooldown cooldownToDribbling;
+
     private void Start()
     {
         ball = Ball.Instance;
         movement = GetComponent<Movement>();
 
-        cooldownToDribbling = new Cooldown(100f);
+        cooldownToDribbling = new Cooldown(cooldownDribbling);
 
     }
 
@@ -24,7 +32,7 @@ public class Dribbling : MonoBehaviour
     {
 
 
-        if(ball.owner == this.gameObject)
+        if(ball.IsOwner(gameObject))
         {
 
             SpinForBall();
@@ -47,13 +55,17 @@ public class Dribbling : MonoBehaviour
     }
 
 
-    private Cooldown cooldownToDribbling;
+    
     public void Dribbling_(Vector3 vector3, float distanceWithOwner)
     {
         if (cooldownToDribbling.Ready())
         {
-            if (distanceWithOwner < 2.7f)
+            if (distanceWithOwner < minDistanceToAddForce)
+            {
                 ball.Movement.GiveForce(vector3);
+                 ball.Movement.GiveVelocity(vector3.normalized);
+            }
+                
 
         }
 
@@ -62,7 +74,11 @@ public class Dribbling : MonoBehaviour
     public void StopTheBall()
     {
 
-        ball.Movement.SetVelocityWithoutY(Vector3.zero);
+        if(Vector3.Distance(transform.position, ball.transform.position) <= minDistanceToAddForce)
+            ball.Movement.SetVelocityWithoutY(Vector3.zero);
+        else if(Time.frameCount % 5 == 0)
+            ball.Movement.SetVelocityWithoutY(ball.Movement.GetVelocity() / 1.2f);
+
         movement.SetVelocity(Vector3.zero);
     }
 

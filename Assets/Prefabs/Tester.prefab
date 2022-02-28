@@ -122,7 +122,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
   shootVector: {x: 0, y: 0, z: 0}
-  mesafe: 0
   spinSpeed: 500
   slightGap: 0
 --- !u!54 &5639154086306291245
@@ -192,6 +191,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
+  maxShootMagnitude: 100
+  cooldownTimeShoot: 500
 --- !u!114 &-3956941786711598427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7a4355f075aee4c9e7686443d66a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDistanceToAddForce: 2.7
+  cooldownDribbling: 100
 --- !u!114 &-5723513630394257703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGround: 1
   maxJumpMagnitude: 0
+  cooldownTimePass: 500
 --- !u!114 &6198703763327274319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,6 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
+  cooldownTimePass: 500
 --- !u!114 &-2072353773377481477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae8a1cea314ac54aaaef3eebf806dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 1
+  localGravity: 0
+  gravityType: 0
 --- !u!1 &5639154086447153862
 GameObject:
   m_ObjectHideFlags: 0

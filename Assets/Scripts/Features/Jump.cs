@@ -15,7 +15,9 @@ public class Jump : MonoBehaviour
 
     [SerializeField]
     private float maxJumpMagnitude;
-
+    [SerializeField]
+    private float cooldownTimePass = 500f;
+    private CooldownManualReset cooldownForPass;
 
 
 
@@ -23,19 +25,21 @@ public class Jump : MonoBehaviour
     private void Start()
     {
         movement = GetComponent<Movement>();
-        
+        cooldownForPass = new CooldownManualReset(cooldownTimePass);
+
     }
 
 
     public void Jump_(Vector3 vector3,float wait)
     {
 
-        if (vector3.magnitude > maxJumpMagnitude)
-            vector3 = vector3.normalized * maxJumpMagnitude;
 
 
-        if (onGround && jumpFinished)
+
+        if (cooldownForPass.TimeOver() && onGround && jumpFinished)
         {
+
+
             StartCoroutine(Jump__(vector3,wait));
         }
         else
@@ -52,11 +56,15 @@ public class Jump : MonoBehaviour
     {
         jumpFinished = false;
         yield return new WaitForSeconds(wait);
+
+        vector3 = VectorCalculater.PreventToPassMaxMagnitude(vector3, maxJumpMagnitude);
         movement.SetVelocity(vector3);
-        //print(vector3);
+        cooldownForPass.ResetTimer();
+
         jumpFinished = true;
 
     }
+
 
 
 
