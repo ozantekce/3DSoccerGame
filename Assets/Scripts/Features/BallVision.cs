@@ -67,7 +67,7 @@ public class BallVision : MonoBehaviour
                 {
                     ballTransform = target;
 
-                    Ball.Instance.AddOwner(gameObject);
+                    Ball.Instance.SetOwner(gameObject);
 
                 }
 

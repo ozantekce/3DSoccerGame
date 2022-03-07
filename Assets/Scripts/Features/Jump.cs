@@ -3,51 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(Movement))]
+[RequireComponent(typeof(Rigidbody))]
 public class Jump : MonoBehaviour
 {
 
 
 
     public bool onGround = true;
-    private Movement movement;
+
     private bool jumpFinished = true;
 
     [SerializeField]
-    private float maxJumpMagnitude;
+    private float jumpPower;
+
+
     [SerializeField]
-    private float cooldownTimePass = 500f;
-    private CooldownManualReset cooldownForPass;
+    private float cdJump = 500f;
+    private CooldownManualReset cooldownForJump;
 
-
+    private Inputter inputter;
+    private Rigidbody rb;
 
 
     private void Start()
     {
-        movement = GetComponent<Movement>();
-        cooldownForPass = new CooldownManualReset(cooldownTimePass);
+        cooldownForJump = new CooldownManualReset(cdJump);
+        inputter = GetComponent<Inputter>();
+        rb = GetComponent<Rigidbody>();
+
+    }
+
+    private void Update()
+    {   
+
+        if (inputter.GetButtonJumpValue() > 0)
+        {
+            Vector3 direction = Vector3.up;
+            direction.x = -inputter.GetJoyStickVerticalValueRaw();
+            direction.z = inputter.GetJoyStickHorizontalValueRaw();
+
+            Jump_(direction.normalized * jumpPower, 0.2f);
+        }
 
     }
 
 
     public void Jump_(Vector3 vector3,float wait)
     {
-
-
-
-
-        if (cooldownForPass.TimeOver() && onGround && jumpFinished)
+        if (cooldownForJump.TimeOver() && onGround && jumpFinished)
         {
-
-
             StartCoroutine(Jump__(vector3,wait));
         }
-        else
-        {
-            return;
-        }
-
-
 
     }
 
@@ -56,10 +62,10 @@ public class Jump : MonoBehaviour
     {
         jumpFinished = false;
         yield return new WaitForSeconds(wait);
-
-        vector3 = VectorCalculater.PreventToPassMaxMagnitude(vector3, maxJumpMagnitude);
-        movement.SetVelocity(vector3);
-        cooldownForPass.ResetTimer();
+        
+        rb.velocity = vector3;
+        print(rb.velocity);
+        cooldownForJump.ResetTimer();
 
         jumpFinished = true;
 

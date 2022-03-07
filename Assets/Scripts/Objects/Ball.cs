@@ -17,10 +17,10 @@ public class Ball : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private float maxDistanceWithOwner = 5f;
+    public Rigidbody Rb { get => rb; set => rb = value; }
 
-    public Movement Movement { get => movement; set => movement = value; }
+    [SerializeField]
+    private float maxDistanceWithOwner = 4f;
 
     private void Awake()
     {
@@ -35,101 +35,50 @@ public class Ball : MonoBehaviour
     }
 
 
-    //private List<GameObject> owners;
-
     private GameObject owner;
 
-    public void AddOwner(GameObject gameObject)
+    public void SetOwner(GameObject gameObject)
     {
 
         owner = gameObject;
 
-        /*
-        if (!owners.Contains(gameObject))
-        {
-            owners.Add(gameObject);
-        }*/
-
     }
-
 
     public void RemoveOwner(GameObject gameObject)
     {
         if(owner == gameObject)
             owner = null;
-        /*
-        if (owners.Contains(gameObject))
-        {
-            owners.Remove(gameObject);
-        }*/
-
     }
 
     public bool IsOwner(GameObject gameObject)
     {
         return owner == gameObject;
-        //return owners.Contains(gameObject);
     }
 
-    public float CountOfOwners()
-    {
-        if (owner == null)
-            return 0;
-        else
-            return 1;
-        //return owners.Count;
-    }
 
-    //public GameObject owner;
 
-    private Movement movement;
+    private Rigidbody rb;
 
-    private Cooldown cooldownToSetVelocity;
     private void Start()
     {
 
-        //owners = new List<GameObject>();
-        movement = GetComponent<Movement>();
-        cooldownToSetVelocity = new Cooldown(100f);
+        rb = GetComponent<Rigidbody>();
+
 
     }
 
     private void Update()
     {
 
-        RemoveFarOwners();
 
-    }
-    
-
-    public void MyMovePosition(Vector3 position, float value)
-    {
-
-        if (cooldownToSetVelocity.Ready())
-            movement.MyMovePositionWithoutY_Axis(position , value);
-
-    }
-
-    
-    private void RemoveFarOwners()
-    {
-
-        if(owner != null)
-            if (DistanceWithOwner(owner) > maxDistanceWithOwner)
-            {
-                RemoveOwner(owner);
-            }
-
-        /*
-        foreach (GameObject owner in owners)
+        if (DistanceWithOwner(owner) > maxDistanceWithOwner)
         {
-            if (DistanceWithOwner(owner) > maxDistanceWithOwner)
-            {
-                RemoveOwner(owner);
-            }
-        }*/
+            RemoveOwner(owner);
+        }
+
 
     }
+    
 
 
     private float DistanceWithOwner(GameObject owner) {
@@ -142,16 +91,26 @@ public class Ball : MonoBehaviour
     }
 
 
-
     public Vector3 GetVelocity()
     {
-        return movement.GetVelocity();
+        return rb.velocity;
     }
 
-    public float GetDrag()
+    public void MyMovePosition(Vector3 position, float speed)
     {
-        return movement.GetDrag();
+
+        if (transform.position != position)
+        {
+            Vector3 directionVector = position - transform.position;
+            directionVector = directionVector.normalized;
+            directionVector.y = 0;
+            speed = Mathf.Clamp(speed, 0, Vector3.Distance(position, transform.position));
+            rb.velocity = directionVector * speed;
+        }
+
+
     }
+
 
 }
 

@@ -7,181 +7,50 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
 
-
-    public bool includeY_axisForMaxVelocity;
+    public bool onGround = true;
 
     [SerializeField]
-    private float maxVelocity;
-    private float sqrMaxVelocity;
+    private float movementSpeed, spinSpeed;
 
-
+    private Inputter inputter;
 
     private Rigidbody rb;
 
-    public float MaxVelocity
-    {
-        get => maxVelocity; set
-        {
-
-            maxVelocity = value;
-            sqrMaxVelocity = Mathf.Max(maxVelocity, 2);
-
-        }
-    }
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        sqrMaxVelocity = Mathf.Pow(maxVelocity, 2);
+        inputter = GetComponent<Inputter>();
 
     }
 
-    private void LateUpdate()
+    private void Update()
     {
 
-        EnsureMaxVelocity();
-
-    }
-
-
-    // ENSURE LIMITATIONS START
-
-
-    private Vector3 tempVelocity;
-    private void EnsureMaxVelocity()
-    {
-
-        if (includeY_axisForMaxVelocity&&PassedMaxSpeed())
+        if(inputter != null)
         {
-            SetVelocity(GetVelocity().normalized * maxVelocity);
-        }
-        else if(PassedMaxSpeed())
-        {
-            tempVelocity = GetVelocity().normalized * maxVelocity;
-            tempVelocity.y = GetVelocity().y;
-            SetVelocity(tempVelocity);
-
+            float inputVertical = -inputter.GetJoyStickVerticalValueRaw();
+            float inputHorizontal = inputter.GetJoyStickHorizontalValueRaw();
+            
+            if(onGround && !Ball.Instance.IsOwner(gameObject))
+                Movement_(inputVertical,inputHorizontal);
         }
 
+
     }
+    
 
-
-    // ENSURE LIMITATIONS END
-
-
-
-    // GIVE_SET Rigidbody START
-    public void GiveVelocity(Vector3 velocity)
+    private void Movement_(float inputVertical, float inputHorizontal)
     {
+        Vector3 directionVector = new Vector3(inputVertical, 0, inputHorizontal).normalized;
 
-        rb.velocity += velocity;
-    }
+        directionVector *= movementSpeed;
+        directionVector.y = rb.velocity.y;
+        rb.velocity = directionVector ;
+        Spin(inputVertical,inputHorizontal);
 
-    public void SetVelocity(Vector3 velocity)
-    {
-        rb.velocity = velocity;
-
-    }
-
-    public void SetVelocityWithoutY(Vector3 velocity)
-    {
-        velocity.y = rb.velocity.y;
-        rb.velocity = velocity;
-        
 
     }
-
-    // x,y,z , xz, xz_
-    public void SetSpecificAxisVelocity(Axis axis,float value)
-    {
-        tempVelocity = GetVelocity();
-        if (axis == Axis.x)
-        {
-            tempVelocity.x = value;  
-        }
-        else if(axis == Axis.y)
-        {
-            tempVelocity.y = value;
-        }
-        else if(axis == Axis.z)
-        {
-            tempVelocity.z = value;
-        }
-
-        rb.velocity = tempVelocity;
-
-    }
-
-
-
-
-    public void GiveForce(Vector3 force)
-    {
-
-        rb.AddForce(force);
-
-    }
-
-    public void SetForce(Vector3 force)
-    {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.AddForce(force);
-
-    }
-
-
-    public void GiveAcceleration(Vector3 acceleration)
-    {
-
-        rb.AddForce(acceleration, ForceMode.Acceleration);
-
-    }
-
-    public void SetAcceleration(Vector3 acceleration)
-    {
-
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.AddForce(acceleration, ForceMode.Acceleration);
-
-    }
-
-
-    public void SetMass(float mass)
-    {
-        rb.mass = mass;
-    }
-
-    // GIVE_SET Rigidbody END
-
-
-    // GET Rigidbody START
-    public float GetMass(){return rb.mass;}
-
-    public Vector3 GetVelocity(){return rb.velocity;}
-
-    public float GetDrag()
-    {
-        return rb.drag;
-    }
-
-    // GET Rigidbody END
-
-
-    // BOOL Control START
-
-    private bool PassedMaxSpeed()
-    {
-        return rb.velocity.sqrMagnitude > sqrMaxVelocity;
-    }
-
-
-    // BOOL Control END
-
-
-
-
 
 
     public void MyMovePosition(Vector3 position, float speed)
@@ -191,7 +60,7 @@ public class Movement : MonoBehaviour
         {
             Vector3 directionVector = position - transform.position;
             directionVector = directionVector.normalized;
-            SetVelocity(directionVector * speed);
+            rb.velocity = directionVector * speed;
 
         }
 
@@ -205,7 +74,7 @@ public class Movement : MonoBehaviour
             Vector3 directionVector = position - transform.position;
             directionVector = directionVector.normalized;
             directionVector.y = 0;
-            SetVelocity(directionVector * speed);
+            rb.velocity = directionVector * speed;
 
         }
 
@@ -213,47 +82,44 @@ public class Movement : MonoBehaviour
     }
 
 
-    public void MovePosition(Vector3 position)
+
+
+
+
+
+    private void OnCollisionEnter(Collision collision)
     {
 
-        rb.MovePosition(position);
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            onGround = true;
+        }
 
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            onGround = false;
+        }
     }
 
 
 
-    
 
 
-    private readonly static Dictionary<Axis, Vector3> anglesMap = CreateAnglesMap();
-    private static Dictionary<Axis, Vector3> CreateAnglesMap()
-    {
-        Dictionary<Axis, Vector3> temp = new Dictionary<Axis, Vector3>();
-        temp.Add(Axis.x, Vector3.right);
-        temp.Add(Axis.y, Vector3.up);
-        temp.Add(Axis.z, Vector3.forward);
-        return temp;
-    }
+    private float slightGap = 10;//ignore low differences
+
+
     private Vector3 angles;
-    public void Spin(float angle, Axis axis)
-    {
-
-        angles = transform.eulerAngles;
-        angles += angle * anglesMap[axis];
-
-        transform.eulerAngles = angles;
-
-    }
-
 
     private float spinValue;
     private Vector3 eulerAng;
-
-    public float spinSpeed = 500;
-    public float slightGap = 10;//ignore low differences
-
-    public void SpinToZXVector(Vector2 angleVector)
+    // we can use here angular velocity
+    private void Spin(float inputVertical, float inputHorizontal)
     {
+        Vector2 angleVector = new Vector2(inputHorizontal, inputVertical);
 
         eulerAng = transform.eulerAngles;
         float targetAngle = CalculateAngle(angleVector);
@@ -284,10 +150,20 @@ public class Movement : MonoBehaviour
                 spinValue = speed;
         }
 
-        Spin(spinValue, Axis.y);
+        angles = transform.eulerAngles;
+        angles += spinValue * anglesMap[Axis.y];
 
-        //transform.eulerAngles = eulerAng;
+        transform.eulerAngles = angles;
+    }
 
+    private readonly static Dictionary<Axis, Vector3> anglesMap = CreateAnglesMap();
+    private static Dictionary<Axis, Vector3> CreateAnglesMap()
+    {
+        Dictionary<Axis, Vector3> temp = new Dictionary<Axis, Vector3>();
+        temp.Add(Axis.x, Vector3.right);
+        temp.Add(Axis.y, Vector3.up);
+        temp.Add(Axis.z, Vector3.forward);
+        return temp;
     }
 
     private static float CalculateAngle(Vector2 vector)
@@ -301,6 +177,8 @@ public class Movement : MonoBehaviour
 
         return angle;
     }
+
+
 
 
 }

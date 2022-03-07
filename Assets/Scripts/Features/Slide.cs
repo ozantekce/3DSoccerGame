@@ -3,45 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(Movement))]
 public class Slide : MonoBehaviour
 {
 
-    private Ball ball;
-    private Movement movement;
+    [SerializeField]
+    private float slidePower;
 
-    private static float defaultWait = 0.1f;
+    private Ball ball;
+
+    private Inputter inputter;
+    private Rigidbody rb;
+
 
     private void Start()
     {
+
         ball = Ball.Instance;
-        movement = GetComponent<Movement>();
+        inputter = GetComponent<Inputter>();
+        rb = GetComponent<Rigidbody>();
+
     }
 
-    public void Slide_(Vector3 targetPosition, float velocityMagnitude, float wait)
+    private void Update()
+    {
+        if (inputter.GetButtonPassValue() > 0)
+            Slide_(ball.transform.position, 0.3f);
+    }
+
+    private void Slide_(Vector3 targetPosition,float wait)
     {
 
 
         if (slideFinished && !ball.IsOwner(gameObject))
         {
-            StartCoroutine(Slide__(targetPosition, velocityMagnitude, wait));
+            StartCoroutine(Slide__(targetPosition, slidePower, wait));
         }
 
 
     }
 
 
-    public void Slide_(Vector3 targetPosition, float velocityMagnitude)
-    {
 
-
-        if (slideFinished && !ball.IsOwner(gameObject))
-        {
-            StartCoroutine(Slide__(targetPosition, velocityMagnitude, defaultWait));
-        }
-
-
-    }
 
 
     private bool slideFinished = true;
@@ -52,11 +54,28 @@ public class Slide : MonoBehaviour
 
         yield return new WaitForSeconds(wait);
 
-        movement.MyMovePositionWithoutY_Axis(targetPosition, velocityMagnitude);
+        MyMovePosition(targetPosition, velocityMagnitude);
 
         slideFinished = true;
 
     }
+
+
+    public void MyMovePosition(Vector3 position, float speed)
+    {
+
+        if (transform.position != position)
+        {
+            Vector3 directionVector = position - transform.position;
+            directionVector = directionVector.normalized;
+            directionVector.y = 0;
+            speed = Mathf.Clamp(speed, 0, Vector3.Distance(position, transform.position));
+            rb.velocity = directionVector * speed;
+        }
+
+
+    }
+
 
 
 }

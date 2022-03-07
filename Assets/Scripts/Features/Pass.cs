@@ -6,15 +6,20 @@ using UnityEngine;
 [RequireComponent(typeof(BallVision))]
 public class Pass : MonoBehaviour
 {
+
+    [SerializeField]
+    private float passPower;
+
     public Ball ball;
 
     private BallVision ballVision;
+
+    private Inputter inputter;
 
     [SerializeField]
     private float cooldownTimePass = 500f;
     private CooldownManualReset cooldownForPass;
 
-    private static float defaultWait = 0.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -22,26 +27,21 @@ public class Pass : MonoBehaviour
         ball = Ball.Instance;
         ballVision = GetComponent<BallVision>();
         cooldownForPass = new CooldownManualReset(cooldownTimePass);
+        inputter = GetComponent<Inputter>();
     }
 
+    private void Update()
+    {
+        if (inputter.GetButtonPassValue() > 0)
+            Pass_(new Vector3(0,0,0),0.3f);
+    }
 
-    public void Pass_(Vector3 targetPosition, float velocityMagnitude, float wait)
+    private void Pass_(Vector3 targetPosition, float wait)
     {
 
         if (cooldownForPass.TimeOver() &&passFinished && ball.IsOwner(gameObject))
         {
-            StartCoroutine(Pass__(targetPosition, velocityMagnitude, wait));
-        }
-
-
-    }
-
-    public void Pass_(Vector3 targetPosition, float velocityMagnitude)
-    {
-
-        if (cooldownForPass.TimeOver() && passFinished && ball.IsOwner(gameObject))
-        {
-            StartCoroutine(Pass__(targetPosition, velocityMagnitude, defaultWait));
+            StartCoroutine(Pass__(targetPosition, wait));
         }
 
 
@@ -49,14 +49,14 @@ public class Pass : MonoBehaviour
 
 
     private bool passFinished = true;
-    private IEnumerator Pass__(Vector3 targetPosition, float velocityMagnitude, float wait)
+    private IEnumerator Pass__(Vector3 targetPosition, float wait)
     {
 
         passFinished = false;
         ballVision.CooldownWaitToTakeBall.ResetTimer();
         yield return new WaitForSeconds(wait);
         ball.RemoveOwner(gameObject);
-        ball.Movement.MyMovePosition(targetPosition, velocityMagnitude);
+        ball.MyMovePosition(targetPosition, passPower);
         cooldownForPass.ResetTimer();
 
         passFinished = true;

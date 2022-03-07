@@ -284,12 +284,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cfed108d461ddf46a8d491998a112a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRadius: 3.2
+  visionRadius: 3.5
   visionAngle: 90
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  cdToTakeBall: 1500
+  cdToTakeBall: 700
   ballTransform: {fileID: 0}
 --- !u!114 &3367045065215517338
 MonoBehaviour:
@@ -372,9 +372,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 0
-  shootPower: 15
-  passPower: 30
+  shootPower: 30
+  passPower: 25
   slidePower: 50
   dribblingSpeed: 18
   spinSpeed: 0
-  teammate: {fileID: 5586862633541110992, guid: 566be08ff381ace43abb0348fc44081d, type: 3}
+  teammate: {fileID: 7338323871751381005, guid: 566be08ff381ace43abb0348fc44081d, type: 3}
