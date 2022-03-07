@@ -7,7 +7,7 @@ using UnityEngine;
 public class Gravity : MonoBehaviour
 {
 
-    public static readonly float GLOBAL_GRAVITY = 1.5f;
+    public static readonly float GLOBAL_GRAVITY = 1.7f;
 
     [SerializeField]
     private float localGravity;

@@ -10,20 +10,23 @@ public class Dribbling : MonoBehaviour
     private Ball ball;
     private Movement movement;
 
-    [SerializeField]
-    private float minDistanceToAddForce = 2.7f;
+
+    private static float minDistanceToAddForce = 2.7f;
+
+
+    private static float defaultMinDistance = 2.2f;
 
     [SerializeField]
-    private float cooldownDribbling = 100f;
+    private float cooldownDribbling = 300f;
 
-    private Cooldown cooldownToDribbling;
+    private CooldownManualReset cooldownToDribbling;
 
     private void Start()
     {
         ball = Ball.Instance;
         movement = GetComponent<Movement>();
 
-        cooldownToDribbling = new Cooldown(cooldownDribbling);
+        cooldownToDribbling = new CooldownManualReset(cooldownDribbling);
 
     }
 
@@ -42,6 +45,7 @@ public class Dribbling : MonoBehaviour
 
     }
 
+
     private void SpinForBall()
     {
 
@@ -56,14 +60,19 @@ public class Dribbling : MonoBehaviour
 
 
     
-    public void Dribbling_(Vector3 vector3, float distanceWithOwner)
+    public void GiveForceTheBall(Vector3 vector3, float distanceWithOwner)
     {
-        if (cooldownToDribbling.Ready())
+        if (cooldownToDribbling.TimeOver())
         {
+
             if (distanceWithOwner < minDistanceToAddForce)
             {
                 ball.Movement.GiveForce(vector3);
-                 ball.Movement.GiveVelocity(vector3.normalized);
+                
+                if(ball.GetVelocity().magnitude < 16f)
+                    ball.Movement.GiveVelocity(vector3.normalized*4f);
+                
+                cooldownToDribbling.ResetTimer();
             }
                 
 
@@ -71,21 +80,36 @@ public class Dribbling : MonoBehaviour
 
     }
 
-    public void StopTheBall()
+    public void SlowDownTheBall()
     {
+        if (ball.Movement.GetVelocity().sqrMagnitude < 4f)
+            return;
 
-        if(Vector3.Distance(transform.position, ball.transform.position) <= minDistanceToAddForce)
-            ball.Movement.SetVelocityWithoutY(Vector3.zero);
-        else if(Time.frameCount % 5 == 0)
+        if(Time.frameCount % 5 == 0)
             ball.Movement.SetVelocityWithoutY(ball.Movement.GetVelocity() / 1.2f);
 
-        movement.SetVelocity(Vector3.zero);
+
     }
 
     public void CloseDistanceWithBall(float minDistance,float speed)
     {
 
         if (minDistance < Vector3.Distance(transform.position, ball.transform.position))
+        {
+            movement.MyMovePositionWithoutY_Axis(ball.transform.position, speed); // speed must be linear with distance
+        }
+        else
+        {
+            movement.SetVelocityWithoutY(Vector3.zero);
+        }
+
+    }
+
+    
+    public void CloseDistanceWithBall(float speed)
+    {
+
+        if (defaultMinDistance < Vector3.Distance(transform.position, ball.transform.position))
         {
             movement.MyMovePositionWithoutY_Axis(ball.transform.position, speed); // speed must be linear with distance
         }

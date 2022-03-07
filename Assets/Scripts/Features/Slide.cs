@@ -10,7 +10,7 @@ public class Slide : MonoBehaviour
     private Ball ball;
     private Movement movement;
 
-
+    private static float defaultWait = 0.1f;
 
     private void Start()
     {
@@ -25,6 +25,19 @@ public class Slide : MonoBehaviour
         if (slideFinished && !ball.IsOwner(gameObject))
         {
             StartCoroutine(Slide__(targetPosition, velocityMagnitude, wait));
+        }
+
+
+    }
+
+
+    public void Slide_(Vector3 targetPosition, float velocityMagnitude)
+    {
+
+
+        if (slideFinished && !ball.IsOwner(gameObject))
+        {
+            StartCoroutine(Slide__(targetPosition, velocityMagnitude, defaultWait));
         }
 
 

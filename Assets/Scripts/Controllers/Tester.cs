@@ -68,7 +68,7 @@ public class Tester : MonoBehaviour
 
             if (inputVertical == 0 && inputHorizotal == 0)
             {
-                dribbling.StopTheBall();
+                dribbling.SlowDownTheBall();
                 dribbling.CloseDistanceWithBall(2.7f, 14f);
             }
             else
@@ -78,7 +78,7 @@ public class Tester : MonoBehaviour
                 //vector3 = vector3.normalized;
                 
 
-                dribbling.Dribbling_(vector3 * 50, Vector3.Distance(transform.position, ball.transform.position));
+                dribbling.GiveForceTheBall(vector3 * 50, Vector3.Distance(transform.position, ball.transform.position));
                 dribbling.CloseDistanceWithBall(2.2f, 14f);
             }
 

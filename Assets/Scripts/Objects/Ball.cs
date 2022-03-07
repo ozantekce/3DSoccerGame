@@ -35,37 +35,49 @@ public class Ball : MonoBehaviour
     }
 
 
-    private List<GameObject> owners;
+    //private List<GameObject> owners;
+
+    private GameObject owner;
 
     public void AddOwner(GameObject gameObject)
     {
 
+        owner = gameObject;
+
+        /*
         if (!owners.Contains(gameObject))
         {
             owners.Add(gameObject);
-        }
+        }*/
 
     }
 
 
     public void RemoveOwner(GameObject gameObject)
     {
-
+        if(owner == gameObject)
+            owner = null;
+        /*
         if (owners.Contains(gameObject))
         {
             owners.Remove(gameObject);
-        }
+        }*/
 
     }
 
     public bool IsOwner(GameObject gameObject)
     {
-        return owners.Contains(gameObject);
+        return owner == gameObject;
+        //return owners.Contains(gameObject);
     }
 
     public float CountOfOwners()
     {
-        return owners.Count;
+        if (owner == null)
+            return 0;
+        else
+            return 1;
+        //return owners.Count;
     }
 
     //public GameObject owner;
@@ -76,7 +88,7 @@ public class Ball : MonoBehaviour
     private void Start()
     {
 
-        owners = new List<GameObject>();
+        //owners = new List<GameObject>();
         movement = GetComponent<Movement>();
         cooldownToSetVelocity = new Cooldown(100f);
 
@@ -102,14 +114,20 @@ public class Ball : MonoBehaviour
     private void RemoveFarOwners()
     {
 
+        if(owner != null)
+            if (DistanceWithOwner(owner) > maxDistanceWithOwner)
+            {
+                RemoveOwner(owner);
+            }
 
+        /*
         foreach (GameObject owner in owners)
         {
             if (DistanceWithOwner(owner) > maxDistanceWithOwner)
             {
                 RemoveOwner(owner);
             }
-        }
+        }*/
 
     }
 
