@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BallVision))]
 [AddComponentMenu("Features/Slide")]
 public class Slide : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Slide : MonoBehaviour
     private Ball ball;
 
     private Inputter inputter;
+    private BallVision ballVision;
     private Rigidbody rb;
 
 
@@ -34,7 +36,7 @@ public class Slide : MonoBehaviour
     {
 
 
-        if (slideFinished && !ball.IsOwner(gameObject))
+        if (slideFinished && !ballVision.IsThereBallInVision())
         {
             StartCoroutine(Slide__(targetPosition, slidePower, wait));
         }

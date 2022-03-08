@@ -2397,7 +2397,20 @@ GameObject:
   m_Component:
   - component: {fileID: 7395976739579142795}
   - component: {fileID: 3477875659019614449}
-  m_Layer: 0
+  - component: {fileID: 919132149419997364}
+  - component: {fileID: 919132149419997363}
+  - component: {fileID: 2395704765826132246}
+  - component: {fileID: 919132149419997361}
+  - component: {fileID: 919132149419997362}
+  - component: {fileID: 919132149419997365}
+  - component: {fileID: 919132149419997366}
+  - component: {fileID: 919132149419997367}
+  - component: {fileID: 919132149419997368}
+  - component: {fileID: 919132149419997369}
+  - component: {fileID: 919132149419997370}
+  - component: {fileID: 919132149419997371}
+  - component: {fileID: 919132149419997384}
+  m_Layer: 7
   m_Name: Player_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2436,7 +2449,7 @@ Animator:
   m_GameObject: {fileID: 7919607450290550833}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 91024b6f3300bcc4a84a804654361722, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6e1b72310c5c2dc42bf6c4d91892cb2b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2445,6 +2458,209 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &919132149419997364
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.8289565
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8751969, z: 0}
+--- !u!54 &919132149419997363
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  serializedVersion: 2
+  m_Mass: 50
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &2395704765826132246
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.8289565
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8751969, z: 0}
+--- !u!114 &919132149419997361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7171da4caaedb4498ab07e2f7b5e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensivity: 0.01
+  buttonLeftKeyboard: 97
+  buttonRightKeyboard: 100
+  buttonUpKeyboard: 119
+  buttonDownKeyboard: 115
+  buttonShootKeyboard: 106
+  buttonPassKeyboard: 107
+  buttonSlideKeyboard: 108
+  buttonRunKeyboard: 118
+  buttonJumpKeyboard: 32
+--- !u!114 &919132149419997362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3edda3ebb153be34ba08c64863b7868b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onGround: 1
+  movementSpeed: 15
+  spinSpeed: 500
+--- !u!114 &919132149419997365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd38afbe0db1a344abd73518b0f5b148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slidePower: 20
+--- !u!114 &919132149419997366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1f85533081df94bac94d95e641facd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 0}
+  shootPower: 20
+  cooldownTimeShoot: 500
+--- !u!114 &919132149419997367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f64ab334884d684ca190536b2cbecf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passPower: 20
+  ball: {fileID: 0}
+  cooldownTimePass: 500
+--- !u!114 &919132149419997368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae8a1cea314ac54aaaef3eebf806dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localGravity: 0
+  gravityType: 0
+--- !u!114 &919132149419997369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f9388536fac6b4486a09c4d60e9a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onGround: 1
+  jumpPower: 10
+  cdJump: 500
+--- !u!114 &919132149419997370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7a4355f075aee4c9e7686443d66a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistanceWithBall: 1
+  speed: 14
+  hitPower: 17
+  minDistanceToHit: 1.5
+  delayToHit: 0
+  spinSpeed: 500
+  slightGap: 1
+--- !u!114 &919132149419997371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cfed108d461ddf46a8d491998a112a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionRadius: 3
+  visionAngle: 60
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  cdToTakeBall: 1000
+  ballTransform: {fileID: 0}
+--- !u!114 &919132149419997384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919607450290550833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb6156369e0e82448e25d6846312454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7993832950497416400
 GameObject:
   m_ObjectHideFlags: 0

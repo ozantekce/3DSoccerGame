@@ -14,14 +14,19 @@ public class Movement : MonoBehaviour
 
     private Inputter inputter;
 
+    private AnimationControl animationControl;
+
     private Rigidbody rb;
 
+    private BallVision ballVision;
+    
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         inputter = GetComponent<Inputter>();
-
+        ballVision = GetComponent<BallVision>();
+        animationControl = GetComponent<AnimationControl>();
     }
 
     private void Update()
@@ -32,8 +37,9 @@ public class Movement : MonoBehaviour
             float inputVertical = -inputter.GetJoyStickVerticalValueRaw();
             float inputHorizontal = inputter.GetJoyStickHorizontalValueRaw();
             
-            if(onGround && !Ball.Instance.IsOwner(gameObject))
+            if(onGround && !ballVision.IsThereBallInVision())
                 Movement_(inputVertical,inputHorizontal);
+
         }
 
 
@@ -44,42 +50,24 @@ public class Movement : MonoBehaviour
     {
         Vector3 directionVector = new Vector3(inputVertical, 0, inputHorizontal).normalized;
 
+        if(directionVector == Vector3.zero)
+        {
+
+        }
+        else
+        {
+            animationControl.ChangeAnimation("Run");
+        }
+
         directionVector *= movementSpeed;
         directionVector.y = rb.velocity.y;
         rb.velocity = directionVector ;
+        
         Spin(inputVertical,inputHorizontal);
 
 
     }
 
-
-    public void MyMovePosition(Vector3 position, float speed)
-    {
-
-        if (transform.position != position)
-        {
-            Vector3 directionVector = position - transform.position;
-            directionVector = directionVector.normalized;
-            rb.velocity = directionVector * speed;
-
-        }
-
-    }
-
-    public void MyMovePositionWithoutY_Axis(Vector3 position, float speed)
-    {
-
-        if (transform.position != position)
-        {
-            Vector3 directionVector = position - transform.position;
-            directionVector = directionVector.normalized;
-            directionVector.y = 0;
-            rb.velocity = directionVector * speed;
-
-        }
-
-
-    }
 
 
 

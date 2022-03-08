@@ -16,10 +16,14 @@ public class Pass : MonoBehaviour
     private BallVision ballVision;
 
     private Inputter inputter;
+    private AnimationControl animationControl;
+
 
     [SerializeField]
     private float cooldownTimePass = 500f;
     private CooldownManualReset cooldownForPass;
+
+
 
 
     // Start is called before the first frame update
@@ -29,6 +33,7 @@ public class Pass : MonoBehaviour
         ballVision = GetComponent<BallVision>();
         cooldownForPass = new CooldownManualReset(cooldownTimePass);
         inputter = GetComponent<Inputter>();
+        animationControl = GetComponent<AnimationControl>();
     }
 
     private void Update()
@@ -40,7 +45,7 @@ public class Pass : MonoBehaviour
     private void Pass_(Vector3 targetPosition, float wait)
     {
 
-        if (cooldownForPass.TimeOver() &&passFinished && ball.IsOwner(gameObject))
+        if (cooldownForPass.TimeOver() &&passFinished && ballVision.IsThereBallInVision())
         {
             StartCoroutine(Pass__(targetPosition, wait));
         }
@@ -54,9 +59,9 @@ public class Pass : MonoBehaviour
     {
 
         passFinished = false;
+        animationControl.ChangeAnimation("Pass");
         ballVision.CooldownWaitToTakeBall.ResetTimer();
         yield return new WaitForSeconds(wait);
-        ball.RemoveOwner(gameObject);
         ball.MyMovePosition(targetPosition, passPower);
         cooldownForPass.ResetTimer();
 

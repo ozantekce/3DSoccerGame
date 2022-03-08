@@ -21,7 +21,10 @@ public class BallVision : MonoBehaviour
 
     public Transform ballTransform;
 
-
+    public bool IsThereBallInVision()
+    {
+        return ballTransform != null;
+    }
 
     void Start()
     {
@@ -67,8 +70,6 @@ public class BallVision : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, distanceToTarget, obstacleMask))
                 {
                     ballTransform = target;
-
-                    Ball.Instance.SetOwner(gameObject);
 
                 }
 

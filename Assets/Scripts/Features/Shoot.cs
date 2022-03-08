@@ -25,6 +25,7 @@ public class Shoot : MonoBehaviour
     private float cooldownTimeShoot = 500f;
     private CooldownManualReset cooldownForShoot;
 
+    private AnimationControl animationControl;
 
 
     // Start is called before the first frame update
@@ -34,7 +35,7 @@ public class Shoot : MonoBehaviour
         ballVision = GetComponent<BallVision>();
         inputter = GetComponent<Inputter>();
         cooldownForShoot = new CooldownManualReset(cooldownTimeShoot);
-
+        animationControl = GetComponent<AnimationControl>();
     }
 
     private void Update()
@@ -49,7 +50,7 @@ public class Shoot : MonoBehaviour
     private void Shoot_(float wait)
     {
         
-        if (cooldownForShoot.TimeOver() && shootFinished && ball.IsOwner(gameObject))
+        if (cooldownForShoot.TimeOver() && shootFinished && ballVision.IsThereBallInVision())
         {
             StartCoroutine(Shoot__(inputter.GetButtonShootValue() * shootPower * (transform.forward + new Vector3(0, 0.4f, 0)), wait));
         }
@@ -63,10 +64,9 @@ public class Shoot : MonoBehaviour
     {   
 
         shootFinished = false;
+        animationControl.ChangeAnimation("Shoot");
         ballVision.CooldownWaitToTakeBall.ResetTimer();
         yield return new WaitForSeconds(wait);
-
-        ball.RemoveOwner(gameObject);
 
         ball.Rb.velocity += velocity;
 

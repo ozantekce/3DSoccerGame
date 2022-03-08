@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("Features/Dribbling")]
+[RequireComponent(typeof(BallVision))]
 public class Dribbling : MonoBehaviour
 {
 
@@ -11,20 +12,23 @@ public class Dribbling : MonoBehaviour
     private Rigidbody rb;
 
     private Inputter inputter;
+    private BallVision ballVision;
+
+    private AnimationControl animationControl;
 
     [SerializeField]
-    private float minDistanceWithBall, speed , hitPower;
+    private float minDistanceWithBall, speed, hitPower, minDistanceToHit, delayToHit;
 
     private void Start()
     {
 
         ball = Ball.Instance;
         rb = GetComponent<Rigidbody>();
-        cooldownHit = new CooldownManualReset(cdHit);
         inputter = GetComponent<Inputter>();
-
-        cd1 = new Cooldown(500);
-        cd2 = new Cooldown(500);
+        ballVision = GetComponent<BallVision>();
+        animationControl = GetComponent<AnimationControl>();
+        cooldownForVertivalHit = new Cooldown(delayToHit);
+        cooldownForHorizontalHit = new Cooldown(delayToHit);
 
     }
 
@@ -32,87 +36,50 @@ public class Dribbling : MonoBehaviour
     private void Update()
     {
 
-        if (ball.IsOwner(this.gameObject))
+        if (ballVision.IsThereBallInVision())
         {
             HitTheBall();
 
             CloseDistanceWithBall();
 
             Spin();
+            
         }
 
 
     }
 
 
-    [SerializeField]
-    private float minDistanceToHit =2.5f;
-    private float cdHit = 200f;
-    private CooldownManualReset cooldownHit;
-    public void HitTheBall2()
-    {
 
-        
-
-        float distanceWithBall = Vector3.Distance(transform.position, ball.transform.position);
-
-        if ( distanceWithBall <= minDistanceToHit && cooldownHit.TimeOver())
-        {
-            float inputVertical = -inputter.GetJoyStickVerticalValueRaw();
-            float inputHorizontal = inputter.GetJoyStickHorizontalValueRaw();
-            Vector3 directionVector = new Vector3(inputVertical, 0, inputHorizontal).normalized;
-
-            ball.Rb.velocity = directionVector * hitPower;
-            cooldownHit.ResetTimer();
-        }
-
-    }
-
-
-
-
-
-    private Cooldown cd1;
-    private Cooldown cd2;
+    private Cooldown cooldownForVertivalHit;
+    private Cooldown cooldownForHorizontalHit;
     private void HitTheBall()
     {
-
         float inputVertical = -inputter.GetJoyStickVerticalValueRaw();
         float inputHorizontal = inputter.GetJoyStickHorizontalValueRaw();
-
         float distanceWithBall = Vector3.Distance(transform.position, ball.transform.position);
 
-        
-
-        if (distanceWithBall <= minDistanceToHit && inputVertical !=  0)
+        if (distanceWithBall <= minDistanceToHit)
         {
-
-            if (cd1.Ready())
+            if (inputVertical != 0 && cooldownForVertivalHit.Ready())
             {
-
-                    Vector3 directionVector = new Vector3(inputVertical, 0, 0).normalized;
-                    directionVector *= hitPower;
-                    directionVector.y = ball.Rb.velocity.y;
-                    directionVector.z = ball.Rb.velocity.z/2;
-                    ball.Rb.velocity = directionVector;
-
+                Vector3 directionVector = new Vector3(inputVertical, 0, 0).normalized;
+                directionVector *= hitPower;
+                directionVector.y = ball.Rb.velocity.y;
+                directionVector.z = ball.Rb.velocity.z/2;
+                ball.Rb.velocity = directionVector;
+            }
+            if (inputHorizontal != 0 && cooldownForHorizontalHit.Ready())
+            {
+                Vector3 directionVector = new Vector3(0, 0, inputHorizontal).normalized;
+                directionVector *= hitPower;
+                directionVector.x = ball.Rb.velocity.x / 2;
+                directionVector.y = ball.Rb.velocity.y;
+                ball.Rb.velocity = directionVector;
             }
 
         }
 
-        if(distanceWithBall <= minDistanceToHit && inputHorizontal != 0)
-        {
-            if (cd2.Ready())
-            {
-                
-                    Vector3 directionVector = new Vector3(0, 0, inputHorizontal).normalized;
-                    directionVector *= hitPower;
-                    directionVector.x = ball.Rb.velocity.x/2;
-                    directionVector.y = ball.Rb.velocity.y;
-                    ball.Rb.velocity = directionVector;
-            }
-
-        }
 
         Vector3 temp = ball.Rb.velocity;
         temp.y = 0;
@@ -129,36 +96,27 @@ public class Dribbling : MonoBehaviour
 
     public void CloseDistanceWithBall()
     {
-        float inputVertical = -inputter.GetJoyStickVerticalValueRaw();
-        float inputHorizontal = inputter.GetJoyStickHorizontalValueRaw();
-        if (inputHorizontal == 0 && inputVertical == 0)
-            return;
-        if (minDistanceWithBall < Vector3.Distance(transform.position, ball.transform.position))
-        {
-            MyMovePosition(ball.transform.position, speed); // speed must be linear with distance
-        }
+
+        Vector3 directionVector = ball.transform.position - transform.position;
+        directionVector = directionVector.normalized;
 
 
-    }
+        float tempSpeed = speed;
+        float distanceWithBall = Vector3.Distance(transform.position, ball.transform.position);
 
 
-    public void MyMovePosition(Vector3 position, float speed)
-    {
+        tempSpeed *= (distanceWithBall - minDistanceWithBall)*5;
 
-        if (transform.position != position)
-        {
-            Vector3 directionVector = position - transform.position;
-            directionVector = directionVector.normalized;
-            directionVector.y = 0;
 
-            speed *= (Vector3.Distance(position, transform.position)-minDistanceWithBall);
-            speed = Mathf.Clamp(speed, 0, 15);
-            if (speed < 0)
-                return;
+        tempSpeed = Mathf.Clamp(tempSpeed, 0, speed);
 
-            rb.velocity = directionVector * speed;
-        }
+        directionVector *= tempSpeed;
+        directionVector.y = rb.velocity.y;
 
+        rb.velocity = directionVector;
+
+        if(directionVector.magnitude>2f)
+            animationControl.ChangeAnimation("Run");
 
     }
 
