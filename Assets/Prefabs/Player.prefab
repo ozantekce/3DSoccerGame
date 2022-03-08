@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 7071135322964596181}
   - component: {fileID: 6276334659318008929}
   - component: {fileID: 7714903715997275839}
-  - component: {fileID: 2556217445935901528}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -136,10 +135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3edda3ebb153be34ba08c64863b7868b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  includeY_axisForMaxVelocity: 0
-  maxVelocity: 50
+  onGround: 1
+  movementSpeed: 15
   spinSpeed: 500
-  slightGap: 10
 --- !u!114 &8819680725017085517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
-  maxShootMagnitude: 100
+  shootPower: 20
   cooldownTimeShoot: 500
 --- !u!114 &9021165592666538559
 MonoBehaviour:
@@ -190,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visionRadius: 3.2
-  visionAngle: 90
+  visionAngle: 110
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
@@ -208,7 +206,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7a4355f075aee4c9e7686443d66a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownDribbling: 50
+  minDistanceWithBall: 2
+  speed: 16
+  hitPower: 13
+  minDistanceToHit: 2.7
+  spinSpeed: 500
+  slightGap: 1
 --- !u!114 &339597957072696899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,8 +225,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onGround: 1
-  maxJumpMagnitude: 0
-  cooldownTimePass: 500
+  jumpPower: 10
+  cdJump: 500
 --- !u!114 &7071135322964596181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f64ab334884d684ca190536b2cbecf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passPower: 0
   ball: {fileID: 0}
   cooldownTimePass: 500
 --- !u!114 &6276334659318008929
@@ -250,6 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd38afbe0db1a344abd73518b0f5b148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slidePower: 0
 --- !u!114 &7714903715997275839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,25 +269,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localGravity: 0
   gravityType: 0
---- !u!114 &2556217445935901528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8819680725017085621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3991485e00ccfbd429bf78bbdeef2ead, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 12
-  shootPower: 15
-  passPower: 30
-  slidePower: 50
-  dribblingSpeed: 18
-  spinSpeed: 500
-  teammate: {fileID: 0}
 --- !u!1 &8819680725043927644
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +296,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8819680725043927644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.58}
+  m_LocalPosition: {x: 0, y: 0, z: 1.35}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 8819680725017085618}

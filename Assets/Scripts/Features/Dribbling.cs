@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[AddComponentMenu("Features/Dribbling")]
 public class Dribbling : MonoBehaviour
 {
 
@@ -22,6 +22,9 @@ public class Dribbling : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         cooldownHit = new CooldownManualReset(cdHit);
         inputter = GetComponent<Inputter>();
+
+        cd1 = new Cooldown(500);
+        cd2 = new Cooldown(500);
 
     }
 
@@ -46,8 +49,11 @@ public class Dribbling : MonoBehaviour
     private float minDistanceToHit =2.5f;
     private float cdHit = 200f;
     private CooldownManualReset cooldownHit;
-    public void HitTheBall()
+    public void HitTheBall2()
     {
+
+        
+
         float distanceWithBall = Vector3.Distance(transform.position, ball.transform.position);
 
         if ( distanceWithBall <= minDistanceToHit && cooldownHit.TimeOver())
@@ -61,6 +67,64 @@ public class Dribbling : MonoBehaviour
         }
 
     }
+
+
+
+
+
+    private Cooldown cd1;
+    private Cooldown cd2;
+    private void HitTheBall()
+    {
+
+        float inputVertical = -inputter.GetJoyStickVerticalValueRaw();
+        float inputHorizontal = inputter.GetJoyStickHorizontalValueRaw();
+
+        float distanceWithBall = Vector3.Distance(transform.position, ball.transform.position);
+
+        
+
+        if (distanceWithBall <= minDistanceToHit && inputVertical !=  0)
+        {
+
+            if (cd1.Ready())
+            {
+
+                    Vector3 directionVector = new Vector3(inputVertical, 0, 0).normalized;
+                    directionVector *= hitPower;
+                    directionVector.y = ball.Rb.velocity.y;
+                    directionVector.z = ball.Rb.velocity.z/2;
+                    ball.Rb.velocity = directionVector;
+
+            }
+
+        }
+
+        if(distanceWithBall <= minDistanceToHit && inputHorizontal != 0)
+        {
+            if (cd2.Ready())
+            {
+                
+                    Vector3 directionVector = new Vector3(0, 0, inputHorizontal).normalized;
+                    directionVector *= hitPower;
+                    directionVector.x = ball.Rb.velocity.x/2;
+                    directionVector.y = ball.Rb.velocity.y;
+                    ball.Rb.velocity = directionVector;
+            }
+
+        }
+
+        Vector3 temp = ball.Rb.velocity;
+        temp.y = 0;
+        temp = Vector3.ClampMagnitude(temp, hitPower);
+        temp.y = ball.Rb.velocity.y;
+
+        ball.Rb.velocity = temp;
+        
+
+    }
+
+
 
 
     public void CloseDistanceWithBall()
@@ -88,7 +152,7 @@ public class Dribbling : MonoBehaviour
             directionVector.y = 0;
 
             speed *= (Vector3.Distance(position, transform.position)-minDistanceWithBall);
-
+            speed = Mathf.Clamp(speed, 0, 15);
             if (speed < 0)
                 return;
 
@@ -97,6 +161,10 @@ public class Dribbling : MonoBehaviour
 
 
     }
+
+
+
+
 
 
     private float spinValue;
@@ -149,8 +217,6 @@ public class Dribbling : MonoBehaviour
     }
 
     private Vector3 angles;
-
-
 
     private static float CalculateAngle(Vector2 vector)
     {

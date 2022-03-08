@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(BallVision))]
+[AddComponentMenu("Features/Pass")]
 public class Pass : MonoBehaviour
 {
 

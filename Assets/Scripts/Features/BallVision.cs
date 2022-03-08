@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[AddComponentMenu("Features/BallVision")]
 public class BallVision : MonoBehaviour
 {
 

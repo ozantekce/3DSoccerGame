@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
+[AddComponentMenu("Features/Gravity")]
 public class Gravity : MonoBehaviour
 {
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[AddComponentMenu("Features/Movement")]
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {

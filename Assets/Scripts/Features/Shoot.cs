@@ -5,6 +5,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(BallVision))]
+[AddComponentMenu("Features/Shoot")]
 public class Shoot : MonoBehaviour
 {
 

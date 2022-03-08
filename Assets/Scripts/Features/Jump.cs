@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
+[AddComponentMenu("Features/Jump")]
 public class Jump : MonoBehaviour
 {
 

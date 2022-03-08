@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[AddComponentMenu("Features/Slide")]
 public class Slide : MonoBehaviour
 {
 
