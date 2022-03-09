@@ -20,6 +20,7 @@ public class Slide : MonoBehaviour
     [SerializeField]
     private float cooldownTimeSlide = 700f;
     private CooldownManualReset cooldownForSlide;
+    
 
     private void Start()
     {

@@ -1,6 +1,6 @@
 # ComputerGraphicsProject
 
-TODO
+DONE
 	Some features added : 
 		Dribbling
 		Jump
@@ -13,7 +13,7 @@ DOING
 	Bug fixing
 
 
-DONE
+TODO
 	Animations
 
 

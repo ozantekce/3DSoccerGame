@@ -2537,6 +2537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slidePower: 20
+  cooldownTimeSlide: 700
 --- !u!114 &919132149419997366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2608,10 +2609,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7a4355f075aee4c9e7686443d66a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistanceWithBall: 1
+  minDistanceWithBall: 1.8
   speed: 14
   hitPower: 17
-  minDistanceToHit: 1.5
+  minDistanceToHit: 2
   delayToHit: 0
   spinSpeed: 500
   slightGap: 1
