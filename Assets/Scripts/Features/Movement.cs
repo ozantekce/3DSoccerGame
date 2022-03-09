@@ -19,7 +19,8 @@ public class Movement : MonoBehaviour
     private Rigidbody rb;
 
     private BallVision ballVision;
-    
+
+    private Slide slide;
 
     void Start()
     {
@@ -27,6 +28,9 @@ public class Movement : MonoBehaviour
         inputter = GetComponent<Inputter>();
         ballVision = GetComponent<BallVision>();
         animationControl = GetComponent<AnimationControl>();
+
+        slide = GetComponent<Slide>();
+
     }
 
     private void Update()
@@ -50,9 +54,15 @@ public class Movement : MonoBehaviour
     {
         Vector3 directionVector = new Vector3(inputVertical, 0, inputHorizontal).normalized;
 
-        if(directionVector == Vector3.zero)
+        if (!slide.CooldownForSlide.TimeOver())
+        {
+            return;
+        }
+
+        if (directionVector == Vector3.zero)
         {
 
+                
         }
         else
         {

@@ -65,9 +65,10 @@ public class Shoot : MonoBehaviour
 
         shootFinished = false;
         animationControl.ChangeAnimation("Shoot");
-        ballVision.CooldownWaitToTakeBall.ResetTimer();
-        yield return new WaitForSeconds(wait);
 
+        yield return new WaitForSeconds(wait);
+        ballVision.CooldownWaitToTakeBall.ResetTimer();
+        ballVision.ballTransform = null;
         ball.Rb.velocity += velocity;
 
         cooldownForShoot.ResetTimer();

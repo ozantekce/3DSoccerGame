@@ -105,8 +105,7 @@ public abstract class AnimationControl : MonoBehaviour
 
                 currentStatus = nextStatus;
                 startPlayTime = Time.realtimeSinceStartup;
-                
-                print(currentStatus.name);
+
                 //animator.Play(currentStatus.name);
                 if(!c_same)
                     animator.CrossFade(currentStatus.name,0.03f);

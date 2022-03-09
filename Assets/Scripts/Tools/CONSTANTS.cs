@@ -30,4 +30,19 @@ public static class CONSTANTS
     }
 
 
+    public static float Normalize_angle_to_pos_neg_180(float angle)
+    {
+
+        float result_angle = angle;
+
+        while (result_angle > 180)
+            result_angle -= 2 * 180;
+        while (result_angle < -180)
+            result_angle += 2 * 180;
+
+        return result_angle;
+
+
+    }
+
 }

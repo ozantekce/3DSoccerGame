@@ -586,6 +586,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 919132149419997370, guid: 5525217b73f25714b9ef5250197c9fe1, type: 3}
+      propertyPath: minDistanceToHit
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149419997370, guid: 5525217b73f25714b9ef5250197c9fe1, type: 3}
+      propertyPath: minDistanceWithBall
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2395704765826132246, guid: 5525217b73f25714b9ef5250197c9fe1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7395976739579142795, guid: 5525217b73f25714b9ef5250197c9fe1, type: 3}
       propertyPath: m_RootOrder
       value: 1

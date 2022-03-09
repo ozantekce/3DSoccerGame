@@ -59,9 +59,10 @@ public class Pass : MonoBehaviour
     {
 
         passFinished = false;
-        animationControl.ChangeAnimation("Pass");
-        ballVision.CooldownWaitToTakeBall.ResetTimer();
+        animationControl.ChangeAnimation("Shoot");
         yield return new WaitForSeconds(wait);
+        ballVision.CooldownWaitToTakeBall.ResetTimer();
+        ballVision.ballTransform = null;
         ball.MyMovePosition(targetPosition, passPower);
         cooldownForPass.ResetTimer();
 

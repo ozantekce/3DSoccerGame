@@ -20,7 +20,7 @@ public class PlayerAnimationControl : AnimationControl
         AnimationStatus run = new AnimationStatus();
         run.name = "Run";
         run.priority = 1;
-        run.minPlayTime = 10;
+        run.minPlayTime = -1;
         run.maxPlayTime = 100;
 
         AnimationStatus shoot = new AnimationStatus();
@@ -42,12 +42,26 @@ public class PlayerAnimationControl : AnimationControl
         run2.minPlayTime = 1000;
         run2.maxPlayTime = 1000;
 
+        AnimationStatus slide = new AnimationStatus();
+        slide.name = "Slide";
+        slide.priority = 5;
+        slide.minPlayTime = 1000;
+        slide.maxPlayTime = 1500;
+
+        AnimationStatus standUp = new AnimationStatus();
+        standUp.name = "StandUp";
+        standUp.priority = 5;
+        standUp.minPlayTime = 1000;
+        standUp.maxPlayTime = 1500;
+
 
         AddAnimationStatus(idle);
         AddAnimationStatus(run);
         AddAnimationStatus(shoot);
         AddAnimationStatus(pass);
         AddAnimationStatus(run2);
+        AddAnimationStatus(slide);
+        AddAnimationStatus(standUp);
 
 
         ChangeAnimation("Idle");

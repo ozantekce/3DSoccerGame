@@ -13,6 +13,7 @@ public class Dribbling : MonoBehaviour
 
     private Inputter inputter;
     private BallVision ballVision;
+    private Slide slide;
 
     private AnimationControl animationControl;
 
@@ -27,6 +28,7 @@ public class Dribbling : MonoBehaviour
         inputter = GetComponent<Inputter>();
         ballVision = GetComponent<BallVision>();
         animationControl = GetComponent<AnimationControl>();
+        slide = GetComponent<Slide>();
         cooldownForVertivalHit = new Cooldown(delayToHit);
         cooldownForHorizontalHit = new Cooldown(delayToHit);
 
@@ -38,6 +40,12 @@ public class Dribbling : MonoBehaviour
 
         if (ballVision.IsThereBallInVision())
         {
+
+            if (!slide.CooldownForSlide.TimeOver())
+            {
+                return;
+            }
+
             HitTheBall();
 
             CloseDistanceWithBall();

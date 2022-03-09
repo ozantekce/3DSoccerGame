@@ -65,7 +65,7 @@ public class Jump : MonoBehaviour
         yield return new WaitForSeconds(wait);
         
         rb.velocity = vector3;
-        print(rb.velocity);
+
         cooldownForJump.ResetTimer();
 
         jumpFinished = true;

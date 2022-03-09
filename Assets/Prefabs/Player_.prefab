@@ -2397,7 +2397,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7395976739579142795}
   - component: {fileID: 3477875659019614449}
-  - component: {fileID: 919132149419997364}
   - component: {fileID: 919132149419997363}
   - component: {fileID: 2395704765826132246}
   - component: {fileID: 919132149419997361}
@@ -2458,20 +2457,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &919132149419997364
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7919607450290550833}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.8289565
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.8751969, z: 0}
 --- !u!54 &919132149419997363
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2642,8 +2627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cfed108d461ddf46a8d491998a112a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRadius: 3
-  visionAngle: 60
+  visionRadius: 4
+  visionAngle: 180
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
