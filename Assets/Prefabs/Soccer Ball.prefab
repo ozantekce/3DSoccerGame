@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4962952929581770717}
   - component: {fileID: 4962952929581770528}
   - component: {fileID: 4962952929581770719}
-  - component: {fileID: 4962952929581770718}
   m_Layer: 6
   m_Name: Soccer Ball
   m_TagString: Ball
@@ -142,18 +141,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9a34571697b8b34e86101030c5dadb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4962952929581770718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4960987461964933136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3edda3ebb153be34ba08c64863b7868b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onGround: 1
-  movementSpeed: 0
-  spinSpeed: 500

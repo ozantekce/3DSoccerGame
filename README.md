@@ -19,4 +19,8 @@ TODO
 
 challenges: dribbling correctly
 
+FSM:
+![FSM_Player](FSM_Player.png)
+
+
 https://hunero.tinytake.com/df/123e442/thumbnail?type=attachments&version_no=0&file_version_no=0&thumbnail_size=preview

@@ -42,11 +42,32 @@ public class Ball : MonoBehaviour
     {
 
         rb = GetComponent<Rigidbody>();
-
+        cooldownToHit = new Cooldown(100f);
 
     }
 
 
+    private Cooldown cooldownToHit;
+    public void HitTheBall(float axisX, float axisZ ,float maxVel)
+    {
+
+
+
+        Vector3 targetVelocity = maxVel * new Vector3 (axisX, 0, axisZ).normalized;
+
+
+        Vector3 addVelocity = targetVelocity - rb.velocity;
+
+        if(addVelocity.magnitude > maxVel)
+        {
+            addVelocity = addVelocity.normalized*maxVel;
+        }
+
+        rb.velocity += addVelocity;
+
+
+
+    }
 
 
     public Vector3 GetVelocity()

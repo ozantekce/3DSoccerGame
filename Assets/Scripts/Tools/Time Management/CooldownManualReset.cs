@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// no auto reset
+///<summary>
+/// CooldownManualReset is look like Cooldown but it cannot reset timer automatic you must reset with Reset() method.
+///</summary>
 public class CooldownManualReset
 {
     private float cooldown;

@@ -20,6 +20,10 @@ public abstract class Inputter : MonoBehaviour
     
     protected float buttonJumpValue;
 
+    protected bool thereAreNoInputs;
+
+    public bool ThereAreNoInputs { get => thereAreNoInputs; set => thereAreNoInputs = value; }
+
     protected void Update()
     {
         Reader();
@@ -37,8 +41,12 @@ public abstract class Inputter : MonoBehaviour
         buttonShootValue = ReadOtherInputs(buttonShootValue, ShootButtonPressed(), sensivity);
         buttonPassValue = ReadOtherInputs(buttonPassValue, PassButtonPressed(), sensivity);
         buttonSlideValue = ReadOtherInputs(buttonSlideValue, SlideButtonPressed(), sensivity);
-        buttonRunValue = ReadOtherInputs(buttonRunValue, RunButtonPressed(), sensivity);
         buttonJumpValue = ReadOtherInputs(buttonJumpValue, JumpButtonPressed(), sensivity);
+        buttonRunValue = ReadOtherInputs(buttonRunValue, RunButtonPressed(), sensivity);
+
+        thereAreNoInputs = Vertical ==0 && Horizontal ==0 
+            && buttonShootValue==0 && buttonPassValue==0 &&
+            buttonSlideValue==0 && buttonJumpValue==0;
 
     }
 

@@ -16,14 +16,15 @@ public class Gravity : MonoBehaviour
     [SerializeField]
     private GravityType gravityType;
 
-    private enum GravityType
+    public enum GravityType
     {
         global, local
     }
 
     private Rigidbody rb;
 
-    private GravityType GravityType_ { get => gravityType; set => gravityType = value; }
+    public GravityType GravityType_ { get => gravityType; set => gravityType = value; }
+    public float LocalGravity { get => localGravity; set => localGravity = value; }
 
     void Start()
     {
