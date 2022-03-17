@@ -7,25 +7,24 @@ public class ShootState : PlayerState
 
     public static ShootState shootState = new ShootState();
 
-    public void Enter(Player player)
+    public void EnterTheState(Player player)
     {
-
-        player.CurrentAction = new ShootAction(player,null);
-        player.CurrentAction.StartAction();
+        player.ChangeCurrentAction(new ShootAction(player, null));
+        player.StartCurrentAction();
         player.ChangeAnimation("Shoot");
 
     }
 
-    public void Execute(Player player)
+    public void ExecuteTheState(Player player)
     {
 
         if (player.FallBySlide)
         {
             // ayaðýna kayýldý 
-            player.CurrentAction.StopAction();
+            player.StopCurrentAction();
             player.ChangeCurrentState(FallBySlideState.fallBySlideState);
         }
-        else if(player.CurrentAction!=null)
+        else if(!player.ActionsOver())
         {   
             // actionlar bitene kadar beklenir
 
@@ -45,7 +44,7 @@ public class ShootState : PlayerState
 
     }
 
-    public void Exit(Player player)
+    public void ExitTheState(Player player)
     {
         
     }
@@ -54,7 +53,7 @@ public class ShootState : PlayerState
     public class ShootAction : PlayerAction
     {
 
-        public ShootAction(Player player, PlayerAction nextAction) : base(player, nextAction, 300f, 300f)
+        public ShootAction(Player player, PlayerAction nextAction) : base(player, nextAction, 300f, 500f)
         {
         }
 
@@ -62,8 +61,7 @@ public class ShootState : PlayerState
         protected override void Action_()
         {
 
-            Debug.Log("shoot");
-            Player.BallVision.ballTransform = null;
+            //Debug.Log("shoot");
             Vector3 addVelocity
                 = (Player.Inputter.GetButtonShootValue()+0.3f) * Player.ShootPower
                 * (Player.transform.forward + new Vector3(0, 0.4f, 0));
@@ -71,6 +69,16 @@ public class ShootState : PlayerState
             Player.Ball.Rb.velocity += addVelocity;
 
 
+        }
+
+        protected override void BeforeAction()
+        {
+            //
+        }
+
+        protected override void AfterAction()
+        {
+            //
         }
 
 

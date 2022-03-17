@@ -7,19 +7,21 @@ public class FallBySlideState : PlayerState
 
     public static FallBySlideState fallBySlideState = new FallBySlideState();
 
-    public void Enter(Player player)
+    public void EnterTheState(Player player)
     {
-        player.CurrentAction = new FallBySlideAction(player, null);
-        player.CurrentAction.StartAction();
+        player.ChangeCurrentAction(new FallBySlideAction(player, null));
+        player.StartCurrentAction();
         player.ChangeAnimation("FallBySlide");
+
         player.GetComponent<Collider>().isTrigger = true;
         player.GetComponent<Gravity>().GravityType_ = Gravity.GravityType.local;
+
     }
 
-    public void Execute(Player player)
+    public void ExecuteTheState(Player player)
     {
 
-        if (player.CurrentAction != null)
+        if (!player.ActionsOver())
         {
             // actionlar bitene kadar beklenir
             
@@ -39,7 +41,7 @@ public class FallBySlideState : PlayerState
 
     }
 
-    public void Exit(Player player)
+    public void ExitTheState(Player player)
     {
 
         player.FallBySlide = false;
@@ -64,7 +66,15 @@ public class FallBySlideState : PlayerState
 
         }
 
+        protected override void AfterAction()
+        {
+            //
+        }
 
+        protected override void BeforeAction()
+        {
+            Player.Rb.velocity = Vector3.zero;
+        }
     }
 
 

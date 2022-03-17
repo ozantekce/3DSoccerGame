@@ -7,15 +7,15 @@ public class JumpState : PlayerState
 
     public static JumpState jumpState = new JumpState();
 
-    public void Enter(Player player)
+    public void EnterTheState(Player player)
     {
 
     }
 
-    public void Execute(Player player)
+    public void ExecuteTheState(Player player)
     {
 
-        if (player.CurrentAction != null)
+        if (!player.ActionsOver())
         {
             // actionlar bitene kadar beklenir
 
@@ -35,7 +35,7 @@ public class JumpState : PlayerState
 
     }
 
-    public void Exit(Player player)
+    public void ExitTheState(Player player)
     {
 
     }

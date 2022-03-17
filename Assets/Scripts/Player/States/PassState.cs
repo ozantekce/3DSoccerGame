@@ -7,24 +7,25 @@ public class PassState : PlayerState
 
     public static PassState passState = new PassState();
 
-    public void Enter(Player player)
+    public void EnterTheState(Player player)
     {
 
-        player.CurrentAction = new PassAction(player, null);
-        player.CurrentAction.StartAction();
+        player.ChangeCurrentAction(new PassAction(player, null));
+        player.StartCurrentAction();
         player.ChangeAnimation("Pass");
+
     }
 
-    public void Execute(Player player)
+    public void ExecuteTheState(Player player)
     {
 
         if (player.FallBySlide)
         {
             // ayaðýna kayýldý 
-            player.CurrentAction.StopAction();
+            player.StopCurrentAction();
             player.ChangeCurrentState(FallBySlideState.fallBySlideState);
         }
-        else if(player.CurrentAction != null)
+        else if(!player.ActionsOver())
         {
             // actionlar bitene kadar beklenir
 
@@ -44,7 +45,7 @@ public class PassState : PlayerState
 
     }
 
-    public void Exit(Player player)
+    public void ExitTheState(Player player)
     {
 
     }
@@ -64,19 +65,35 @@ public class PassState : PlayerState
             Debug.Log("pass");
             Player.BallVision.ballTransform = null;
 
-            Vector3 directionVector = passTargetPosition() - Player.Ball.transform.position;
+            Vector3 directionVector = PassTargetPosition() - Player.Ball.transform.position;
             directionVector = directionVector.normalized;
 
-            Player.Ball.Rb.velocity = directionVector * Player.PassPower* (Player.Inputter.GetButtonPassValue() + 0.5f);
+            Vector3 addVelocity
+                = (Player.Inputter.GetButtonShootValue() + 0.3f) * Player.ShootPower
+                * directionVector + new Vector3(0, 0.4f, 0);
 
+
+            Player.Ball.Rb.velocity += addVelocity;
 
         }
 
 
-        private Vector3 passTargetPosition()
+        protected override void BeforeAction()
+        {
+            
+        }
+
+        protected override void AfterAction()
+        {
+            
+
+        }
+
+        private Vector3 PassTargetPosition()
         {
             //en yakýn takým arkadaþýnýn ön tarafý olacak
             return Vector3.zero;
+
         }
 
 

@@ -16,6 +16,19 @@ public abstract class PlayerAction
     public float WaitBeforeAction { get => waitBeforeAction; set => waitBeforeAction = value; }
     public float WaitAfterAction { get => waitAfterAction; set => waitAfterAction = value; }
     public Player Player { get => player; set => player = value; }
+    public PlayerAction NextAction { get => nextAction;}
+
+    public void AddAction(PlayerAction action)
+    {
+        PlayerAction temp = this;
+        while(temp.nextAction != null)
+        {
+            temp = temp.nextAction;
+        }
+        temp.nextAction = action;
+
+    }
+
 
     public PlayerAction(Player player,PlayerAction nextAction, float waitBeforeAction, float waitAfterAction)
     {
@@ -41,22 +54,27 @@ public abstract class PlayerAction
 
     protected abstract void Action_();
 
+    protected abstract void BeforeAction();
+    protected abstract void AfterAction();
+
     private IEnumerator Action()
     {
 
         actionIsOver = false;
-
+        BeforeAction();
         yield return new WaitForSeconds(waitBeforeAction);
 
         Action_();
 
         yield return new WaitForSeconds(waitAfterAction);
-
         actionIsOver = true;
-        player.CurrentAction = nextAction;
-        
-        if(nextAction != null)
-            player.CurrentAction.StartAction();
+        AfterAction();
+
+        player.MoveNextAction();
 
     }
+
+
+
+
 }

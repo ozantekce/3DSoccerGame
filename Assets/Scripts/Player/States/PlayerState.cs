@@ -6,10 +6,10 @@ public interface PlayerState
 {
 
 
-    void Enter(Player player);
-    void Execute(Player player);
+    void EnterTheState(Player player);
+    void ExecuteTheState(Player player);
 
-    void Exit(Player player);
+    void ExitTheState(Player player);
 
     
 

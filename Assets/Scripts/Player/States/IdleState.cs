@@ -12,7 +12,7 @@ public class IdleState: PlayerState
         withBall, withoutBall
     }
 
-    public void Enter(Player player)
+    public void EnterTheState(Player player)
     {
 
         if(currentState == State.withoutBall)
@@ -31,37 +31,40 @@ public class IdleState: PlayerState
 
     }
 
-    public void Execute(Player player)
+    public void ExecuteTheState(Player player)
     {
 
 
         // Idle için Idlewithball ve Idlewithoutball diye 2 state oluþturmak yerine 2 methoda böldüm
+        // top kontrol alanýndaysa :
         if (player.BallVision.IsThereBallInVision())
         {
-            // top kontrol alanýndaysa 
+            
             if(currentState != State.withBall)
             {
                 currentState = State.withBall;
-                Enter(player);
+                EnterTheState(player);
             }
-            WithBall(player);
+            
+            ExecuteWithBall(player);
 
         }
+        // top kontrol alanýnda deðilse :
         else
         {
-            // top kontrol alanýnda deðilse
+            
             if (currentState != State.withoutBall)
             {
                 currentState = State.withoutBall;
-                Enter(player);
+                EnterTheState(player);
             }
-            WithOutBall(player);
+            ExecuteWithoutBall(player);
 
         }
 
     }
 
-    public void Exit(Player player)
+    public void ExitTheState(Player player)
     {
         if (currentState == State.withoutBall)
         {
@@ -75,10 +78,14 @@ public class IdleState: PlayerState
         }
     }
 
-    private void WithBall(Player player)
+    private void ExecuteWithBall(Player player)
     {
 
-
+        //  state geçiþlerinde bazý stateler daha önceliklidir
+        //  örnek olarak ayaðýna kayýldý ise diðer geçiþ kontrollerinin yapýlmasýna gerek yoktur
+        //  yereDüþme > shoot > pass > koþma 
+        //
+        //
         if (player.FallBySlide)
         {
             // ayaðýna kayýldý 
@@ -98,25 +105,19 @@ public class IdleState: PlayerState
             // Hareket inputu var runningState gider
             player.ChangeCurrentState(RunningState.runningState);
         }
-        else
-        {
-            // Else kadar state deðiþikliði gerekli mi diye kontrol ediliyor
-            // Else de idle statein iþlemeleri yapýlýyor
-
-            Vector3 velocity = player.Rb.velocity;
-            velocity.x = 0;
-            velocity.z = 0;
-            player.Rb.velocity = velocity; // -> playerýn hýzý y dýþýnda 0 a eþitlendi
+        // kontrol bitti 
 
 
-
-        }
+        Vector3 velocity = player.Rb.velocity;
+        velocity.x = 0;
+        velocity.z = 0;
+        player.Rb.velocity = velocity; // -> playerýn hýzý y dýþýnda 0 a eþitlendi
 
 
     }
 
 
-    private void WithOutBall(Player player)
+    private void ExecuteWithoutBall(Player player)
     {
 
 

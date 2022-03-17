@@ -7,18 +7,19 @@ public class SlideState : PlayerState
 
     public static SlideState slideState = new SlideState();
 
-    public void Enter(Player player)
+    public void EnterTheState(Player player)
     {
+        player.ChangeCurrentAction(new SlideAction(player, null));
+        player.StartCurrentAction();
 
-        player.CurrentAction = new SlideAction(player, null);
-        player.CurrentAction.StartAction();
         player.ChangeAnimation("Slide");
+
     }
 
-    public void Execute(Player player)
+    public void ExecuteTheState(Player player)
     {
 
-        if (player.CurrentAction != null)
+        if (!player.ActionsOver())
         {
             // actionlar bitene kadar beklenir
 
@@ -38,7 +39,7 @@ public class SlideState : PlayerState
 
     }
 
-    public void Exit(Player player)
+    public void ExitTheState(Player player)
     {
 
     }
@@ -66,11 +67,20 @@ public class SlideState : PlayerState
 
         }
 
+        protected override void BeforeAction()
+        {
+            Player.Rb.velocity = Vector3.zero;
+        }
 
-
+        protected override void AfterAction()
+        {
+            
+        }
 
 
     }
+
+
 
 
 }

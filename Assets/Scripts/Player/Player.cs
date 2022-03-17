@@ -33,18 +33,44 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-
+        // animatorde MovementSpeed parametresi run animasyonunun hýzýný belirliyor
+        // koþma hýzý ile oranlý animasyon hýzý
         animator.SetFloat("MovementSpeed", 0.7f + (rb.velocity.magnitude / 25f));
-        currentState.Execute(this);
+        currentState.ExecuteTheState(this);
 
 
     }
 
     public void ChangeCurrentState(PlayerState nextState)
     {
-        currentState.Exit(this);
+        currentState.ExitTheState(this);
         currentState = nextState;
-        currentState.Enter(this);
+        currentState.EnterTheState(this);
+    }
+
+    public void ChangeCurrentAction(PlayerAction action){ currentAction = action;}
+
+    public void AddActionToCurrentAction(PlayerAction action){ currentAction.AddAction(action);}
+
+    public void StartCurrentAction(){ currentAction.StartAction();}
+
+    public void StopCurrentAction(){ currentAction.StopAction();}
+
+    public void MoveNextAction()
+    {
+        if (currentAction == null)
+            return;
+
+        currentAction = currentAction.NextAction;
+
+        if (currentAction != null)
+            currentAction.StartAction();
+
+    }
+
+    public bool ActionsOver()
+    {
+        return currentAction == null;
     }
 
     public void ChangeAnimation(string name)
@@ -56,12 +82,14 @@ public class Player : MonoBehaviour
 
 
     public PlayerState CurrentState { get => currentState;}
+    public PlayerAction CurrentAction { get => currentAction; }
+
     public Inputter Inputter { get => inputter; }
     public BallVision BallVision { get => ballVision; }
     public Rigidbody Rb { get => rb; set => rb = value; }
     public float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
     public Ball Ball { get => ball; set => ball = value; }
-    public PlayerAction CurrentAction { get => currentAction; set => currentAction = value; }
+
     public float ShootPower { get => shootPower; set => shootPower = value; }
     public float PassPower { get => passPower; set => passPower = value; }
     public float SlidePower { get => slidePower; set => slidePower = value; }
