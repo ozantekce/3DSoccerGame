@@ -36,30 +36,16 @@ public class IdleState: PlayerState
 
 
         // Idle için Idlewithball ve Idlewithoutball diye 2 state oluþturmak yerine 2 methoda böldüm
+
         // top kontrol alanýndaysa :
         if (player.BallVision.IsThereBallInVision())
         {
-            
-            if(currentState != State.withBall)
-            {
-                currentState = State.withBall;
-                EnterTheState(player);
-            }
-            
             ExecuteWithBall(player);
-
         }
         // top kontrol alanýnda deðilse :
         else
         {
-            
-            if (currentState != State.withoutBall)
-            {
-                currentState = State.withoutBall;
-                EnterTheState(player);
-            }
             ExecuteWithoutBall(player);
-
         }
 
     }
@@ -145,7 +131,7 @@ public class IdleState: PlayerState
             velocity.x = 0;
             velocity.z = 0;
             player.Rb.velocity = velocity;// -> playerýn hýzý y dýþýnda 0 a eþitlendi
-            //animasyon
+
         }
 
 

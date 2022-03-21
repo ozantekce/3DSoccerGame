@@ -9,6 +9,8 @@ TagManager:
   - Floor
   - Ball
   - Ground
+  - GoalTriggerOne
+  - GoalTriggerTwo
   layers:
   - Default
   - TransparentFX

@@ -2536,7 +2536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 15
   shootPower: 50
-  passPower: 20
+  passPower: 45
   slidePower: 20
 --- !u!114 &132216256
 MonoBehaviour:

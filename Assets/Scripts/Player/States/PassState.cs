@@ -54,7 +54,7 @@ public class PassState : PlayerState
     public class PassAction : PlayerAction
     {
 
-        public PassAction(Player player, PlayerAction nextAction) : base(player, nextAction, 300f, 500f)
+        public PassAction(Player player, PlayerAction nextAction) : base(player, nextAction, 300f, 900f)
         {
         }
 
@@ -67,10 +67,10 @@ public class PassState : PlayerState
 
             Vector3 directionVector = PassTargetPosition() - Player.Ball.transform.position;
             directionVector = directionVector.normalized;
-
+            Debug.Log(-Player.Inputter.GetJoyStickVerticalValue());
             Vector3 addVelocity
-                = (Player.Inputter.GetButtonShootValue() + 0.3f) * Player.ShootPower
-                * directionVector + new Vector3(0, 0.4f, 0);
+                = (Player.Inputter.GetButtonShootValue() + 0.3f) * Player.PassPower
+                * directionVector + new Vector3(-Player.Inputter.GetJoyStickVerticalValue(), 0.4f, 0);
 
 
             Player.Ball.Rb.velocity += addVelocity;
@@ -89,10 +89,46 @@ public class PassState : PlayerState
 
         }
 
+        
         private Vector3 PassTargetPosition()
         {
-            //en yakýn takým arkadaþýnýn ön tarafý olacak
-            return Vector3.zero;
+            Vector3 passTarget;
+
+            // en yakýn takým arkadaþýnýn ön tarafý olacak
+            // þuan 2 vs 2 olduðu için if yeterli
+            if (Player.Team == 1)
+            {
+                if(Player.PlayerIndex == 1)
+                {
+                    passTarget
+                        = GameManager.Instance.teamOneList[1].GameObject_.transform.position;
+                }
+                else
+                {
+                    passTarget
+                        = GameManager.Instance.teamOneList[0].GameObject_.transform.position;
+                }
+
+            }
+            else
+            {
+
+                if (Player.PlayerIndex == 1)
+                {
+                    passTarget
+                        = GameManager.Instance.teamTwoList[1].GameObject_.transform.position;
+                }
+                else
+                {
+                    passTarget
+                        = GameManager.Instance.teamTwoList[0].GameObject_.transform.position;
+                }
+
+            }
+
+
+            
+            return passTarget;
 
         }
 

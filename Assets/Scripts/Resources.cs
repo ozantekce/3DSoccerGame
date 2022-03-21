@@ -42,8 +42,9 @@ public class Resources : MonoBehaviour
     };
 
 
-    public ObjectsInfo[] objectsArray;
-
+    public ObjectsInfo[] teamOneArray;
+    public ObjectsInfo[] teamTwoArray;
+    public ObjectsInfo[] othersArray;
     // Start is called before the first frame update
     void Start()
     {

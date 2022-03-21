@@ -7,6 +7,19 @@ public class GameManager : MonoBehaviour
 {
 
 
+    private GameStatus lastStatus;
+    private GameStatus status;
+    public enum GameStatus
+    {
+
+        opening, running, stopped, ending
+
+    }
+
+
+
+    private int teamOneScore;
+    private int teamTwoScore;
 
 
     //Singleton
@@ -20,22 +33,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public GameStatus Status { get => status;}
+    public GameStatus LastStatus { get => lastStatus; }
 
     private void Awake()
     {
-
-        if (instance != null && instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        SetStatus(GameStatus.opening);
     }
 
 
-    public List<SpawnableGameObject> handler;
+    public List<SpawnableGameObject> allList;
 
+    public List<SpawnableGameObject> teamOneList;
+    public List<SpawnableGameObject> teamTwoList;
+    public List<SpawnableGameObject> othersList;
 
 
     public Camera camera;
@@ -45,17 +57,48 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        handler = new List<SpawnableGameObject>();
 
-        Resources.ObjectsInfo[] objectsInfo  = Resources.Instance.objectsArray;
 
-        for (int i = 0; i < objectsInfo.Length; i++)
+        allList = new List<SpawnableGameObject>();
+        teamOneList = new List<SpawnableGameObject>();
+        teamTwoList = new List<SpawnableGameObject>();
+        othersList = new List<SpawnableGameObject>();
+
+
+
+        Resources.ObjectsInfo[] teamOneArray  = Resources.Instance.teamOneArray;
+        Resources.ObjectsInfo[] teamTwoArray = Resources.Instance.teamTwoArray;
+        Resources.ObjectsInfo[] othersArray = Resources.Instance.othersArray;
+
+
+
+        for (int i = 0; i < teamOneArray.Length; i++)
         {
-            handler.Add(new SpawnableGameObject(objectsInfo[i].name, objectsInfo[i].prefab
-                , objectsInfo[i].startPosition,objectsInfo[i].angles));
+            teamOneList.Add(new SpawnableGameObject(teamOneArray[i].name, teamOneArray[i].prefab
+                , teamOneArray[i].startPosition, teamOneArray[i].angles));
+            allList.Add(teamOneList[i]);
+            teamOneList[i].GameObject_.GetComponent<Player>().Team = 1;
+            teamOneList[i].GameObject_.GetComponent<Player>().PlayerIndex = (i+1);
 
         }
+
+        for (int i = 0; i < teamTwoArray.Length; i++)
+        {
+            teamTwoList.Add(new SpawnableGameObject(teamTwoArray[i].name, teamTwoArray[i].prefab
+                , teamTwoArray[i].startPosition, teamTwoArray[i].angles));
+            allList.Add(teamTwoList[i]);
+            teamTwoList[i].GameObject_.GetComponent<Player>().Team = 2;
+            teamTwoList[i].GameObject_.GetComponent<Player>().PlayerIndex = (i + 1);
+        }
+
+
+        for (int i = 0; i < othersArray.Length; i++)
+        {
+            othersList.Add(new SpawnableGameObject(othersArray[i].name, othersArray[i].prefab
+                , othersArray[i].startPosition, othersArray[i].angles));
+            allList.Add(othersList[i]);
+        }
+
 
         virtualCamera = camera.GetComponentInChildren<CinemachineVirtualCamera>();
         if (virtualCamera.LookAt == null)
@@ -67,7 +110,9 @@ public class GameManager : MonoBehaviour
         }
 
 
+        SetStatus(GameStatus.running);
 
+        
     }
 
 
@@ -77,9 +122,9 @@ public class GameManager : MonoBehaviour
     public void ResetAllPositions()
     {
 
-        for(int i = 0;i < handler.Count; i++)
+        for(int i = 0;i < allList.Count; i++)
         {
-            handler[i].ResetPosition();
+            allList[i].ResetPosition();
         }
 
     }
@@ -87,10 +132,10 @@ public class GameManager : MonoBehaviour
     public void ResetPosition(string name)
     {
 
-        for (int i = 0; i < handler.Count; i++)
+        for (int i = 0; i < allList.Count; i++)
         {
-            if(handler[i].Name == name) {
-                handler[i].ResetPosition();
+            if(allList[i].Name == name) {
+                allList[i].ResetPosition();
                 return;
             }
         }
@@ -98,7 +143,49 @@ public class GameManager : MonoBehaviour
     }
 
 
-    
+
+
+    public void Goal(GoalTrigger goalTrigger)
+    {
+        SetStatus(GameStatus.stopped);
+
+        if (goalTrigger.CompareTag("GoalTriggerOne"))
+            teamOneScore++;
+        else if (goalTrigger.CompareTag("GoalTriggerTwo"))
+            teamTwoScore++;
+
+        StartCoroutine(Goal_());
+
+    }
+
+    private IEnumerator Goal_()
+    {
+
+        //geçiþ eklenebilir
+
+        yield return new WaitForSeconds(5f);
+
+
+        ResetAllPositions();
+
+
+        yield return new WaitForSeconds(5f);
+
+        SetStatus(GameStatus.running);
+
+    }
+
+
+    public void SetStatus(GameStatus status)
+    {
+
+        lastStatus = this.status;
+        this.status = status;
+        print(status);
+
+    }
+
+
 
 
 

@@ -13,8 +13,12 @@ public class Player : MonoBehaviour
 
 
     [SerializeField]
-    private float movementSpeed = 15f, shootPower = 50f, passPower = 20f , slidePower = 20f;
+    private float movementSpeed = 15f, shootPower = 50f, passPower = 45f , slidePower = 20f;
 
+
+
+    private int team;
+    private int playerIndex;
 
     private Rigidbody rb;
     private Animator animator;
@@ -94,7 +98,8 @@ public class Player : MonoBehaviour
     public float PassPower { get => passPower; set => passPower = value; }
     public float SlidePower { get => slidePower; set => slidePower = value; }
     public bool FallBySlide { get => fallBySlide; set => fallBySlide = value; }
-
+    public int Team { get => team; set => team = value; }
+    public int PlayerIndex { get => playerIndex; set => playerIndex = value; }
 
     private void OnTriggerEnter(Collider other)
     {

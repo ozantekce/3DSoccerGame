@@ -203,8 +203,8 @@ public class RunningState: PlayerState
     private void RunWithBall(Player player)
     {
 
-        float inputVertical = -player.Inputter.GetJoyStickVerticalValueRaw();
-        float inputHorizontal = player.Inputter.GetJoyStickHorizontalValueRaw();
+        float inputVertical = -player.Inputter.GetJoyStickVerticalValue();
+        float inputHorizontal = player.Inputter.GetJoyStickHorizontalValue();
 
         // topla player arasýndaki mesafe bulundu
         float distanceWithBall = Vector3.Distance(player.transform.position, player.Ball.transform.position);
@@ -242,7 +242,7 @@ public class RunningState: PlayerState
         float angle = Vector3.SignedAngle(ballForwardVector, ballTargetForwardVector, Vector3.up);
         if (Mathf.Abs(angle) > 160f)
         {
-            Debug.Log(((int)Vector3.SignedAngle(ballForwardVector, ballTargetForwardVector, Vector3.up)));
+            //Debug.Log(((int)Vector3.SignedAngle(ballForwardVector, ballTargetForwardVector, Vector3.up)));
             ballTargetForwardVector = Quaternion.AngleAxis(-90, Vector3.up) * ballTargetForwardVector;
         }
 

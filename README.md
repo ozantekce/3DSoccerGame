@@ -23,4 +23,8 @@ FSM:
 ![FSM_Player](FSM_Player.png)
 
 
-https://hunero.tinytake.com/df/123e442/thumbnail?type=attachments&version_no=0&file_version_no=0&thumbnail_size=preview
+21/03/2022:
+	Finite state machine  added to control player.
+	Some animations added.(idle, runnning, shoot,pass,slide and fall)
+	Some bugs fixed.
+	

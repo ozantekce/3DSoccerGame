@@ -26,6 +26,18 @@ public abstract class Inputter : MonoBehaviour
 
     protected void Update()
     {
+        if (GameManager.Instance.Status != GameManager.GameStatus.running)
+        {
+            Vertical = 0;
+            Horizontal = 0;
+            buttonShootValue = 0;
+            buttonPassValue = 0;
+            buttonSlideValue = 0;
+            buttonJumpValue = 0;
+            return;
+        }
+            
+
         Reader();
     }
 
