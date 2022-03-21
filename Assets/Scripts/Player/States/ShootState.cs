@@ -62,13 +62,15 @@ public class ShootState : PlayerState
         {
 
             //Debug.Log("shoot");
-            Debug.Log(-Player.Inputter.GetJoyStickVerticalValue());
+
             Vector3 addVelocity
                 = (Player.Inputter.GetButtonShootValue()+0.3f) * Player.ShootPower
-                * (Player.transform.forward + new Vector3(-Player.Inputter.GetJoyStickVerticalValue()/5f, 0.4f, 0));
+                * (Player.transform.forward + new Vector3(0, 0.4f, 0));
+
 
             Player.Ball.Rb.velocity += addVelocity;
-
+            // top dönsün
+            Player.Ball.Rb.angularVelocity = Vector3.left*100f;
 
         }
 
