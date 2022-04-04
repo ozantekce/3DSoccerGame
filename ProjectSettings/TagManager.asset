@@ -11,6 +11,8 @@ TagManager:
   - Ground
   - GoalTriggerOne
   - GoalTriggerTwo
+  - Fire
+  - Goalkeeper
   layers:
   - Default
   - TransparentFX

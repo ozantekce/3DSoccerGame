@@ -451,7 +451,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2125491523
 GameObject:
@@ -538,7 +538,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   shootPower: 10
-  jumpPower: 10
+  jumpPowerY: 10
+  jumpPowerX: 20
   waitPositionTransform: {fileID: 2323832196508126900}
 --- !u!4 &2323832196508126900 stripped
 Transform:
@@ -556,9 +557,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goalkeeper
       objectReference: {fileID: 0}
+    - target: {fileID: 1238557012131903154, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
+      propertyPath: m_TagString
+      value: Goalkeeper
+      objectReference: {fileID: 0}
     - target: {fileID: 1908380167772875784, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1908380167772875784, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_LocalPosition.x
