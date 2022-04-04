@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10
-  shootPower: 10
+  shootPower: 50
   jumpPowerY: 10
   jumpPowerX: 20
   waitPositionTransform: {fileID: 2323832196508126900}
@@ -571,7 +571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1908380167772875784, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: -0.58
       objectReference: {fileID: 0}
     - target: {fileID: 1908380167772875784, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_LocalPosition.z
@@ -604,6 +604,10 @@ PrefabInstance:
     - target: {fileID: 1908380167772875784, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077573029103400496, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
+      propertyPath: m_Mass
+      value: 50000
       objectReference: {fileID: 0}
     - target: {fileID: 8077573029103400498, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: sensivity

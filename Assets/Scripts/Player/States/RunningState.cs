@@ -167,7 +167,7 @@ public class RunningState: PlayerState
 
     private float minDistanceWithBall = 2f;
 
-    private float ballMaxAddVelocity = 7.2f;
+    private float ballMaxAddVelocity = 4.2f;
 
     private float minDistanceToAddVelocityToBall = 2.5f; // minDistanceWithBall dan büyük olmalý
 

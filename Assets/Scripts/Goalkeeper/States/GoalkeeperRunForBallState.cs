@@ -18,18 +18,13 @@ public class GoalkeeperRunForBallState : GoalkeeperState
     public void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
-        if (19f < Vector3.Distance(Ball.Instance.transform.position, goalkeeper.transform.position))
+        if (goalkeeper.BallVision.IsThereBallInVision())
         {
-            
-            goalkeeper.ChangeCurrentState(GoalkeeperIdleState.goalkeeperIdleState);
-
+            goalkeeper.ChangeCurrentState(GoalkeeperShootState.goalkeeperShootState);
         }
         else if (19f < Vector3.Distance(goalkeeper.WaitPosition, goalkeeper.transform.position))
         {
-
             goalkeeper.ChangeCurrentState(GoalkeeperGoWaitPositionState.goalkeeperGoWaitPositionState);
-
-
         }
         else
         {
@@ -53,8 +48,6 @@ public class GoalkeeperRunForBallState : GoalkeeperState
             Vector3 directionVector = position - goalkeeper.transform.position;
             directionVector = directionVector.normalized;
             directionVector.y = 0;
-            speed 
-                = Mathf.Clamp(speed, 0, Vector3.Distance(position, goalkeeper.transform.position));
             goalkeeper.Rb.velocity = directionVector * speed;
         }
 

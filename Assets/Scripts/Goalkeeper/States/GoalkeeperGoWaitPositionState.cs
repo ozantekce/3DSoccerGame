@@ -72,8 +72,6 @@ public class GoalkeeperGoWaitPositionState : GoalkeeperState
             Vector3 directionVector = position - goalkeeper.transform.position;
             directionVector = directionVector.normalized;
             directionVector.y = 0;
-            speed
-                = Mathf.Clamp(speed, 0, Vector3.Distance(position, goalkeeper.transform.position));
             goalkeeper.Rb.velocity = directionVector * speed;
         }
 

@@ -18,7 +18,15 @@ public class GoalkeeperShootState : GoalkeeperState
     public void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
+        if (!goalkeeper.ActionsOver())
+        {
+            // actionlar bitene kadar beklenir
 
+        }
+        else
+        {
+            goalkeeper.ChangeCurrentState(GoalkeeperIdleState.goalkeeperIdleState);
+        }
 
     }
 
@@ -31,7 +39,7 @@ public class GoalkeeperShootState : GoalkeeperState
     public class ShootAction : GoalkeeperAction
     {
 
-        public ShootAction(Goalkeeper goalkeeper, GoalkeeperAction nextAction) : base(goalkeeper, nextAction, 300f, 500f)
+        public ShootAction(Goalkeeper player, GoalkeeperAction nextAction) : base(player, nextAction, 0, 1000f)
         {
         }
 
@@ -39,12 +47,18 @@ public class GoalkeeperShootState : GoalkeeperState
         protected override void Action_()
         {
 
+            //Debug.Log("shoot");
+
+            Vector3 addVelocity
+                = Goalkeeper.ShootPower * (new Vector3(0, 0.5f, 0.5f));
+
+            Goalkeeper.Ball.Rb.velocity = addVelocity; ;
 
         }
 
         protected override void BeforeAction()
         {
-            //
+
         }
 
         protected override void AfterAction()
@@ -54,6 +68,5 @@ public class GoalkeeperShootState : GoalkeeperState
 
 
     }
-
 
 }
