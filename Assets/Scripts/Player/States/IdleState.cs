@@ -33,8 +33,6 @@ public class IdleState: PlayerState
 
     public void ExecuteTheState(Player player)
     {
-
-
         // Idle için Idlewithball ve Idlewithoutball diye 2 state oluþturmak yerine 2 methoda böldüm
 
         // top kontrol alanýndaysa :

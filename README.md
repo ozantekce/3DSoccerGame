@@ -28,3 +28,9 @@ FSM:
 	Some animations added.(idle, runnning, shoot,pass,slide and fall)
 	Some bugs fixed.
 	
+04/04/2022:
+	Added goalkeeper.
+	Working on goalkeeper artificial intelligence.
+	I'm considering using a decision tree for artificial intelligence.
+	Added a tree for experimentation.
+	Added goalkeeper animations.

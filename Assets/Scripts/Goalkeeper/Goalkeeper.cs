@@ -2,29 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Goalkeeper : MonoBehaviour
 {
+    private GoalkeeperState currentState = GoalkeeperIdleState.goalkeeperIdleState;
 
-    private PlayerState currentState = IdleState.idleState;
-
-    private PlayerAction currentAction = null;
-
-    private bool fallBySlide;
-
-
-    [SerializeField]
-    private float movementSpeed = 15f, shootPower = 50f, passPower = 45f , slidePower = 20f;
-
-
+    private GoalkeeperAction currentAction = null;
 
     private int team;
-    private int playerIndex;
 
     private Rigidbody rb;
     private Animator animator;
     private Inputter inputter;
     private BallVision ballVision;
     private Ball ball;
+
+
+
+    private GoalkeeperDesicionTree desicionTree;
+
+    [SerializeField]
+    private float movementSpeed = 15f, shootPower = 50f,jumpPower = 5f;
+
+    public Transform waitPositionTransform;
+
+    private Vector3 waitPosition;
 
     private void Start()
     {
@@ -33,6 +34,9 @@ public class Player : MonoBehaviour
         inputter = GetComponent<Inputter>();
         ballVision = GetComponent<BallVision>();
         ball = Ball.Instance;
+        desicionTree = new GoalkeeperDesicionTree();
+        desicionTree.goalkeeper = this;
+        waitPosition = waitPositionTransform.position;
     }
 
     private void FixedUpdate()
@@ -40,25 +44,30 @@ public class Player : MonoBehaviour
         // animatorde MovementSpeed parametresi run animasyonunun hýzýný belirliyor
         // koþma hýzý ile oranlý animasyon hýzý
         animator.SetFloat("MovementSpeed", 0.7f + (rb.velocity.magnitude / 25f));
+
+
+        DesicionTree.Execute();
         currentState.ExecuteTheState(this);
 
 
     }
 
-    public void ChangeCurrentState(PlayerState nextState)
+
+
+    public void ChangeCurrentState(GoalkeeperState nextState)
     {
         currentState.ExitTheState(this);
         currentState = nextState;
         currentState.EnterTheState(this);
     }
 
-    public void ChangeCurrentAction(PlayerAction action){ currentAction = action;}
+    public void ChangeCurrentAction(GoalkeeperAction action) { currentAction = action; }
 
-    public void AddActionToCurrentAction(PlayerAction action){ currentAction.AddAction(action);}
+    public void AddActionToCurrentAction(GoalkeeperAction action) { currentAction.AddAction(action); }
 
-    public void StartCurrentAction(){ currentAction.StartAction();}
+    public void StartCurrentAction() { currentAction.StartAction(); }
 
-    public void StopCurrentAction(){ currentAction.StopAction();}
+    public void StopCurrentAction() { currentAction.StopAction(); }
 
     public void MoveNextAction()
     {
@@ -85,52 +94,33 @@ public class Player : MonoBehaviour
     }
 
 
-    public PlayerState CurrentState { get => currentState;}
-    public PlayerAction CurrentAction { get => currentAction; }
+
+    public GoalkeeperState CurrentState { get => currentState; }
+    public GoalkeeperAction CurrentAction { get => currentAction; }
 
     public Inputter Inputter { get => inputter; }
     public BallVision BallVision { get => ballVision; }
     public Rigidbody Rb { get => rb; set => rb = value; }
     public float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
-    public Ball Ball
-    {
-        get
-        {
+    public Ball Ball { get{
             if (ball == null)
                 ball = Ball.Instance;
-            return ball;
-        }
-        set => ball = value;
-    }
+            return ball; 
+        } set => ball = value; }
 
     public float ShootPower { get => shootPower; set => shootPower = value; }
-    public float PassPower { get => passPower; set => passPower = value; }
-    public float SlidePower { get => slidePower; set => slidePower = value; }
-    public bool FallBySlide { get => fallBySlide; set => fallBySlide = value; }
     public int Team { get => team; set => team = value; }
-    public int PlayerIndex { get => playerIndex; set => playerIndex = value; }
+    public float JumpPower { get => jumpPower; set => jumpPower = value; }
+    public Vector3 WaitPosition { get => waitPosition; set => waitPosition = value; }
+    public GoalkeeperDesicionTree DesicionTree { get{
 
-    private void OnTriggerEnter(Collider other)
-    {
+            if (desicionTree == null)
+                desicionTree = new GoalkeeperDesicionTree();
+            desicionTree.goalkeeper = this;
+            return desicionTree;
+
+        } 
         
-    }
-
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (FallBySlide == false && collision.gameObject.CompareTag("Player"))
-        {
-
-            Player player = collision.gameObject.GetComponent<Player>();
-            if (player.currentState == SlideState.slideState)
-            {
-                
-                FallBySlide = true;
-            }
-
-        }
-    }
-
-
-
+        
+        set => desicionTree = value; }
 }

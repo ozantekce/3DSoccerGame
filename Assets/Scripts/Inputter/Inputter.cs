@@ -63,6 +63,24 @@ public abstract class Inputter : MonoBehaviour
     }
 
 
+    public void SetButtonShootValue(float value)
+    {
+        buttonShootValue=value;
+    }
+
+    public void SetButtonJumpValue(float value)
+    {
+        buttonJumpValue = value;
+    }
+
+    public void SetVerticalValue(float value)
+    {
+        Vertical = value;
+    }
+    public void SetHorizontalValue(float value)
+    {
+        Horizontal = value;
+    }
 
     public float GetJoyStickHorizontalValue()
     {
@@ -137,7 +155,7 @@ public abstract class Inputter : MonoBehaviour
     }
 
     public float GetButtonJumpValue()
-    {
+    {   
         if (JumpButtonPressed())
         {
             return 0;

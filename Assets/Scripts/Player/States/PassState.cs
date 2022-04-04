@@ -59,18 +59,20 @@ public class PassState : PlayerState
         }
 
 
+        private float passButtonValue;
+        private float vertcialInputValue;
         protected override void Action_()
         {
 
             Debug.Log("pass");
+            // topun kontrolünü býraktý
             Player.BallVision.ballTransform = null;
 
             Vector3 directionVector = PassTargetPosition() - Player.Ball.transform.position;
             directionVector = directionVector.normalized;
-            Debug.Log(-Player.Inputter.GetJoyStickVerticalValue());
             Vector3 addVelocity
-                = (Player.Inputter.GetButtonShootValue() + 0.3f) * Player.PassPower
-                * directionVector + new Vector3(-Player.Inputter.GetJoyStickVerticalValue(), 0.4f, 0);
+                = passButtonValue * Player.PassPower
+                * directionVector + new Vector3(vertcialInputValue, 0.4f, 0);
 
 
             Player.Ball.Rb.velocity += addVelocity;
@@ -80,7 +82,8 @@ public class PassState : PlayerState
 
         protected override void BeforeAction()
         {
-            
+            this.passButtonValue = Player.Inputter.GetButtonPassValue();
+            this.vertcialInputValue = -Player.Inputter.GetJoyStickVerticalValue();
         }
 
         protected override void AfterAction()

@@ -26,4 +26,10 @@ FSM:
 21/03/2022:
 	Finite state machine  added to control player.
 	Some animations added.(idle, runnning, shoot,pass,slide and fall)
+	Some bugs fixed.
+	
+04/04/2022:
+	Goalkeeper added.
+	I working to goalkeeper AI.
+	Goalkeeper animations added.
 	

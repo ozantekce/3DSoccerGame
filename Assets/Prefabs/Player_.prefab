@@ -2515,7 +2515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cfed108d461ddf46a8d491998a112a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRadius: 2.6
+  visionRadius: 3
   visionAngle: 180
   obstacleMask:
     serializedVersion: 2
@@ -2534,9 +2534,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0450d1d558bb2646b2ed8015c050014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 15
-  shootPower: 50
-  passPower: 45
+  movementSpeed: 16
+  shootPower: 25
+  passPower: 20
   slidePower: 20
 --- !u!114 &132216256
 MonoBehaviour:
