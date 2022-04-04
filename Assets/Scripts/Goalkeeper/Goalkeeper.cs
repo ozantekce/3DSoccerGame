@@ -93,7 +93,13 @@ public class Goalkeeper : MonoBehaviour
 
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            Ball.Rb.velocity = transform.forward * 10f;
+        }
+    }
 
     public GoalkeeperState CurrentState { get => currentState; }
     public GoalkeeperAction CurrentAction { get => currentAction; }
@@ -114,19 +120,6 @@ public class Goalkeeper : MonoBehaviour
     public Vector3 WaitPosition { get => waitPosition; set => waitPosition = value; }
     public float JumpPowerY { get => jumpPowerY; set => jumpPowerY = value; }
     public float JumpPowerX { get => jumpPowerX; set => jumpPowerX = value; }
-    /*
-public GoalkeeperDesicionTree DesicionTree { get{
 
-if (desicionTree == null)
-desicionTree = new GoalkeeperDesicionTree();
-desicionTree.goalkeeper = this;
-return desicionTree;
-
-} 
-
-
-set => desicionTree = value; }
-
-*/
 }
     
