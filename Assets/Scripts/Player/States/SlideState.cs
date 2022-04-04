@@ -24,8 +24,8 @@ public class SlideState : PlayerState
             // actionlar bitene kadar beklenir
 
         }
-        else if (player.Inputter.GetJoyStickVerticalValue() != 0
-            || player.Inputter.GetJoyStickHorizontalValue() != 0)
+        else if (player.VerticalInput != 0
+            || player.HorizontalInput != 0)
         {
             // Hareket inputu var runningState gider
             player.ChangeCurrentState(RunningState.runningState);

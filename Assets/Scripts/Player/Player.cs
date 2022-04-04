@@ -35,13 +35,33 @@ public class Player : MonoBehaviour
         ball = Ball.Instance;
     }
 
-    private void FixedUpdate()
+
+    private float verticalInput;
+    private float horizontalInput;
+    private float shootInput;
+    private float passInput;
+    private float slideInput;
+
+
+    private void Update()
     {
         // animatorde MovementSpeed parametresi run animasyonunun hýzýný belirliyor
         // koþma hýzý ile oranlý animasyon hýzý
         animator.SetFloat("MovementSpeed", 0.7f + (rb.velocity.magnitude / 25f));
-        currentState.ExecuteTheState(this);
 
+        shootInput = Inputter.GetButtonShootValue();
+        passInput = Inputter.GetButtonPassValue();
+        slideInput = Inputter.GetButtonSlideValue();
+        verticalInput = -Inputter.GetJoyStickVerticalValue();
+        horizontalInput = Inputter.GetJoyStickHorizontalValue();
+
+    }
+
+
+    private void FixedUpdate()
+    {
+
+        currentState.ExecuteTheState(this);
 
     }
 
@@ -109,6 +129,11 @@ public class Player : MonoBehaviour
     public bool FallBySlide { get => fallBySlide; set => fallBySlide = value; }
     public int Team { get => team; set => team = value; }
     public int PlayerIndex { get => playerIndex; set => playerIndex = value; }
+    public float VerticalInput { get => verticalInput; set => verticalInput = value; }
+    public float HorizontalInput { get => horizontalInput; set => horizontalInput = value; }
+    public float ShootInput { get => shootInput; set => shootInput = value; }
+    public float PassInput { get => passInput; set => passInput = value; }
+    public float SlideInput { get => slideInput; set => slideInput = value; }
 
     private void OnTriggerEnter(Collider other)
     {

@@ -29,8 +29,8 @@ public class ShootState : PlayerState
             // actionlar bitene kadar beklenir
 
         }
-        else if (player.Inputter.GetJoyStickVerticalValue() != 0
-            || player.Inputter.GetJoyStickHorizontalValue() != 0)
+        else if (player.VerticalInput != 0
+            || player.HorizontalInput != 0)
         {
             // Hareket inputu var runningState gider
             player.ChangeCurrentState(RunningState.runningState);
@@ -68,18 +68,15 @@ public class ShootState : PlayerState
 
             Vector3 addVelocity
                 = (shootButtonValue + 0.3f) * Player.ShootPower
-                * (Player.transform.forward + new Vector3(0, 0.4f, 0));
+                * (Player.transform.forward + new Vector3(0, 0.5f, 0));
 
-
-            Player.Ball.Rb.velocity += addVelocity;
-            // top dönsün
-            Player.Ball.Rb.angularVelocity = Vector3.left*100f;
+            Player.Ball.Rb.velocity += addVelocity;;
 
         }
 
         protected override void BeforeAction()
         {
-            this.shootButtonValue = Player.Inputter.GetButtonShootValue();
+            this.shootButtonValue = Player.ShootInput;
         }
 
         protected override void AfterAction()

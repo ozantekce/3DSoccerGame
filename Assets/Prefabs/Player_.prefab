@@ -2493,7 +2493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7171da4caaedb4498ab07e2f7b5e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensivity: 0.01
+  sensivity: 0.05
   buttonLeftKeyboard: 97
   buttonRightKeyboard: 100
   buttonUpKeyboard: 119
@@ -2515,7 +2515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cfed108d461ddf46a8d491998a112a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRadius: 3
+  visionRadius: 4.8
   visionAngle: 180
   obstacleMask:
     serializedVersion: 2

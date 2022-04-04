@@ -15,18 +15,7 @@ public class RunningState: PlayerState
 
     public void EnterTheState(Player player)
     {
-
-        if (currentState == State.withoutBall)
-        {
-            //Debug.Log("enter : RunningState_withoutBall");
-            player.ChangeAnimation("Run");
-        }
-        else
-        {
-            //Debug.Log("enter : RunningState_withBall");
-            player.ChangeAnimation("Run");
-        }
-
+        player.ChangeAnimation("Run");
 
     }
 
@@ -72,43 +61,33 @@ public class RunningState: PlayerState
         // Running için Runningwithball ve Runningwithoutball diye 2 state oluþturmak yerine 2 methoda böldüm
         if (player.BallVision.IsThereBallInVision())
         {
-            if (currentState != State.withBall)
-            {
-                currentState = State.withBall;
-                EnterTheState(player);
-            }
+            currentState = State.withBall;
             ExecuteWithBall(player);
         }
         else
         {
-            if (currentState != State.withoutBall)
-            {
-                currentState = State.withoutBall;
-                EnterTheState(player);
-            }
+            currentState = State.withoutBall;
             ExecuteWithoutBall(player);
         }
-
     }
 
     private void ExecuteWithBall(Player player)
     {
-
         if (player.FallBySlide)
         {
             // ayaðýna kayýldý 
             player.ChangeCurrentState(FallBySlideState.fallBySlideState);
         }
-        else if(player.Inputter.GetButtonShootValue() != 0)
+        else if(player.ShootInput != 0)
         {   //Shoot inputu var shootState e gider
             player.ChangeCurrentState(ShootState.shootState);
         }
-        else if (player.Inputter.GetButtonPassValue() != 0)
+        else if (player.PassInput != 0)
         {   //Pass inputu var passState e gider
             player.ChangeCurrentState(PassState.passState);
         }
-        else if (player.Inputter.GetJoyStickVerticalValue() == 0
-            && player.Inputter.GetJoyStickHorizontalValue() == 0)
+        else if (player.VerticalInput == 0
+            && player.HorizontalInput == 0)
         {
             // input olmadýðý için IdleState gider
             player.ChangeCurrentState(IdleState.idleState);
@@ -129,17 +108,16 @@ public class RunningState: PlayerState
         // ayaðýna kayýldý 
         if (player.FallBySlide)
         {
-            
             player.ChangeCurrentState(FallBySlideState.fallBySlideState);
         }
         //Slide inputu var SlideState e gider
-        else if (player.Inputter.GetButtonSlideValue() != 0)
+        else if (player.SlideInput != 0)
         {   
             player.ChangeCurrentState(SlideState.slideState);
 
         }
-        else if (player.Inputter.GetJoyStickVerticalValue() == 0
-            && player.Inputter.GetJoyStickHorizontalValue() == 0)
+        else if (player.VerticalInput== 0
+            && player.HorizontalInput == 0)
         {   
             // input olmadýðý için IdleState gider
             player.ChangeCurrentState(IdleState.idleState);
@@ -156,20 +134,19 @@ public class RunningState: PlayerState
 
 
 
-    private float gap  = 16f;        //  küçük açý farklarý görmezden gelinir
+    private float gap  = 4f;        //  küçük açý farklarý görmezden gelinir
     private float spinSpeed = 500f; //  rotation deðiþim hýzý
     private void Run(Player player)
     {
 
-        float inputVertical = -player.Inputter.GetJoyStickVerticalValue();
-        float inputHorizontal = player.Inputter.GetJoyStickHorizontalValue();
-
         // inputa göre x ve z eksenindeki hedef Forward vektörü bulundu 
-        Vector2 targetForward = new Vector2(inputVertical, inputHorizontal).normalized;
+        // verilen inputa göre forward belirleniyor
+        // mevcut forward ile hedeflenen forward ayný olana kadar 
+        // karakter döndürülüyor
+        Vector2 targetForward 
+            = new Vector2(player.VerticalInput, player.HorizontalInput).normalized;
         // Rotation ayarlanmasý için spin methoduna gidilir
         Spin(player, targetForward);
-
-
 
         // y olmadan birim forward vektörü bulundu
         Vector3 directionVector 
@@ -184,23 +161,23 @@ public class RunningState: PlayerState
     }
 
 
-    private float ballTargetVelocity = 15.5f;
+    private float ballTargetVelocity = 20f;
 
-    private float trackingToBallSpeed = 13f;
+    private float trackingToBallSpeed = 15f;
 
-    private float minDistanceWithBall = 1.8f;
+    private float minDistanceWithBall = 2f;
 
-    private float ballMaxAddVelocity = 5.2f;
+    private float ballMaxAddVelocity = 7.2f;
 
-    private float minDistanceToAddVelocityToBall = 2f; // minDistanceWithBall dan büyük olmalý
+    private float minDistanceToAddVelocityToBall = 2.5f; // minDistanceWithBall dan büyük olmalý
 
 
     private Vector3 lastBallForward;
     private void RunWithBall(Player player)
     {
 
-        float inputVertical = -player.Inputter.GetJoyStickVerticalValue();
-        float inputHorizontal = player.Inputter.GetJoyStickHorizontalValue();
+        float inputVertical = player.VerticalInput;
+        float inputHorizontal = player.HorizontalInput;
 
         // topla player arasýndaki mesafe bulundu
         float distanceWithBall = Vector3.Distance(player.transform.position, player.Ball.transform.position);
@@ -210,7 +187,7 @@ public class RunningState: PlayerState
         //  takip etmek için gerekli birim vektör bulundu
         Vector3 ballForwardVector = (player.Ball.transform.position - player.transform.position).normalized;
 
-        // topun konumuna rotation ayarlanýyor
+        // topa doðru rotation ayarlanýyor
         Spin(player, new Vector3(ballForwardVector.x, ballForwardVector.z).normalized);
 
         Vector3 forwardVectorWithoutY
@@ -230,31 +207,40 @@ public class RunningState: PlayerState
 
         //----topa hýz veriliyor
 
+        Vector3 ballTargetForwardVector
+            = new Vector3(inputVertical, 0, inputHorizontal).normalized;
 
-        //targetDirection = DirectionHelper.FindDirection(inputVertical, inputHorizontal);
-        Vector3 ballTargetForwardVector = new Vector3(inputVertical, 0, inputHorizontal).normalized;
 
-        
         float angle = Vector3.SignedAngle(ballForwardVector, ballTargetForwardVector, Vector3.up);
         if (Mathf.Abs(angle) > 160f)
         {
-            //Debug.Log(((int)Vector3.SignedAngle(ballForwardVector, ballTargetForwardVector, Vector3.up)));
+            //  targetForward ile mevcut forward arasýndaki açý farký
+            //  160 dereceden fazla ise targetForward mevcut forwardýn 90 derece
+            //  döndürülmüþ halidir
+            //  bunun sebebi -> yönünde ilerelerken <- de input geldiðinde
+            //  topu önce aþaðý yönüne sonra <- yönüne hareket ettirmek
+            //  bu sayede top karaktere çarpmaz
             ballTargetForwardVector = Quaternion.AngleAxis(-90, Vector3.up) * ballTargetForwardVector;
         }
 
 
         bool needChangeVelocity;
-        // yön deðiþimi oldu ise oyun tepki vermeli akýcýlýk için
-        bool changeDirection = Vector3.Angle(ballTargetForwardVector,lastBallForward) > 40f;
+        // yön deðiþimi oldu mu ?
+        // oldu ise top uzakta olsa bile hýzý deðiþmeli
+        bool changeDirection = Vector3.Angle(ballTargetForwardVector, lastBallForward) > 20f;
+
         // top hýz verecek kadar yakýn mý ?
         needChangeVelocity = (distanceWithBall <= minDistanceToAddVelocityToBall) || changeDirection;
 
         if (needChangeVelocity)
         {
 
-            // top için hedef hýzýn vektörü bulundu 
+            // top için hedef hýzýn vektörü bulundu
+            // oyuncu ayný yöne doðru gitmiyor ise top yakýn olmasa bile tepki gösterir
+            // ama hedef hýz 0.8f ile çarpýlarak küçültülür
+      
             Vector3 targetBallVelocity
-                = ballTargetVelocity * (changeDirection ? 0.8f:1) * ballTargetForwardVector;
+                = ballTargetVelocity * (changeDirection ? 0.8f : 1) * ballTargetForwardVector;
             // topun mevcut hýz vektörü bulundu
             Vector3 currentBallVelocity = player.Ball.Rb.velocity;
             // hedef vektör için mevcut hýz vektörüne eklenmesi gerekli olan vektör bulundu
@@ -272,7 +258,9 @@ public class RunningState: PlayerState
 
 
     }
-    
+
+
+
     private void Spin(Player player, Vector2 targetForward)
     {
         //  dönme x ve z eksenine göre y de yapýlýyor bu yüzden 2 boyutlu bir iþlem

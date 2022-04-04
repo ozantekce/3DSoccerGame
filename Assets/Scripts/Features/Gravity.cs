@@ -8,7 +8,7 @@ using UnityEngine;
 public class Gravity : MonoBehaviour
 {
 
-    public static readonly float GLOBAL_GRAVITY = 1.7f;
+    public static readonly float GLOBAL_GRAVITY = 0.2f;
 
     [SerializeField]
     private float localGravity;
@@ -33,13 +33,13 @@ public class Gravity : MonoBehaviour
     }
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         float tempGravity = GLOBAL_GRAVITY;
         if (gravityType == GravityType.local)
             tempGravity = localGravity;
 
-        rb.AddForce(tempGravity * Vector3.down, ForceMode.Acceleration);
+        rb.AddForce(tempGravity * Vector3.down, ForceMode.VelocityChange);
 
     }
 

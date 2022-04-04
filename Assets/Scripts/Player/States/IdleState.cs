@@ -68,23 +68,21 @@ public class IdleState: PlayerState
         //  state geçiþlerinde bazý stateler daha önceliklidir
         //  örnek olarak ayaðýna kayýldý ise diðer geçiþ kontrollerinin yapýlmasýna gerek yoktur
         //  yereDüþme > shoot > pass > koþma 
-        //
-        //
         if (player.FallBySlide)
         {
             // ayaðýna kayýldý 
             player.ChangeCurrentState(FallBySlideState.fallBySlideState);
         }
-        else if (player.Inputter.GetButtonShootValue()!=0)
+        else if (player.ShootInput!=0)
         {   //Shoot inputu var shootState e gider
             player.ChangeCurrentState(ShootState.shootState);
         }
-        else if(player.Inputter.GetButtonPassValue()!=0)
+        else if(player.PassInput!=0)
         {   //Pass inputu var passState e gider
             player.ChangeCurrentState(PassState.passState);
         }
-        else if (player.Inputter.GetJoyStickVerticalValue() != 0
-            || player.Inputter.GetJoyStickHorizontalValue() != 0)
+        else if (player.VerticalInput!= 0
+            || player.HorizontalInput != 0)
         {
             // Hareket inputu var runningState gider
             player.ChangeCurrentState(RunningState.runningState);
@@ -110,14 +108,14 @@ public class IdleState: PlayerState
             // ayaðýna kayýldý 
             player.ChangeCurrentState(FallBySlideState.fallBySlideState);
         }
-        else if (player.Inputter.GetButtonSlideValue()!=0)
+        else if (player.SlideInput!=0)
         {   
             //Slide inputu var slideState e gider
             player.ChangeCurrentState(SlideState.slideState);
 
         }
-        else if (player.Inputter.GetJoyStickVerticalValue() != 0
-            || player.Inputter.GetJoyStickHorizontalValue() != 0)
+        else if (player.VerticalInput!= 0
+            || player.HorizontalInput != 0)
         {   // Hareket inputu var runningState gider
             player.ChangeCurrentState(RunningState.runningState);
         }
