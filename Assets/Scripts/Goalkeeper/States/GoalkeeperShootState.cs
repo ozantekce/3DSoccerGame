@@ -18,23 +18,7 @@ public class GoalkeeperShootState : GoalkeeperState
     public void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
-        if (!goalkeeper.ActionsOver())
-        {
-            // actionlar bitene kadar beklenir
 
-        }
-        else if (goalkeeper.Inputter.GetJoyStickVerticalValue() != 0
-            || goalkeeper.Inputter.GetJoyStickHorizontalValue() != 0)
-        {
-            // Hareket inputu var runningState gider
-            goalkeeper.ChangeCurrentState(GoalkeeperRunState.goalkeeperRunState);
-        }
-        else
-        {
-            // input olmadýðý için IdleState gider
-            goalkeeper.ChangeCurrentState(GoalkeeperIdleState.goalkeeperIdleState);
-
-        }
 
     }
 
@@ -55,18 +39,6 @@ public class GoalkeeperShootState : GoalkeeperState
         protected override void Action_()
         {
 
-            //Debug.Log("shoot");
-
-            Vector3 addVelocity
-                = (Goalkeeper.Inputter.GetButtonShootValue() + 0.3f) * Goalkeeper.ShootPower
-                * (Goalkeeper.transform.forward + new Vector3(0, 0.4f, 0));
-
-
-            Goalkeeper.Ball.Rb.velocity += addVelocity;
-            // top dönsün
-            Goalkeeper.Ball.Rb.angularVelocity = Vector3.left * 100f;
-
-            Goalkeeper.Inputter.SetButtonShootValue(0);
 
         }
 

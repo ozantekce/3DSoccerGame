@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GoalkeeperDesicionTree
 {
-
+    /*
     public Goalkeeper goalkeeper;
 
     private Node root = GoalkeeperIsJumpingNode.goalkeeperIsJumpingNode;

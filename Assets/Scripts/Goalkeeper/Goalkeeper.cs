@@ -12,16 +12,16 @@ public class Goalkeeper : MonoBehaviour
 
     private Rigidbody rb;
     private Animator animator;
-    private Inputter inputter;
+    //private Inputter inputter;
     private BallVision ballVision;
     private Ball ball;
 
 
 
-    private GoalkeeperDesicionTree desicionTree;
+    //private GoalkeeperDesicionTree desicionTree;
 
     [SerializeField]
-    private float movementSpeed = 15f, shootPower = 50f,jumpPower = 5f;
+    private float movementSpeed = 15f, shootPower = 50f,jumpPowerY = 10f, jumpPowerX = 20f;
 
     public Transform waitPositionTransform;
 
@@ -31,11 +31,11 @@ public class Goalkeeper : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        inputter = GetComponent<Inputter>();
+        //inputter = GetComponent<Inputter>();
         ballVision = GetComponent<BallVision>();
-        ball = Ball.Instance;
+        ball = Ball.Instance;/*
         desicionTree = new GoalkeeperDesicionTree();
-        desicionTree.goalkeeper = this;
+        desicionTree.goalkeeper = this;*/
         waitPosition = waitPositionTransform.position;
     }
 
@@ -46,7 +46,7 @@ public class Goalkeeper : MonoBehaviour
         animator.SetFloat("MovementSpeed", 0.7f + (rb.velocity.magnitude / 25f));
 
 
-        DesicionTree.Execute();
+        //DesicionTree.Execute();
         currentState.ExecuteTheState(this);
 
 
@@ -98,7 +98,7 @@ public class Goalkeeper : MonoBehaviour
     public GoalkeeperState CurrentState { get => currentState; }
     public GoalkeeperAction CurrentAction { get => currentAction; }
 
-    public Inputter Inputter { get => inputter; }
+    //public Inputter Inputter { get => inputter; }
     public BallVision BallVision { get => ballVision; }
     public Rigidbody Rb { get => rb; set => rb = value; }
     public float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
@@ -110,17 +110,23 @@ public class Goalkeeper : MonoBehaviour
 
     public float ShootPower { get => shootPower; set => shootPower = value; }
     public int Team { get => team; set => team = value; }
-    public float JumpPower { get => jumpPower; set => jumpPower = value; }
+
     public Vector3 WaitPosition { get => waitPosition; set => waitPosition = value; }
-    public GoalkeeperDesicionTree DesicionTree { get{
+    public float JumpPowerY { get => jumpPowerY; set => jumpPowerY = value; }
+    public float JumpPowerX { get => jumpPowerX; set => jumpPowerX = value; }
+    /*
+public GoalkeeperDesicionTree DesicionTree { get{
 
-            if (desicionTree == null)
-                desicionTree = new GoalkeeperDesicionTree();
-            desicionTree.goalkeeper = this;
-            return desicionTree;
+if (desicionTree == null)
+desicionTree = new GoalkeeperDesicionTree();
+desicionTree.goalkeeper = this;
+return desicionTree;
 
-        } 
-        
-        
-        set => desicionTree = value; }
+} 
+
+
+set => desicionTree = value; }
+
+*/
 }
+    

@@ -68,7 +68,7 @@ public class ShootState : PlayerState
 
             Vector3 addVelocity
                 = (shootButtonValue + 0.3f) * Player.ShootPower
-                * (Player.transform.forward + new Vector3(0, 0.5f, 0));
+                * (Player.transform.forward + new Vector3(0, 0.2f, 0));
 
             Player.Ball.Rb.velocity += addVelocity;;
 

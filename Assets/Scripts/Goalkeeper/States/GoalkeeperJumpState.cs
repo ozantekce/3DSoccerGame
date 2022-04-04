@@ -14,34 +14,16 @@ public class GoalkeeperJumpState : GoalkeeperState
             , new WaitForStandUpAction(goalkeeper,null)));
 
         goalkeeper.StartCurrentAction();
-        float inputVertical = -goalkeeper.Inputter.GetJoyStickVerticalValue();
-        if (inputVertical==0)
-            goalkeeper.ChangeAnimation("Jump");
-        else if(inputVertical>0)
-            goalkeeper.ChangeAnimation("JumpRight");
-        else
-            goalkeeper.ChangeAnimation("JumpLeft");
+
 
     }
 
     public void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
-        if (!goalkeeper.ActionsOver())
+        if(goalkeeper.CurrentAction == null)
         {
-            // actionlar bitene kadar beklenir
-        }
-        else if (goalkeeper.Inputter.GetJoyStickVerticalValue() != 0
-            || goalkeeper.Inputter.GetJoyStickHorizontalValue() != 0)
-        {
-            // Hareket inputu var runningState gider
-            goalkeeper.ChangeCurrentState(GoalkeeperRunState.goalkeeperRunState);
-        }
-        else
-        {
-            // input olmadýðý için IdleState gider
             goalkeeper.ChangeCurrentState(GoalkeeperIdleState.goalkeeperIdleState);
-
         }
 
     }
@@ -51,6 +33,7 @@ public class GoalkeeperJumpState : GoalkeeperState
         
     }
 
+    public static Vector3 jumpVelocity;
 
     public class JumpAction : GoalkeeperAction
     {
@@ -64,22 +47,24 @@ public class GoalkeeperJumpState : GoalkeeperState
         {
 
             Debug.Log("jump");
-            float inputVertical = -Goalkeeper.Inputter.GetJoyStickVerticalValue();
-            Debug.Log(inputVertical);
-            Goalkeeper.Rb.velocity = (new Vector3(inputVertical, 0.7f, 0f)) * Goalkeeper.JumpPower;
-            
-
-            Goalkeeper.Inputter.SetButtonJumpValue(0);
-            Goalkeeper.Inputter.SetVerticalValue(0);
-            Goalkeeper.Inputter.SetHorizontalValue(0);
-
-
         }
 
         protected override void BeforeAction()
         {
-            //
+            
+            Goalkeeper.Rb.velocity = jumpVelocity;
+            if (jumpVelocity.x == 0)
+                Goalkeeper.ChangeAnimation("Jump");
+            else if (jumpVelocity.x > 0)
+                Goalkeeper.ChangeAnimation("JumpRight");
+            else
+                Goalkeeper.ChangeAnimation("JumpLeft");
+
         }
+
+
+
+
 
         protected override void AfterAction()
         {

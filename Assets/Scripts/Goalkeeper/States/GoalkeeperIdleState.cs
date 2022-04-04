@@ -15,27 +15,31 @@ public class GoalkeeperIdleState : GoalkeeperState
     public void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
-        if (goalkeeper.Inputter.GetButtonShootValue() != 0&& goalkeeper.BallVision.IsThereBallInVision())
-        {   //Shoot inputu var shootState e gider
-            goalkeeper.ChangeCurrentState(GoalkeeperShootState.goalkeeperShootState);
-        }
-        else if (goalkeeper.Inputter.GetButtonJumpValue() != 0)
-        {   //Jump inputu var jumpState e gider
+
+        float meetingTime = FindMeetingTime(
+            goalkeeper.transform.position, Ball.Instance.transform.position, Ball.Instance.GetVelocity()
+            );
+
+
+        Vector3 vel
+            = GoalkeeperCalculater.FindRequiredVelocity(goalkeeper.transform.position,
+            Ball.Instance.transform.position, Ball.Instance.GetVelocity());
+        
+
+        if (vel.magnitude <=5f || meetingTime < 0)
+            return;
+
+        if(Mathf.Abs(vel.x) <= goalkeeper.JumpPowerX
+            && Mathf.Abs(vel.y)<= goalkeeper.JumpPowerY)
+        {
+            
+            GoalkeeperJumpState.jumpVelocity = vel;
             goalkeeper.ChangeCurrentState(GoalkeeperJumpState.goalkeeperJumpState);
         }
-        else if (goalkeeper.Inputter.GetJoyStickVerticalValue() != 0
-            || goalkeeper.Inputter.GetJoyStickHorizontalValue() != 0)
+        else
         {
-            // Hareket inputu var runningState gider
-            goalkeeper.ChangeCurrentState(GoalkeeperRunState.goalkeeperRunState);
+            Debug.Log("vel : " + vel);
         }
-        // kontrol bitti 
-
-
-        Vector3 velocity = goalkeeper.Rb.velocity;
-        velocity.x = 0;
-        velocity.z = 0;
-        goalkeeper.Rb.velocity = velocity; // -> playerýn hýzý y dýþýnda 0 a eþitlendi
 
 
 
@@ -48,7 +52,25 @@ public class GoalkeeperIdleState : GoalkeeperState
 
 
 
+    private float FindMeetingTime(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
+    {
 
+        /*
+         // daha iyi eksenlerden baðýmsýz ama yönetilmesi daha zor
+         // ilerde üzerine düþünülebilir
+        float angle = Vector3.Angle(goalkeeperPosition, ballPosition);
+
+        float distance = Mathf.Cos(angle)* Vector3.Distance(goalkeeperPosition,ballPosition);
+
+        float t = distance / ballVelocity.magnitude;
+
+        return t;*/
+
+        if (Mathf.Abs(ballVelocity.z) < 25f)
+            return -1;
+
+        return (goalkeeperPosition.z - ballPosition.z) / ballVelocity.z;
+    }
 
 
 }

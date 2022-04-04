@@ -173,6 +173,8 @@ public class RunningState: PlayerState
 
 
     private Vector3 lastBallForward;
+
+
     private void RunWithBall(Player player)
     {
 
@@ -252,9 +254,11 @@ public class RunningState: PlayerState
             currentBallVelocity += addVelocityToBall;
             player.Ball.Rb.velocity = currentBallVelocity;
 
+
             lastBallForward = ballTargetForwardVector;
 
         }
+
 
 
     }
