@@ -8,17 +8,18 @@ public class Goalkeeper : MonoBehaviour
 
     private GoalkeeperAction currentAction = null;
 
+    [SerializeField]
     private int team;
+
+    private int direction;
 
     private Rigidbody rb;
     private Animator animator;
-    //private Inputter inputter;
     private BallVision ballVision;
     private Ball ball;
 
 
 
-    //private GoalkeeperDesicionTree desicionTree;
 
     [SerializeField]
     private float movementSpeed = 15f, shootPower = 50f,jumpPowerY = 10f, jumpPowerX = 20f;
@@ -31,12 +32,15 @@ public class Goalkeeper : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        //inputter = GetComponent<Inputter>();
         ballVision = GetComponent<BallVision>();
-        ball = Ball.Instance;/*
-        desicionTree = new GoalkeeperDesicionTree();
-        desicionTree.goalkeeper = this;*/
+        ball = Ball.Instance;
         waitPosition = waitPositionTransform.position;
+
+        if (team == 1)
+            direction = 1;
+        else
+            direction = -1;
+
     }
 
     private void FixedUpdate()
@@ -46,7 +50,6 @@ public class Goalkeeper : MonoBehaviour
         animator.SetFloat("MovementSpeed", 0.7f + (rb.velocity.magnitude / 25f));
 
 
-        //DesicionTree.Execute();
         currentState.ExecuteTheState(this);
 
 
@@ -97,14 +100,14 @@ public class Goalkeeper : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            Ball.Rb.velocity = transform.forward * 10f;
+            Ball.Rb.velocity = Vector3.forward * 10f * direction;
         }
     }
 
     public GoalkeeperState CurrentState { get => currentState; }
     public GoalkeeperAction CurrentAction { get => currentAction; }
 
-    //public Inputter Inputter { get => inputter; }
+
     public BallVision BallVision { get => ballVision; }
     public Rigidbody Rb { get => rb; set => rb = value; }
     public float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
@@ -120,6 +123,7 @@ public class Goalkeeper : MonoBehaviour
     public Vector3 WaitPosition { get => waitPosition; set => waitPosition = value; }
     public float JumpPowerY { get => jumpPowerY; set => jumpPowerY = value; }
     public float JumpPowerX { get => jumpPowerX; set => jumpPowerX = value; }
-
+    public int Team1 { get => team; set => team = value; }
+    public int Direction { get => direction; set => direction = value; }
 }
     

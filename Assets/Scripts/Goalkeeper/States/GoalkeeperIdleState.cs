@@ -27,7 +27,9 @@ public class GoalkeeperIdleState : GoalkeeperState
         
 
         if (vel.magnitude <=5f || meetingTime < 0)
-            ;
+        {
+            //Debug.Log("vel : " + vel+" mt :"+meetingTime);
+        }
         else
         {
             if (Mathf.Abs(vel.x) <= goalkeeper.JumpPowerX
@@ -36,6 +38,7 @@ public class GoalkeeperIdleState : GoalkeeperState
 
                 GoalkeeperJumpState.jumpVelocity = vel;
                 goalkeeper.ChangeCurrentState(GoalkeeperJumpState.goalkeeperJumpState);
+                return;
             }
 
 
@@ -46,10 +49,14 @@ public class GoalkeeperIdleState : GoalkeeperState
         {
             goalkeeper.ChangeCurrentState(GoalkeeperRunForBallState.goalkeeperRunForBallState);
         }
-
-
-
-
+        else if (goalkeeper.BallVision.IsThereBallInVision())
+        {
+            goalkeeper.ChangeCurrentState(GoalkeeperShootState.goalkeeperShootState);
+        }
+        else if (2f < Vector3.Distance(goalkeeper.WaitPosition, goalkeeper.transform.position))
+        {
+            goalkeeper.ChangeCurrentState(GoalkeeperGoWaitPositionState.goalkeeperGoWaitPositionState);
+        }
 
 
 
@@ -76,8 +83,10 @@ public class GoalkeeperIdleState : GoalkeeperState
 
         return t;*/
 
-        if (Mathf.Abs(ballVelocity.z) < 25f)
+        // daha iyi bir kontrol eklenmeli
+        if (Mathf.Abs(ballVelocity.z) < 20f)
             return -1;
+
 
         return (goalkeeperPosition.z - ballPosition.z) / ballVelocity.z;
     }

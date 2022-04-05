@@ -59,6 +59,9 @@ public class ShootState : PlayerState
 
 
         private float shootButtonValue;
+        private float verticalValue;
+        private float horizontalValue;
+
         
 
         protected override void Action_()
@@ -67,16 +70,19 @@ public class ShootState : PlayerState
             //Debug.Log("shoot");
 
             Vector3 addVelocity
-                = (shootButtonValue + 0.3f) * Player.ShootPower
-                * (Player.transform.forward + new Vector3(0, 0.2f, 0));
+                = (shootButtonValue) * Player.ShootPower
+                * (Player.transform.forward + new Vector3(verticalValue, 0.5f, horizontalValue));
 
-            Player.Ball.Rb.velocity += addVelocity;;
+            Player.Ball.Rb.velocity += addVelocity;
 
         }
 
         protected override void BeforeAction()
         {
             this.shootButtonValue = Player.ShootInput;
+            this.verticalValue = Player.VerticalInput;
+            this.horizontalValue = Player.HorizontalInput;
+            
         }
 
         protected override void AfterAction()

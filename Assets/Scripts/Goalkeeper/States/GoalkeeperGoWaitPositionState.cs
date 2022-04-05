@@ -44,7 +44,7 @@ public class GoalkeeperGoWaitPositionState : GoalkeeperState
         }
 
 
-        if (3f > Vector3.Distance(goalkeeper.WaitPosition, goalkeeper.transform.position))
+        if (0.5f > Vector3.Distance(goalkeeper.WaitPosition, goalkeeper.transform.position))
         {
 
             goalkeeper.ChangeCurrentState(GoalkeeperIdleState.goalkeeperIdleState);
@@ -60,7 +60,7 @@ public class GoalkeeperGoWaitPositionState : GoalkeeperState
 
     public void ExitTheState(Goalkeeper goalkeeper)
     {
-
+        goalkeeper.Rb.velocity = Vector3.zero;
     }
 
 

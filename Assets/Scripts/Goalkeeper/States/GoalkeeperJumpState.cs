@@ -46,19 +46,23 @@ public class GoalkeeperJumpState : GoalkeeperState
         protected override void Action_()
         {
 
-            Debug.Log("jump");
+            //Debug.Log("jump");
         }
 
         protected override void BeforeAction()
         {
             
             Goalkeeper.Rb.velocity = jumpVelocity;
-            if (jumpVelocity.x == 0)
-                Goalkeeper.ChangeAnimation("Jump");
-            else if (jumpVelocity.x > 0)
+
+            float gap = 0.1f;
+
+            float dir = Goalkeeper.Direction;
+            if (dir * jumpVelocity.x > gap)
                 Goalkeeper.ChangeAnimation("JumpRight");
-            else
+            else if (dir*jumpVelocity.x < -gap)
                 Goalkeeper.ChangeAnimation("JumpLeft");
+            else
+                Goalkeeper.ChangeAnimation("Jump");
 
         }
 
@@ -78,7 +82,7 @@ public class GoalkeeperJumpState : GoalkeeperState
     public class WaitForStandUpAction : GoalkeeperAction
     {
 
-        public WaitForStandUpAction(Goalkeeper goalkeeper, GoalkeeperAction nextAction) : base(goalkeeper, nextAction, 0, 1500f)
+        public WaitForStandUpAction(Goalkeeper goalkeeper, GoalkeeperAction nextAction) : base(goalkeeper, nextAction, 0, 1000f)
         {
         }
 
@@ -86,7 +90,7 @@ public class GoalkeeperJumpState : GoalkeeperState
         protected override void Action_()
         {
 
-            Debug.Log("stand up");
+            //Debug.Log("stand up");
             Vector3 velocity = Goalkeeper.Rb.velocity;
             velocity.x = 0;
             velocity.z = 0;

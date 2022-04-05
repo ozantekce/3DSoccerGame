@@ -47,6 +47,8 @@ public class Ball : MonoBehaviour
     }
 
 
+
+
     private Cooldown cooldownToHit;
     public void HitTheBall(float axisX, float axisZ ,float maxVel)
     {

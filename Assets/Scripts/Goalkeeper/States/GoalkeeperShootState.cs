@@ -50,7 +50,7 @@ public class GoalkeeperShootState : GoalkeeperState
             //Debug.Log("shoot");
 
             Vector3 addVelocity
-                = Goalkeeper.ShootPower * (new Vector3(0, 0.5f, 0.5f));
+                = Goalkeeper.ShootPower * (new Vector3(0, 0.5f, Goalkeeper.Direction));
 
             Goalkeeper.Ball.Rb.velocity = addVelocity; ;
 
