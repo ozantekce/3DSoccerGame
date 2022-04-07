@@ -67,7 +67,7 @@ public class Ball : MonoBehaviour
 
         if (cooldownToShot.Ready())
         {
-            rb.AddForce(vector, ForceMode.VelocityChange);
+            rb.velocity += vector;
             return true;
         }
         else
@@ -82,7 +82,7 @@ public class Ball : MonoBehaviour
 
     public bool IsShoted()
     {
-        return cooldownToShot.Peek();
+        return !cooldownToShot.Peek();
     }
 
     public void MyMovePosition(Vector3 position, float speed)

@@ -41,6 +41,7 @@ public class Goalkeeper : MonoBehaviour
         else
             direction = -1;
 
+
     }
 
     private void FixedUpdate()
@@ -54,7 +55,6 @@ public class Goalkeeper : MonoBehaviour
 
 
     }
-
 
 
     public void ChangeCurrentState(GoalkeeperState nextState)
@@ -123,7 +123,6 @@ public class Goalkeeper : MonoBehaviour
     public Vector3 WaitPosition { get => waitPosition; set => waitPosition = value; }
     public float JumpPowerY { get => jumpPowerY; set => jumpPowerY = value; }
     public float JumpPowerX { get => jumpPowerX; set => jumpPowerX = value; }
-    public int Team1 { get => team; set => team = value; }
     public int Direction { get => direction; set => direction = value; }
 }
     

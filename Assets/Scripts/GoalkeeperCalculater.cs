@@ -7,17 +7,20 @@ public class GoalkeeperCalculater
 
 
     private static Vector3 meetingPosition;
+
+
     public static Vector3 FindRequiredVelocity(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
     {
 
 
         meetingPosition = FindMeetingPosition(goalkeeperPosition, ballPosition, ballVelocity);
 
-        if (meetingPosition.z != goalkeeperPosition.z) return Vector3.zero;
+        //if (meetingPosition.z != goalkeeperPosition.z) return Vector3.zero;
 
         Vector3 velocity = FindRequiredVelocity(meetingPosition, goalkeeperPosition, FindMeetingTime(goalkeeperPosition, ballPosition, ballVelocity));
-        
-        if (    
+
+
+        if (
                float.IsNaN(velocity.x)
             || float.IsNaN(velocity.y)
             || float.IsNaN(velocity.z)
@@ -40,8 +43,10 @@ public class GoalkeeperCalculater
     {
 
         Vector3 velocity = (meetingPosition - goalkeeperPoisiton) / meetingTime;
+        
 
         return velocity;
+
     }
 
 
@@ -55,7 +60,7 @@ public class GoalkeeperCalculater
     }
 
 
-    private static float FindMeetingTime(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
+    public static float FindMeetingTime(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
     {
         
         /*
@@ -71,6 +76,21 @@ public class GoalkeeperCalculater
     }
 
 
+
+    public static float FindMeetingTime_(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
+    {
+
+        
+        float angle = Vector3.Angle(goalkeeperPosition, ballPosition);
+
+        float distance = Mathf.Cos(angle)* Vector3.Distance(goalkeeperPosition,ballPosition);
+
+        float t = distance / ballVelocity.magnitude;
+
+        return t;
+
+
+    }
 
 
 

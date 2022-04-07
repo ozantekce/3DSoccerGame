@@ -18,26 +18,36 @@ public class GoalkeeperGoWaitPositionState : GoalkeeperState
     public void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
-        float meetingTime = FindMeetingTime(
-            goalkeeper.transform.position, Ball.Instance.transform.position, Ball.Instance.GetVelocity()
-            );
 
-
-        Vector3 vel
-            = GoalkeeperCalculater.FindRequiredVelocity(goalkeeper.transform.position,
-            Ball.Instance.transform.position, Ball.Instance.GetVelocity());
-
-
-        if (vel.magnitude <= 5f || meetingTime < 0)
-            ;
-        else
+        if (Ball.Instance.IsShoted())
         {
-            if (Mathf.Abs(vel.x) <= goalkeeper.JumpPowerX
-                && Mathf.Abs(vel.y) <= goalkeeper.JumpPowerY)
-            {
 
-                GoalkeeperJumpState.jumpVelocity = vel;
-                goalkeeper.ChangeCurrentState(GoalkeeperJumpState.goalkeeperJumpState);
+            float meetingTime = GoalkeeperCalculater.FindMeetingTime(
+                goalkeeper.transform.position, Ball.Instance.transform.position, Ball.Instance.GetVelocity()
+                );
+            Vector3 vel
+                = GoalkeeperCalculater.FindRequiredVelocity(goalkeeper.transform.position,
+                Ball.Instance.transform.position, Ball.Instance.GetVelocity());
+
+            if (vel.y > 0 && meetingTime > 0)
+            {
+                if (Mathf.Abs(vel.x) < goalkeeper.JumpPowerX
+                    && Mathf.Abs(vel.y) < goalkeeper.JumpPowerY
+                    )
+                {
+                    //Debug.Log(goalkeeper.name+" "+meetingTime+" "+vel+" "+Ball.Instance.GetVelocity());
+                    GoalkeeperJumpState.jumpVelocity = vel;
+                    goalkeeper.ChangeCurrentState(GoalkeeperJumpState.goalkeeperJumpState);
+                    return;
+                }
+                else
+                {
+
+                    GoalkeeperJumpState.jumpVelocity
+                        = vel.normalized * goalkeeper.JumpPowerX;
+                    goalkeeper.ChangeCurrentState(GoalkeeperJumpState.goalkeeperJumpState);
+                    return;
+                }
             }
 
 
@@ -60,7 +70,9 @@ public class GoalkeeperGoWaitPositionState : GoalkeeperState
 
     public void ExitTheState(Goalkeeper goalkeeper)
     {
-        goalkeeper.Rb.velocity = Vector3.zero;
+        if (0.5f > Vector3.Distance(goalkeeper.WaitPosition, goalkeeper.transform.position))
+            goalkeeper.Rb.velocity = Vector3.zero;
+
     }
 
 
@@ -79,22 +91,6 @@ public class GoalkeeperGoWaitPositionState : GoalkeeperState
     }
 
 
-    private float FindMeetingTime(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
-    {
-
-        
-        float angle = Vector3.Angle(goalkeeperPosition, ballPosition);
-
-        float distance = Mathf.Cos(angle)* Vector3.Distance(goalkeeperPosition,ballPosition);
-
-        float t = distance / ballVelocity.magnitude;
-
-        
-        if (Mathf.Abs(ballVelocity.z) < 25f)
-            return -1;
-        return t;
-
-    }
 
 
 }
