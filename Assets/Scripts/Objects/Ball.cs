@@ -20,8 +20,6 @@ public class Ball : MonoBehaviour
     public Rigidbody Rb { get => rb; set => rb = value; }
 
 
-
-
     private void Awake()
     {
 
@@ -43,38 +41,48 @@ public class Ball : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         cooldownToHit = new Cooldown(100f);
-
+        cooldownToShot = new Cooldown(100f);
     }
-
-
 
 
     private Cooldown cooldownToHit;
-    public void HitTheBall(float axisX, float axisZ ,float maxVel)
+    public bool HitTheBall(Vector3 vector)
     {
-
-
-
-        Vector3 targetVelocity = maxVel * new Vector3 (axisX, 0, axisZ).normalized;
-
-
-        Vector3 addVelocity = targetVelocity - rb.velocity;
-
-        if(addVelocity.magnitude > maxVel)
+        if (cooldownToHit.Ready())
         {
-            addVelocity = addVelocity.normalized*maxVel;
-        }
-
-        rb.velocity += addVelocity;
-
-
-
+            rb.AddForce(vector, ForceMode.VelocityChange);
+            return true;
+        }else
+            return false;
+    }
+    
+    public void HitTheBall_(Vector3 vector)
+    {
+        rb.AddForce(vector, ForceMode.VelocityChange);
     }
 
+
+    private Cooldown cooldownToShot;
+    public bool Shot(Vector3 vector) {
+
+        if (cooldownToShot.Ready())
+        {
+            rb.AddForce(vector, ForceMode.VelocityChange);
+            return true;
+        }
+        else
+            return false;
+    }
 
     public Vector3 GetVelocity()
     {
         return rb.velocity;
+    }
+
+
+    public bool IsShoted()
+    {
+        return cooldownToShot.Peek();
     }
 
     public void MyMovePosition(Vector3 position, float speed)

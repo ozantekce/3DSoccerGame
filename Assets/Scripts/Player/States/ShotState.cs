@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootState : PlayerState
+public class ShotState : PlayerState
 {
 
-    public static ShootState shootState = new ShootState();
+    public static ShotState shootState = new ShotState();
 
     public void EnterTheState(Player player)
     {
-        player.ChangeCurrentAction(new ShootAction(player, null));
+        player.ChangeCurrentAction(new ShotAction(player, null));
         player.StartCurrentAction();
-        player.ChangeAnimation("Shoot");
+        player.ChangeAnimation("Shot");
 
     }
 
@@ -50,10 +50,10 @@ public class ShootState : PlayerState
     }
 
 
-    public class ShootAction : PlayerAction
+    public class ShotAction : PlayerAction
     {
 
-        public ShootAction(Player player, PlayerAction nextAction) : base(player, nextAction, 300f, 500f)
+        public ShotAction(Player player, PlayerAction nextAction) : base(player, nextAction, 300f, 500f)
         {
         }
 
@@ -62,18 +62,14 @@ public class ShootState : PlayerState
         private float verticalValue;
         private float horizontalValue;
 
-        
 
         protected override void Action_()
         {
-
-            //Debug.Log("shoot");
-
-            Vector3 addVelocity
+            //Debug.Log("shot");
+            Vector3 shotVector
                 = (shootButtonValue) * Player.ShootPower
                 * (Player.transform.forward + new Vector3(verticalValue, 0.5f, horizontalValue));
-
-            Player.Ball.Rb.velocity += addVelocity;
+            Ball.Instance.Shot(shotVector);
 
         }
 

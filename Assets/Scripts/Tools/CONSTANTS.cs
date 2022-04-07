@@ -21,13 +21,17 @@ public static class CONSTANTS
 
     public static float Linear(float value , float minValue , float maxValue)
     {
+        if (value < minValue)
+            return 0;
+        if (value > maxValue)
+            return 1;
+        else
+            return (1 / (maxValue - minValue)) * value;
 
-        value = minValue + (maxValue - minValue) * value;
-
-
-        return value;
 
     }
+    
+
 
 
     public static float Normalize_angle_to_pos_neg_180(float angle)

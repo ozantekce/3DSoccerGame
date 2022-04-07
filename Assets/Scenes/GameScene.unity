@@ -145,7 +145,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1238557012131903154, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
   m_PrefabInstance: {fileID: 753811811}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &705059530
+--- !u!114 &705059539
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,20 +154,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 705059529}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c108e18f68bc7a84ab7e3cc20207d1a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 160572c3a3d91014c873b6acc0c9d6d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 0
-  movementSpeed: 10
-  shootPower: 30
-  jumpPowerY: 15
-  jumpPowerX: 20
-  waitPositionTransform: {fileID: 705059537}
---- !u!4 &705059537 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1908380167772875784, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
-  m_PrefabInstance: {fileID: 753811811}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &714724449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -296,6 +285,14 @@ PrefabInstance:
     - target: {fileID: 2323832196508126893, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: team
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2323832196508126893, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
+      propertyPath: jumpPowerX
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2323832196508126893, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
+      propertyPath: jumpPowerY
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8077573029103400496, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_Mass
@@ -685,6 +682,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1934768783, guid: 8e343ee225672544aa4b7f80c3510578, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427760531366770835, guid: 8e343ee225672544aa4b7f80c3510578, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427760531610216092, guid: 8e343ee225672544aa4b7f80c3510578, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427760531927702402, guid: 8e343ee225672544aa4b7f80c3510578, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427760532906015104, guid: 8e343ee225672544aa4b7f80c3510578, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5655273029595674294, guid: 8e343ee225672544aa4b7f80c3510578, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131864100484844950, guid: 8e343ee225672544aa4b7f80c3510578, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7942116965625558528, guid: 8e343ee225672544aa4b7f80c3510578, type: 3}
       propertyPath: m_Name
       value: Field

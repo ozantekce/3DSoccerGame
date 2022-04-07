@@ -39,6 +39,18 @@ public class Cooldown
 
     }
 
+    public bool Peek()
+    {
+
+        if (ElapsedTime() >= cooldown)
+        {
+            return true;
+        }
+        else
+            return false;
+
+    }
+
     public void Reset()
     {
         lastTime = Time.realtimeSinceStartup;

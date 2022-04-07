@@ -11,7 +11,7 @@ public class GoalkeeperShootState : GoalkeeperState
     {
         goalkeeper.ChangeCurrentAction(new ShootAction(goalkeeper, null));
         goalkeeper.StartCurrentAction();
-        goalkeeper.ChangeAnimation("Shoot");
+        goalkeeper.ChangeAnimation("Shot");
 
     }
 
@@ -39,7 +39,7 @@ public class GoalkeeperShootState : GoalkeeperState
     public class ShootAction : GoalkeeperAction
     {
 
-        public ShootAction(Goalkeeper player, GoalkeeperAction nextAction) : base(player, nextAction, 0, 1000f)
+        public ShootAction(Goalkeeper player, GoalkeeperAction nextAction) : base(player, nextAction, 300, 1000f)
         {
         }
 

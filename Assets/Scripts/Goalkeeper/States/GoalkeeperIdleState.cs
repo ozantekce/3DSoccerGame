@@ -26,7 +26,7 @@ public class GoalkeeperIdleState : GoalkeeperState
             Ball.Instance.transform.position, Ball.Instance.GetVelocity());
         
 
-        if (vel.magnitude <=5f || meetingTime < 0)
+        if (vel.magnitude <=5f || meetingTime < 0 || !Ball.Instance.IsShoted())
         {
             //Debug.Log("vel : " + vel+" mt :"+meetingTime);
         }
@@ -58,6 +58,8 @@ public class GoalkeeperIdleState : GoalkeeperState
             goalkeeper.ChangeCurrentState(GoalkeeperGoWaitPositionState.goalkeeperGoWaitPositionState);
         }
 
+        Spin(goalkeeper);
+
 
 
     }
@@ -69,26 +71,48 @@ public class GoalkeeperIdleState : GoalkeeperState
 
 
 
+    private float gap = 4f;        //  küçük açý farklarý görmezden gelinir
+    private float spinSpeed = 500f; //  rotation deðiþim hýzý
+    private void Spin(Goalkeeper goalkeeper)
+    {
+        Vector3 ballForwardVector = (goalkeeper.Ball.transform.position - goalkeeper.transform.position).normalized;
+        Vector2 targetForward = new Vector3(ballForwardVector.x, ballForwardVector.z).normalized;
+
+
+        Vector2 curretForward = new Vector2(goalkeeper.transform.forward.x, goalkeeper.transform.forward.z);
+
+        //  aradaki açý bulundu
+        float angleBetweenVectors = Vector2.SignedAngle(curretForward, targetForward);
+
+        // aradaki açý küçük deðil ise iþlem yapýlýr
+        if (Mathf.Abs(angleBetweenVectors) > gap)
+        {
+            //-- dönme yönüne göre playerýn eulerAnglesý spinSpeed*Time.deltaTime kadar deðiþtirildi
+            Vector3 eulerAng = goalkeeper.transform.eulerAngles;
+            eulerAng.y += spinSpeed * Time.deltaTime * ((angleBetweenVectors < 0) ? +1 : -1);
+            goalkeeper.transform.eulerAngles = eulerAng;
+            //---
+
+        }
+
+    }
+
+
     private float FindMeetingTime(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
     {
 
-        /*
-         // daha iyi eksenlerden baðýmsýz ama yönetilmesi daha zor
-         // ilerde üzerine düþünülebilir
         float angle = Vector3.Angle(goalkeeperPosition, ballPosition);
 
         float distance = Mathf.Cos(angle)* Vector3.Distance(goalkeeperPosition,ballPosition);
 
         float t = distance / ballVelocity.magnitude;
 
-        return t;*/
-
         // daha iyi bir kontrol eklenmeli
         if (Mathf.Abs(ballVelocity.z) < 20f)
             return -1;
 
+        return t;
 
-        return (goalkeeperPosition.z - ballPosition.z) / ballVelocity.z;
     }
 
 

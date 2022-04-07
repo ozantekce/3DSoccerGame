@@ -53,12 +53,12 @@ public class IdleState: PlayerState
         if (currentState == State.withoutBall)
         {
             //Debug.Log("exit : IdleState_withoutBall");
-            player.ChangeAnimation("Idle");
+
         }
         else
         {
             //Debug.Log("exit : IdleState_withBall");
-            player.ChangeAnimation("IdleWithBallRight");
+
         }
     }
 
@@ -75,7 +75,7 @@ public class IdleState: PlayerState
         }
         else if (player.ShootInput!=0)
         {   //Shoot inputu var shootState e gider
-            player.ChangeCurrentState(ShootState.shootState);
+            player.ChangeCurrentState(ShotState.shootState);
         }
         else if(player.PassInput!=0)
         {   //Pass inputu var passState e gider
@@ -87,21 +87,19 @@ public class IdleState: PlayerState
             // Hareket inputu var runningState gider
             player.ChangeCurrentState(RunningState.runningState);
         }
-        // kontrol bitti 
-
-
-        Vector3 velocity = player.Rb.velocity;
-        velocity.x = 0;
-        velocity.z = 0;
-        player.Rb.velocity = velocity; // -> playerýn hýzý y dýþýnda 0 a eþitlendi
-
+        else
+        {
+            Vector3 velocity = player.Rb.velocity;
+            velocity.x = 0;
+            velocity.z = 0;
+            player.Rb.velocity = velocity; // -> playerýn hýzý y dýþýnda 0 a eþitlendi
+        }
 
     }
 
 
     private void ExecuteWithoutBall(Player player)
     {
-
 
         if (player.FallBySlide)
         {

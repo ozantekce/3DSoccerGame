@@ -12,7 +12,7 @@ public class PassState : PlayerState
 
         player.ChangeCurrentAction(new PassAction(player, null));
         player.StartCurrentAction();
-        player.ChangeAnimation("Pass");
+        player.ChangeAnimation("Shot");
 
     }
 
@@ -60,22 +60,32 @@ public class PassState : PlayerState
 
 
         private float passButtonValue;
-        private float vertcialInputValue;
         protected override void Action_()
         {
 
             Debug.Log("pass");
-            // topun kontrolünü býraktý
-            Player.BallVision.ballTransform = null;
+            Transform target = PassTargetTransform();
 
-            Vector3 directionVector = PassTargetPosition() - Player.Ball.transform.position;
+            Vector3 directionVector = target.position - Player.Ball.transform.position;
             directionVector = directionVector.normalized;
             Vector3 addVelocity
                 = passButtonValue * Player.PassPower
-                * directionVector + new Vector3(vertcialInputValue, 0.4f, 0);
+                * (directionVector + new Vector3(0, 0.1f, 0));
+
+            if(VectorCalculater.CheckVectorXFrontOfVectorY(
+                    Player.transform.forward,
+                    (target.position - Player.transform.position).normalized
+                ))
+            {
+                Player.Ball.Rb.velocity += addVelocity;
+            }
+            else
+            {
+                Player.Ball.Rb.velocity += Player.transform.forward*addVelocity.magnitude/2;
+            }
 
 
-            Player.Ball.Rb.velocity += addVelocity;
+            
 
         }
 
@@ -83,7 +93,6 @@ public class PassState : PlayerState
         protected override void BeforeAction()
         {
             this.passButtonValue = Player.PassInput;
-            this.vertcialInputValue = Player.VerticalInput;
         }
 
         protected override void AfterAction()
@@ -93,9 +102,9 @@ public class PassState : PlayerState
         }
 
         
-        private Vector3 PassTargetPosition()
+        private Transform PassTargetTransform()
         {
-            Vector3 passTarget;
+            Transform passTarget;
 
             // en yakýn takým arkadaþýnýn ön tarafý olacak
             // þuan 2 vs 2 olduðu için if yeterli
@@ -104,12 +113,12 @@ public class PassState : PlayerState
                 if(Player.PlayerIndex == 1)
                 {
                     passTarget
-                        = GameManager.Instance.teamOneList[1].GameObject_.transform.position;
+                        = GameManager.Instance.teamOneList[1].GameObject_.transform;
                 }
                 else
                 {
                     passTarget
-                        = GameManager.Instance.teamOneList[0].GameObject_.transform.position;
+                        = GameManager.Instance.teamOneList[0].GameObject_.transform;
                 }
 
             }
@@ -119,12 +128,12 @@ public class PassState : PlayerState
                 if (Player.PlayerIndex == 1)
                 {
                     passTarget
-                        = GameManager.Instance.teamTwoList[1].GameObject_.transform.position;
+                        = GameManager.Instance.teamTwoList[1].GameObject_.transform;
                 }
                 else
                 {
                     passTarget
-                        = GameManager.Instance.teamTwoList[0].GameObject_.transform.position;
+                        = GameManager.Instance.teamTwoList[0].GameObject_.transform;
                 }
 
             }

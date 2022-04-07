@@ -2075,8 +2075,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 16
   shootPower: 25
-  passPower: 45
+  passPower: 30
   slidePower: 20
+  hitPower: 15
 --- !u!114 &4376745567909416784
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,7 +15,6 @@ public class SlideState : PlayerState
         player.ChangeAnimation("Slide");
 
     }
-
     public void ExecuteTheState(Player player)
     {
 
@@ -36,8 +35,10 @@ public class SlideState : PlayerState
             player.ChangeCurrentState(IdleState.idleState);
 
         }
-
+        
     }
+
+
 
     public void ExitTheState(Player player)
     {
