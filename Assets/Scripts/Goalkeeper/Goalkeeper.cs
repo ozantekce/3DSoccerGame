@@ -18,6 +18,9 @@ public class Goalkeeper : MonoBehaviour
     private BallVision ballVision;
     private Ball ball;
 
+    public Transform handPositionWhileJumping;
+    public Hand leftHand;
+    public Hand rightHand;
 
 
 
@@ -96,13 +99,7 @@ public class Goalkeeper : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ball"))
-        {
-            Ball.Rb.velocity = Vector3.forward * 10f * direction;
-        }
-    }
+
 
     public GoalkeeperState CurrentState { get => currentState; }
     public GoalkeeperAction CurrentAction { get => currentAction; }

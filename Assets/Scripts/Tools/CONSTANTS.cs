@@ -5,20 +5,13 @@ using UnityEngine;
 public static class CONSTANTS 
 {
 
-    public readonly static Dictionary<Direction, Vector3> direction_Vector_Dictionary = Create_direction_Vector_Dictionary();
-    private static Dictionary<Direction, Vector3> Create_direction_Vector_Dictionary()
-    {
-        Dictionary<Direction, Vector3> temp = new Dictionary<Direction, Vector3>();
-        temp.Add(Direction.forward, Vector3.forward);
-        temp.Add(Direction.backward, -Vector3.forward);
-        temp.Add(Direction.left, -Vector3.right);
-        temp.Add(Direction.right, Vector3.right);
-        temp.Add(Direction.none, Vector3.zero);
-        return temp;
-    }
-
-
-
+    /// <summary>
+    /// return value between 0 and 1 that is linear with value parameter
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="minValue"></param>
+    /// <param name="maxValue"></param>
+    /// <returns></returns>
     public static float Linear(float value , float minValue , float maxValue)
     {
         if (value < minValue)
@@ -33,7 +26,11 @@ public static class CONSTANTS
     
 
 
-
+    /// <summary>
+    /// return angle that is nonnegative and between 0-360
+    /// </summary>
+    /// <param name="angle"></param>
+    /// <returns></returns>
     public static float Normalize_angle_to_pos_neg_180(float angle)
     {
 

@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoalkeeperShootState : GoalkeeperState
+public class GoalkeeperDropKickState : GoalkeeperState
 {
 
-    public static GoalkeeperShootState goalkeeperShootState = new GoalkeeperShootState();
+
+    public static GoalkeeperDropKickState goalkeeperDropKickState = new GoalkeeperDropKickState();
 
     public void EnterTheState(Goalkeeper goalkeeper)
     {
-        goalkeeper.ChangeCurrentAction(new ShootAction(goalkeeper, null));
+
+
+
+        goalkeeper.ChangeCurrentAction(new DropKickAction(goalkeeper, null));
+
         goalkeeper.StartCurrentAction();
-        goalkeeper.ChangeAnimation("Shot");
+        goalkeeper.ChangeAnimation("DropKick");
 
     }
 
@@ -32,14 +37,14 @@ public class GoalkeeperShootState : GoalkeeperState
 
     public void ExitTheState(Goalkeeper goalkeeper)
     {
-        
+
     }
 
 
-    public class ShootAction : GoalkeeperAction
+    public class DropKickAction : GoalkeeperAction
     {
 
-        public ShootAction(Goalkeeper player, GoalkeeperAction nextAction) : base(player, nextAction, 300, 1000f)
+        public DropKickAction(Goalkeeper goalkeeper, GoalkeeperAction nextAction) : base(goalkeeper, nextAction, 2000f, 1500f)
         {
         }
 
@@ -47,29 +52,31 @@ public class GoalkeeperShootState : GoalkeeperState
         protected override void Action_()
         {
 
-            //Debug.Log("shoot");
-
-            if (!Goalkeeper.BallVision.IsThereBallInVision())
-                return;
-
+            Debug.Log("dropKick");
             Vector3 addVelocity
                 = Goalkeeper.ShootPower * (new Vector3(0, 0.5f, Goalkeeper.Direction));
 
             Goalkeeper.Ball.Rb.velocity = addVelocity;
-
         }
 
         protected override void BeforeAction()
         {
 
+            Goalkeeper.leftHand.DropBall = true;
+            Goalkeeper.rightHand.DropBall = true;
+
         }
+
+
 
         protected override void AfterAction()
         {
-            //
+            Goalkeeper.leftHand.DropBall = false;
+            Goalkeeper.rightHand.DropBall = false;
         }
 
 
     }
+
 
 }

@@ -49,7 +49,7 @@ public class SlideState : PlayerState
     public class SlideAction : PlayerAction
     {
 
-        public SlideAction(Player player, PlayerAction nextAction) : base(player, nextAction, 300f, 1000f)
+        public SlideAction(Player player, PlayerAction nextAction) : base(player, nextAction, 100f, 1000f)
         {
         }
 

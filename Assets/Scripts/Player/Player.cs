@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
         // koþma hýzý ile oranlý animasyon hýzý
         animator.SetFloat("MovementSpeed", 0.7f + (rb.velocity.magnitude / 25f));
 
+        // input getting in update
         shootInput = Inputter.GetButtonShootValue();
         passInput = Inputter.GetButtonPassValue();
         slideInput = Inputter.GetButtonSlideValue();
@@ -61,11 +62,15 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        // current state executing
         currentState.ExecuteTheState(this);
 
     }
 
+    /// <summary>
+    /// change current state with parameter
+    /// </summary>
+    /// <param name="nextState"></param>
     public void ChangeCurrentState(PlayerState nextState)
     {
         currentState.ExitTheState(this);
@@ -73,6 +78,10 @@ public class Player : MonoBehaviour
         currentState.EnterTheState(this);
     }
 
+    /// <summary>
+    /// change current action with parameter
+    /// </summary>
+    /// <param name="action"></param>
     public void ChangeCurrentAction(PlayerAction action){ currentAction = action;}
 
     public void AddActionToCurrentAction(PlayerAction action){ currentAction.AddAction(action);}

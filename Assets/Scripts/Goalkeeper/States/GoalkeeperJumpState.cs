@@ -23,7 +23,16 @@ public class GoalkeeperJumpState : GoalkeeperState
 
         if(goalkeeper.CurrentAction == null)
         {
-            goalkeeper.ChangeCurrentState(GoalkeeperIdleState.goalkeeperIdleState);
+            if (goalkeeper.leftHand.HasBall)
+            {
+                goalkeeper.ChangeCurrentState(GoalkeeperDropKickState.goalkeeperDropKickState);
+            }
+            else
+            {
+                goalkeeper.ChangeCurrentState(GoalkeeperIdleState.goalkeeperIdleState);
+            }
+            
+
         }
 
     }

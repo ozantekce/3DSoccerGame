@@ -65,11 +65,15 @@ public class ShotState : PlayerState
 
         protected override void Action_()
         {
+            if (!Player.BallVision.IsThereBallInVision())
+                return;
+
             //Debug.Log("shot");
             Vector3 shotVector
                 = (shootButtonValue) * Player.ShootPower
                 * (Player.transform.forward + new Vector3(verticalValue, 0.5f, horizontalValue));
-            Ball.Instance.Shot(shotVector);
+
+            Ball.Instance.Shot(Deformation.Deform(shotVector,1f,10f));
 
         }
 

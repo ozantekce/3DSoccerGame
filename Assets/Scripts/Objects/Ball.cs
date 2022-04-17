@@ -85,6 +85,9 @@ public class Ball : MonoBehaviour
         return !cooldownToShot.Peek();
     }
 
+
+
+
     public void MyMovePosition(Vector3 position, float speed)
     {
 

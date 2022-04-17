@@ -30,6 +30,7 @@ public class GoalkeeperRunForBallState : GoalkeeperState
         {
             Spin(goalkeeper);
             MyMovePosition(goalkeeper, Ball.Instance.transform.position, goalkeeper.MovementSpeed);
+
         }
 
 

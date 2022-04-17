@@ -30,9 +30,13 @@ public class RunningState: PlayerState
         {
             //Debug.Log("exit : RunningState_withBall");
             // top yavaþlatýlmalý
-            Vector3 directionVector 
-                =VectorCalculater.CalculateDirectionVector(Ball.Instance.GetVelocity(),Vector3.zero);
-            Ball.Instance.HitTheBall_(directionVector* player.HitPower);
+            if(player.ShootInput != 0)
+            {
+                Vector3 directionVector
+                    = VectorCalculater.CalculateDirectionVector(Ball.Instance.GetVelocity(), Vector3.zero);
+                Ball.Instance.HitTheBall_(directionVector * player.HitPower);
+            }
+
 
         }
 
@@ -157,23 +161,8 @@ public class RunningState: PlayerState
                     // top vuracak kadar yakýn mý ?
                     switch (distanceWithBall<minDistanceToHitBall) {
 
-                        default:
-                            {
-                                //Her zaman topa doðru koþ
-                                Vector3 directionVector
-                                    = VectorCalculater.CalculateDirectionVectorWithoutYAxis(
-                                        player.transform.position, Ball.Instance.transform.position
-                                        );
-
-                                Spin(player, VectorCalculater.Vector3toVector2(directionVector, Axis.y).normalized);
-                                float trackingSpeed
-                                   = player.MovementSpeed * CONSTANTS.Linear(distanceWithBall, 0, 3f);
-
-                                player.Rb.velocity = trackingSpeed * directionVector; ;
-                            }
-                            break;
                         case true:
-                            {//
+                            {
                                 //Evet topa vur
                                 if(Ball.Instance.HitTheBall(
                                     CalculateHitVector(player)))
@@ -192,6 +181,21 @@ public class RunningState: PlayerState
                                 //Hayýr bir þey yapma
                             }
                             goto default;
+                        default:
+                            {
+                                //Her zaman topa doðru koþ
+                                Vector3 directionVector
+                                    = VectorCalculater.CalculateDirectionVectorWithoutYAxis(
+                                        player.transform.position, Ball.Instance.transform.position
+                                        );
+
+                                Spin(player, VectorCalculater.Vector3toVector2(directionVector, Axis.y).normalized);
+                                float trackingSpeed
+                                   = player.MovementSpeed * CONSTANTS.Linear(distanceWithBall, 0, 3f);
+
+                                player.Rb.velocity = trackingSpeed * directionVector; ;
+                            }
+                            break;
 
                     }
                 }
@@ -257,7 +261,8 @@ public class RunningState: PlayerState
         //  kuþ bakýþý yapýlýyor olarak düþünülebilir
 
         // x ve z eksenindeki mevcut Forward vektörü bulundu
-        Vector2 curretForward = new Vector2(player.transform.forward.x, player.transform.forward.z);
+
+        Vector2 curretForward = VectorCalculater.ThreeDForwardToTwoDForward(player.transform.forward);
 
         //  aradaki açý bulundu
         float angleBetweenVectors = Vector2.SignedAngle(curretForward, targetForward);

@@ -64,13 +64,17 @@ public class PassState : PlayerState
         {
 
             Debug.Log("pass");
+
+            if (!Player.BallVision.IsThereBallInVision())
+                return;
+
             Transform target = PassTargetTransform();
 
             Vector3 directionVector = target.position - Player.Ball.transform.position;
             directionVector = directionVector.normalized;
             Vector3 addVelocity
                 = passButtonValue * Player.PassPower
-                * (directionVector + new Vector3(0, 0.1f, 0));
+                * (directionVector + new Vector3(0, 0.2f, 0));
 
             if(VectorCalculater.CheckVectorXFrontOfVectorY(
                     Player.transform.forward,
@@ -81,7 +85,7 @@ public class PassState : PlayerState
             }
             else
             {
-                Player.Ball.Rb.velocity += Player.transform.forward*addVelocity.magnitude/2;
+                Player.Ball.Rb.velocity += Player.transform.forward*15f;
             }
 
 

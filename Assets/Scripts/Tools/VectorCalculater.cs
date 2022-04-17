@@ -7,19 +7,11 @@ public class VectorCalculater
 
 
 
-    public static float FindAngleAroundVectors(Vector3 vector1,Vector3 vector2)
-    {
-
-        return Vector3.Angle(vector1,vector2);
-
-    }
-
-
     public static bool CheckVectorXFrontOfVectorY(Vector3 vectorX,Vector3 vectorY)
     {
 
         float cos = (Vector3.Dot(vectorX, vectorY) / (vectorX.magnitude* vectorY.magnitude));
-        Debug.Log(cos);
+
         return cos > 0;
 
     }
@@ -34,23 +26,38 @@ public class VectorCalculater
 
     }
 
-
+    /// <summary>
+    /// return the unit vector needed to get to the destination
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
     public static Vector3 CalculateDirectionVector(Vector3 position, Vector3 target)
     {
         return ( target - position ).normalized;
     }
 
+
+    /// <summary>
+    /// return the unit vector needed to get to the destination but ignoring y axis because
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
     public static Vector3 CalculateDirectionVectorWithoutYAxis(Vector3 position, Vector3 target)
     {
-
         target.y = 0;
         position.y = 0;
-
         return (target - position).normalized;
 
     }
 
-
+    /// <summary>
+    /// remove the removeAxis and return a vector2
+    /// </summary>
+    /// <param name="vector"></param>
+    /// <param name="removeAxis"></param>
+    /// <returns></returns>
     public static Vector2 Vector3toVector2(Vector3 vector, Axis removeAxis)
     {
         Vector2 rtn = Vector2.zero;
@@ -70,6 +77,13 @@ public class VectorCalculater
 
         return rtn;
 
+    }
+
+
+
+    public static Vector2 ThreeDForwardToTwoDForward(Vector3 vector)
+    {
+        return new Vector2(vector.x, vector.z).normalized;
     }
 
 
