@@ -16,7 +16,7 @@ public class Hand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        dropBall = true;
     }
 
     // Update is called once per frame
@@ -24,7 +24,6 @@ public class Hand : MonoBehaviour
     {
         
     }
-
 
 
     private void OnTriggerStay(Collider other)
@@ -36,9 +35,9 @@ public class Hand : MonoBehaviour
 
             if (!dropBall)
             {
-                Ball.Instance.transform.position = transform.position;
                 Ball.Instance.Rb.velocity = Vector3.zero;
                 Ball.Instance.Rb.angularVelocity = Vector3.zero;
+                Ball.Instance.Rb.MovePosition(transform.position);
             }
                 
 

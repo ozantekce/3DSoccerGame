@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     {
         // animatorde MovementSpeed parametresi run animasyonunun hýzýný belirliyor
         // koþma hýzý ile oranlý animasyon hýzý
-        animator.SetFloat("MovementSpeed", 0.7f + (rb.velocity.magnitude / 25f));
+        //animator.SetFloat("MovementSpeed", 0.7f + (rb.velocity.magnitude / 25f));
 
         // input getting in update
         shootInput = Inputter.GetButtonShootValue();

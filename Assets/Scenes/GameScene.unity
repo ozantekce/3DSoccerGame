@@ -140,23 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b189f9ecf9d9714b9fd2aeebf299d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &705059529 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1238557012131903154, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
-  m_PrefabInstance: {fileID: 753811811}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &705059539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 705059529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160572c3a3d91014c873b6acc0c9d6d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &714724449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -252,7 +235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1238557012131903154, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1238557012131903154, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_TagString
@@ -316,11 +299,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8077573029103400496, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_Mass
-      value: 50000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8077573029103400498, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: sensivity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077573029103400504, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
+      propertyPath: visionRadius
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8995979900146645818, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
@@ -645,6 +632,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 775245724, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 1238557012131903154, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_Name
       value: Goalkeeper_team1
@@ -692,10 +683,6 @@ PrefabInstance:
     - target: {fileID: 1908380167772875784, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2323832196508126893, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
-      propertyPath: movementSpeed
-      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}

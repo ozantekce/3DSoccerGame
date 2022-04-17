@@ -10,6 +10,9 @@ public class GoalkeeperJumpState : GoalkeeperState
 
     public void EnterTheState(Goalkeeper goalkeeper)
     {
+        goalkeeper.leftHand.DropBall = false;
+        goalkeeper.rightHand.DropBall = false;
+
         goalkeeper.ChangeCurrentAction(new JumpAction(goalkeeper
             , new WaitForStandUpAction(goalkeeper,null)));
 
@@ -25,7 +28,7 @@ public class GoalkeeperJumpState : GoalkeeperState
         {
             if (goalkeeper.leftHand.HasBall)
             {
-                goalkeeper.ChangeCurrentState(GoalkeeperDropKickState.goalkeeperDropKickState);
+                goalkeeper.ChangeCurrentState(GoalkeeperOverhandThrowState.goalkeeperOverhandThrowState);
             }
             else
             {

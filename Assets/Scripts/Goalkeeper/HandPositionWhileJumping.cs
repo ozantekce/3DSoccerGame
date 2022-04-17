@@ -25,7 +25,7 @@ public class HandPositionWhileJumping : MonoBehaviour
 
         if (other.CompareTag("Ball"))
         {
-            //Debug.Log("ball ");
+            Debug.Log("ball ");
             //Ball.Instance.transform.position = rightHand.transform.position;
             Ball.Instance.Rb.MovePosition(rightHand.transform.position);
 
