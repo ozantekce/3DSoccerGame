@@ -7,7 +7,7 @@ public class GoalkeeperShootState : GoalkeeperState
 
     public static GoalkeeperShootState goalkeeperShootState = new GoalkeeperShootState();
 
-    public void EnterTheState(Goalkeeper goalkeeper)
+    public override void EnterTheState(Goalkeeper goalkeeper)
     {
         goalkeeper.ChangeCurrentAction(new ShootAction(goalkeeper, null));
         goalkeeper.StartCurrentAction();
@@ -15,7 +15,7 @@ public class GoalkeeperShootState : GoalkeeperState
 
     }
 
-    public void ExecuteTheState(Goalkeeper goalkeeper)
+    public override void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
         if (!goalkeeper.ActionsOver())
@@ -30,7 +30,7 @@ public class GoalkeeperShootState : GoalkeeperState
 
     }
 
-    public void ExitTheState(Goalkeeper goalkeeper)
+    public override void ExitTheState(Goalkeeper goalkeeper)
     {
         
     }

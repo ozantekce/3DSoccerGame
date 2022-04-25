@@ -8,14 +8,14 @@ public class GoalkeeperGoWaitPositionState : GoalkeeperState
     public static GoalkeeperGoWaitPositionState goalkeeperGoWaitPositionState = new GoalkeeperGoWaitPositionState();
 
 
-    public void EnterTheState(Goalkeeper goalkeeper)
+    public override void EnterTheState(Goalkeeper goalkeeper)
     {
 
         goalkeeper.ChangeAnimation("JogBackward");
 
     }
 
-    public void ExecuteTheState(Goalkeeper goalkeeper)
+    public override void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
 
@@ -23,10 +23,10 @@ public class GoalkeeperGoWaitPositionState : GoalkeeperState
         {
 
             float meetingTime = GoalkeeperCalculater.FindMeetingTime(
-                goalkeeper.handPositionWhileJumping.position, Ball.Instance.transform.position, Ball.Instance.GetVelocity()
+                goalkeeper.cacthArea.position, Ball.Instance.transform.position, Ball.Instance.GetVelocity()
                 );
             Vector3 jumpVelocity
-                = GoalkeeperCalculater.FindRequiredVelocity(goalkeeper.handPositionWhileJumping.position,
+                = GoalkeeperCalculater.FindRequiredVelocity(goalkeeper.cacthArea.position,
                 Ball.Instance.transform.position, Ball.Instance.GetVelocity());
 
             if (jumpVelocity.y > 0 && meetingTime > 0)
@@ -51,7 +51,7 @@ public class GoalkeeperGoWaitPositionState : GoalkeeperState
     }
 
 
-    public void ExitTheState(Goalkeeper goalkeeper)
+    public override void ExitTheState(Goalkeeper goalkeeper)
     {
         if (0.5f > Vector3.Distance(goalkeeper.WaitPosition, goalkeeper.transform.position))
             goalkeeper.Rb.velocity = Vector3.zero;

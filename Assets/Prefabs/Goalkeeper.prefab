@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416638784}
   m_LocalRotation: {x: -0.0049852696, y: 0.02034381, z: 0.99585545, w: 0.08850561}
-  m_LocalPosition: {x: -0.009, y: 0.079, z: 0.109}
+  m_LocalPosition: {x: -0.012, y: 0.073, z: 0.153}
   m_LocalScale: {x: 0.19999994, y: 0.19999994, z: 0.19999996}
   m_Children: []
   m_Father: {fileID: 7381836996900155139}
@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdcff88ca393f34f82cb0081484e5f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropBall: 0
 --- !u!1 &775245723
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +123,7 @@ GameObject:
   - component: {fileID: 775245725}
   - component: {fileID: 775245728}
   m_Layer: 7
-  m_Name: HandPositionWhileJumping
+  m_Name: CatchArea
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -136,8 +137,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 775245723}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.824, z: -0.003}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.65}
+  m_LocalPosition: {x: -0, y: 0.848, z: 0.06}
+  m_LocalScale: {x: 1, y: 0.7, z: 0.3}
   m_Children: []
   m_Father: {fileID: 2754622955980426238}
   m_RootOrder: 3
@@ -217,6 +218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rightHand: {fileID: 1580354570}
+  leftHand: {fileID: 416638785}
+  goalkeeper: {fileID: 2323832196508126893}
 --- !u!1 &1580354569
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1580354569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.006, y: 0.08, z: 0.109}
+  m_LocalPosition: {x: -0.012, y: 0.073, z: 0.153}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 1371266455074657656}
@@ -325,6 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdcff88ca393f34f82cb0081484e5f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropBall: 0
 --- !u!1 &387383488441480206
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +804,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
-  handPositionWhileJumping: {fileID: 775245724}
+  center: {fileID: 0}
+  radius: 9
+  cacthArea: {fileID: 775245724}
   leftHand: {fileID: 416638786}
   rightHand: {fileID: 1580354571}
   movementSpeed: 17

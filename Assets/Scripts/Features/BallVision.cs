@@ -23,7 +23,7 @@ public class BallVision : MonoBehaviour
 
     public bool IsThereBallInVision()
     {
-        return ballTransform != null;
+        return ballTransform != null && !Ball.Instance.Rb.isKinematic;
     }
 
     void Start()

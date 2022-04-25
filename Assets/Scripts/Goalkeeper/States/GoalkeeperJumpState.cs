@@ -8,7 +8,7 @@ public class GoalkeeperJumpState : GoalkeeperState
     public static GoalkeeperJumpState goalkeeperJumpState = new GoalkeeperJumpState();
 
 
-    public void EnterTheState(Goalkeeper goalkeeper)
+    public override void EnterTheState(Goalkeeper goalkeeper)
     {
         goalkeeper.leftHand.DropBall = false;
         goalkeeper.rightHand.DropBall = false;
@@ -21,12 +21,12 @@ public class GoalkeeperJumpState : GoalkeeperState
 
     }
 
-    public void ExecuteTheState(Goalkeeper goalkeeper)
+    public override void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
         if(goalkeeper.CurrentAction == null)
         {
-            if (goalkeeper.leftHand.HasBall)
+            if (goalkeeper.leftHand.HasBall||goalkeeper.rightHand.HasBall)
             {
                 goalkeeper.ChangeCurrentState(GoalkeeperOverhandThrowState.goalkeeperOverhandThrowState);
             }
@@ -40,7 +40,7 @@ public class GoalkeeperJumpState : GoalkeeperState
 
     }
 
-    public void ExitTheState(Goalkeeper goalkeeper)
+    public override void ExitTheState(Goalkeeper goalkeeper)
     {
         
     }

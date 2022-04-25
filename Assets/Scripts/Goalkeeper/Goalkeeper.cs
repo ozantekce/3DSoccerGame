@@ -18,7 +18,12 @@ public class Goalkeeper : MonoBehaviour
     private BallVision ballVision;
     private Ball ball;
 
-    public Transform handPositionWhileJumping;
+    [SerializeField]
+    private Transform center;
+    public float radius;
+
+
+    public Transform cacthArea;
     public Hand leftHand;
     public Hand rightHand;
 
@@ -121,5 +126,6 @@ public class Goalkeeper : MonoBehaviour
     public float JumpPowerY { get => jumpPowerY; set => jumpPowerY = value; }
     public float JumpPowerX { get => jumpPowerX; set => jumpPowerX = value; }
     public int Direction { get => direction; set => direction = value; }
+    public Transform Center { get => center; set => center = value; }
 }
     

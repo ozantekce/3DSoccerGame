@@ -8,7 +8,7 @@ public class GoalkeeperOverhandThrowState : GoalkeeperState
 
     public static GoalkeeperOverhandThrowState goalkeeperOverhandThrowState = new GoalkeeperOverhandThrowState();
 
-    public void EnterTheState(Goalkeeper goalkeeper)
+    public override void EnterTheState(Goalkeeper goalkeeper)
     {
 
 
@@ -20,7 +20,7 @@ public class GoalkeeperOverhandThrowState : GoalkeeperState
 
     }
 
-    public void ExecuteTheState(Goalkeeper goalkeeper)
+    public override void ExecuteTheState(Goalkeeper goalkeeper)
     {
 
         if (!goalkeeper.ActionsOver())
@@ -35,7 +35,7 @@ public class GoalkeeperOverhandThrowState : GoalkeeperState
 
     }
 
-    public void ExitTheState(Goalkeeper goalkeeper)
+    public override void ExitTheState(Goalkeeper goalkeeper)
     {
 
     }
@@ -73,7 +73,7 @@ public class GoalkeeperOverhandThrowState : GoalkeeperState
     public class OverhandThrowAction : GoalkeeperAction
     {
 
-        public OverhandThrowAction(Goalkeeper goalkeeper, GoalkeeperAction nextAction) : base(goalkeeper, nextAction, 100f, 1500f)
+        public OverhandThrowAction(Goalkeeper goalkeeper, GoalkeeperAction nextAction) : base(goalkeeper, nextAction, 100f, 1300f)
         {
         }
 
