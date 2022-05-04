@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Inputter : MonoBehaviour
 {
     [SerializeField]
-    protected float sensivity = 0.01f;
+    protected float positiveSensivity = 0.01f, negativeSensivity = 0.01f;
 
     protected float Horizontal;
     protected float Vertical;
@@ -26,6 +26,7 @@ public abstract class Inputter : MonoBehaviour
 
     protected void Update()
     {
+        /*
         if (GameManager.Instance.Status != GameManager.GameStatus.running)
         {
             Vertical = 0;
@@ -36,7 +37,7 @@ public abstract class Inputter : MonoBehaviour
             buttonJumpValue = 0;
             return;
         }
-            
+            */
 
         Reader();
     }
@@ -45,16 +46,16 @@ public abstract class Inputter : MonoBehaviour
     {
 
         Vertical
-            = ReadJoystickInputs(Vertical, DownButtonPressed(), UpButtonPressed(), sensivity);
+            = ReadJoystickInputs(Vertical, DownButtonPressed(), UpButtonPressed(), positiveSensivity);
 
         Horizontal
-            = ReadJoystickInputs(Horizontal, LeftButtonPressed(), RightButtonPressed(), sensivity);
+            = ReadJoystickInputs(Horizontal, LeftButtonPressed(), RightButtonPressed(), positiveSensivity);
 
-        buttonShootValue = ReadOtherInputs(buttonShootValue, ShootButtonPressed(), sensivity);
-        buttonPassValue = ReadOtherInputs(buttonPassValue, PassButtonPressed(), sensivity);
-        buttonSlideValue = ReadOtherInputs(buttonSlideValue, SlideButtonPressed(), sensivity);
-        buttonJumpValue = ReadOtherInputs(buttonJumpValue, JumpButtonPressed(), sensivity);
-        buttonRunValue = ReadOtherInputs(buttonRunValue, RunButtonPressed(), sensivity);
+        buttonShootValue = ReadOtherInputs(buttonShootValue, ShotButtonPressed(), positiveSensivity,negativeSensivity);
+        buttonPassValue = ReadOtherInputs(buttonPassValue, PassButtonPressed(), positiveSensivity,negativeSensivity);
+        buttonSlideValue = ReadOtherInputs(buttonSlideValue, SlideButtonPressed(), positiveSensivity, negativeSensivity);
+        buttonJumpValue = ReadOtherInputs(buttonJumpValue, JumpButtonPressed(), positiveSensivity, negativeSensivity);
+        buttonRunValue = ReadOtherInputs(buttonRunValue, RunButtonPressed(), positiveSensivity, negativeSensivity);
 
         thereAreNoInputs = Vertical ==0 && Horizontal ==0 
             && buttonShootValue==0 && buttonPassValue==0 &&
@@ -114,10 +115,10 @@ public abstract class Inputter : MonoBehaviour
             return 0;
     }
 
-    public float GetButtonShootValue()
+    public float GetButtonShotValue()
     {
 
-        if (ShootButtonPressed())
+        if (ShotButtonPressed())
         {
             return 0;
         }
@@ -170,7 +171,7 @@ public abstract class Inputter : MonoBehaviour
     protected abstract bool RightButtonPressed();
     protected abstract bool UpButtonPressed();
     protected abstract bool DownButtonPressed();
-    protected abstract bool ShootButtonPressed();
+    protected abstract bool ShotButtonPressed();
 
     protected abstract bool PassButtonPressed();
     protected abstract bool SlideButtonPressed();
@@ -215,16 +216,16 @@ public abstract class Inputter : MonoBehaviour
 
     }
 
-    private float ReadOtherInputs(float currentValue, bool keyPressed, float sensivity)
+    private float ReadOtherInputs(float currentValue, bool keyPressed, float posSensivity,float negSensivity)
     {
 
         if (keyPressed)
         {
-            currentValue += sensivity;
+            currentValue += posSensivity;
         }
         else
         {
-            currentValue -= sensivity;
+            currentValue -= negSensivity;
         }
 
 

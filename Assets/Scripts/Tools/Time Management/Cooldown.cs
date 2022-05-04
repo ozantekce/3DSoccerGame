@@ -39,6 +39,13 @@ public class Cooldown
 
     }
 
+    public bool NotReady()
+    {
+
+        return !Ready();
+
+    }
+
     public bool Peek()
     {
 

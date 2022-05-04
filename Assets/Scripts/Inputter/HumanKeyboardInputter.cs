@@ -39,7 +39,7 @@ public class HumanKeyboardInputter : Inputter
         return Input.GetKey(buttonDownKeyboard);
     }
 
-    protected override bool ShootButtonPressed()
+    protected override bool ShotButtonPressed()
     {
         return Input.GetKey(buttonShootKeyboard);
     }

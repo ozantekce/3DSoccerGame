@@ -17,8 +17,11 @@ public class Ball : MonoBehaviour
         }
     }
 
+    private Rigidbody rb;
     public Rigidbody Rb { get => rb; set => rb = value; }
+    public bool IsShoted { get => isShoted; set => isShoted = value; }
 
+    private bool isShoted;
 
     private void Awake()
     {
@@ -33,27 +36,42 @@ public class Ball : MonoBehaviour
     }
 
 
+    private const float resetIsShotedDelay = 1f;
+    private float resetIsShotedDelayTimer = 0;
+    private void FixedUpdate()
+    {
 
-    private Rigidbody rb;
+        if (isShoted)
+        {
+            resetIsShotedDelayTimer += Time.deltaTime;
+            if(resetIsShotedDelayTimer >= resetIsShotedDelay)
+            {
+                IsShoted = false;
+            }
+        }
+        else
+        {
+            resetIsShotedDelayTimer = 0;
+        }
+        
+    }
+
+
+
 
     private void Start()
     {
 
         rb = GetComponent<Rigidbody>();
-        cooldownToHit = new Cooldown(100f);
-        cooldownToShot = new Cooldown(100f);
+
     }
 
 
-    private Cooldown cooldownToHit;
-    public bool HitTheBall(Vector3 vector)
+
+    public void HitTheBall(Vector3 vector)
     {
-        if (cooldownToHit.Ready())
-        {
-            rb.AddForce(vector, ForceMode.VelocityChange);
-            return true;
-        }else
-            return false;
+
+        Rb.AddForce(vector, ForceMode.VelocityChange);
     }
     
     public void HitTheBall_(Vector3 vector)
@@ -62,16 +80,11 @@ public class Ball : MonoBehaviour
     }
 
 
-    private Cooldown cooldownToShot;
-    public bool Shot(Vector3 vector) {
+    public void Shot(Vector3 vector) {
 
-        if (cooldownToShot.Ready())
-        {
-            rb.velocity += vector;
-            return true;
-        }
-        else
-            return false;
+        
+        rb.velocity += vector;
+        isShoted = true;
     }
 
     public Vector3 GetVelocity()
@@ -79,29 +92,9 @@ public class Ball : MonoBehaviour
         return rb.velocity;
     }
 
-
-    public bool IsShoted()
-    {
-        return !cooldownToShot.Peek();
-    }
+    
 
 
-
-
-    public void MyMovePosition(Vector3 position, float speed)
-    {
-
-        if (transform.position != position)
-        {
-            Vector3 directionVector = position - transform.position;
-            directionVector = directionVector.normalized;
-            directionVector.y = 0;
-            speed = Mathf.Clamp(speed, 0, Vector3.Distance(position, transform.position));
-            rb.velocity = directionVector * speed;
-        }
-
-
-    }
 
 
 

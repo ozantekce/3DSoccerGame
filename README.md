@@ -1,14 +1,5 @@
 # ComputerGraphicsProject
 
-https://user-images.githubusercontent.com/32203867/162645365-3aa8b037-f802-457c-b20a-38c2c8f7ee04.mp4
-
-
-
-https://user-images.githubusercontent.com/32203867/165019963-328a931d-94ac-428f-9a1c-3331c8b0c196.mp4
-
-
-
-
 DONE
 	Some features added : 
 		Dribbling
@@ -29,7 +20,8 @@ TODO
 challenges: dribbling correctly
 
 FSM:
-![FSM_Player](FSM_Player.png)
+![FSM_Footballer](Footballer_FSM.png)
+![FSM_Goalkeeper](Goalkeeper_FSM.png)
 
 
 21/03/2022:

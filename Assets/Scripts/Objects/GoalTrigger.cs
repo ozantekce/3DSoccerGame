@@ -14,7 +14,7 @@ public class GoalTrigger : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             Debug.Log("Goal");
-            GameManager.Instance.Goal(this);
+            //GameManager.Instance.Goal(this);
         }
 
     }

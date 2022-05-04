@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4939224080750517380}
   - component: {fileID: 4989958399036994582}
   - component: {fileID: 4962952929581770717}
-  - component: {fileID: 4962952929581770528}
-  - component: {fileID: 4962952929581770719}
+  - component: {fileID: 7974974580475044763}
+  - component: {fileID: 4872336010993082443}
   m_Layer: 6
   m_Name: Soccer Ball
   m_TagString: Ball
@@ -115,7 +115,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4962952929581770528
+--- !u!114 &7974974580475044763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,12 +124,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4960987461964933136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fae8a1cea314ac54aaaef3eebf806dbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c505f1116cf44a429caf04252a749d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   localGravity: 0
   gravityType: 0
---- !u!114 &4962952929581770719
+--- !u!114 &4872336010993082443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,6 +138,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4960987461964933136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9a34571697b8b34e86101030c5dadb8, type: 3}
+  m_Script: {fileID: 11500000, guid: ee23e0156959ea2478a3f8fa15fc6057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
