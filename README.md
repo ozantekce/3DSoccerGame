@@ -20,7 +20,9 @@ TODO
 challenges: dribbling correctly
 
 FSM:
+Footballer:
 ![FSM_Footballer](Footballer_FSM.png)
+Goalkeeper:
 ![FSM_Goalkeeper](Goalkeeper_FSM.png)
 
 
