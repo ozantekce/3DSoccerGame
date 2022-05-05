@@ -98,8 +98,8 @@ public class ConditionMethods
 
     public static bool Shooting(FiniteStateMachine fsm)
     {
-        Footballer player = fsm.GetComponent<Footballer>();
-        return player.IsShooting;
+        Shotable shotable = fsm.GetComponent<Shotable>();
+        return shotable.IsShooting;
     }
     public static bool NoShooting(FiniteStateMachine fsm)
     {
@@ -194,12 +194,20 @@ public class ConditionMethods
 
     public static bool GoalkeeperMeetingWithBall(FiniteStateMachine fsm)
     {
-        if (!BallShoted(fsm))
-            return false;
 
+        Goalkeeper goalkeeper = fsm.GetComponent<Goalkeeper>();
+        Vector3 meetingPosition
+            = GoalkeeperCalculater.FindMeetingPosition(goalkeeper.transform.position, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
+        //Debug.Log("mt : " + meetingPosition);
 
+        return goalkeeper.Other.IntersectWithMeetingPosition(meetingPosition);
 
-        return Ball.Instance.IsShoted;
+    }
+
+    public static bool BallShotedAndGoalkeeperMeetingWithBall(FiniteStateMachine fsm)
+    {
+
+        return BallShoted(fsm)&&GoalkeeperMeetingWithBall(fsm);
 
     }
 
@@ -207,11 +215,11 @@ public class ConditionMethods
     public static bool BallGrabbableAndBallNotGrabbed(FiniteStateMachine fsm)
     {
 
-        return BallGrabbable(fsm)&& BallNotGrabbed(fsm);
+        return BallGrabbable(fsm)&& NoBallGrabbed(fsm);
 
     }
 
-    public static bool BallNotGrabbed(FiniteStateMachine fsm)
+    public static bool NoBallGrabbed(FiniteStateMachine fsm)
     {
 
         return !Ball.Instance.Rb.isKinematic;
@@ -236,11 +244,56 @@ public class ConditionMethods
     }
 
 
-    public static bool GoalkeeperReadyToThrow(FiniteStateMachine fsm)
+
+
+    public static bool GoalkeeperBallCatchable(FiniteStateMachine fsm)
     {
 
+        if (Ball.Instance.Rb.isKinematic)
+            return false;
+
+        Collider[] intersecting = Physics.OverlapSphere(Ball.Instance.transform.position, 3.5f);
+
+        GameObject catchArea = fsm.GetComponent<Goalkeeper>().CatchArea;
+
+        foreach (Collider c in intersecting)
+        {
+            if (c.gameObject == catchArea)
+            {
+                return true;
+            }
+        }
+
         return false;
-    
+    }
+
+
+    public static bool BallCatched(FiniteStateMachine fsm)
+    {
+
+        return Ball.Instance.Rb.isKinematic;
+
+    }
+
+
+    public static bool Elapsed2SecondInState(FiniteStateMachine fsm)
+    {
+
+        if (fsm.ElapsedTimeInCurrentState() > 2f)
+            return true;
+
+
+        return false;
+    }
+
+    public static bool Elapsed4SecondInState(FiniteStateMachine fsm)
+    {
+
+        if (fsm.ElapsedTimeInCurrentState() > 4f)
+            return true;
+
+
+        return false;
     }
 
 }

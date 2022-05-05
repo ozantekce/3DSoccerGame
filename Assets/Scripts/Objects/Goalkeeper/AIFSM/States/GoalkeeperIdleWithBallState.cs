@@ -16,8 +16,9 @@ public class GoalkeeperIdleWithBallState : State
     public override void Init(FiniteStateMachine fsm)
     {
 
+        AddAction(ActionMethods.GoalkeeperHoldTheBall);
 
-        AddTransition(GoalkeeperThrowBallState.Instance,ConditionMethods.GoalkeeperReadyToThrow);
+        AddTransition(GoalkeeperThrowBallState.Instance,ConditionMethods.Elapsed2SecondInState);
 
 
     }

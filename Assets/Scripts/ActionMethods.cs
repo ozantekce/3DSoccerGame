@@ -75,15 +75,15 @@ public class ActionMethods
         Animator animator = fsm.GetComponent<Animator>();
 
         Vector3 targetPos = goalkeeper.CalculateRightPosition();
-        
+        /*
         Vector3 localDir
             = Quaternion.Inverse(goalkeeper.transform.rotation) * (targetPos - goalkeeper.transform.position);
 
         bool isForward = localDir.z > 0;
         bool isUp = localDir.y > 0;
         bool isRight = localDir.x > 0;
-
-        if (isRight)
+        */
+        if (VectorCalculater.PositionIs_(goalkeeper.transform,targetPos,Direction.right))
         {
             animator.SetBool("WalkingLeft", true);
         }
@@ -113,10 +113,29 @@ public class ActionMethods
         Ball ball = Ball.Instance;
         ball.Rb.isKinematic = true;
 
-        fsm.StartCoroutine(SendBallToHands(fsm, Ball.Instance.transform.position));
+        fsm.StartCoroutine(SendBallToHands(fsm,0.8f));
 
 
     }
+
+
+    public static void GoalkeeperCatchBall(FiniteStateMachine fsm)
+    {
+        if (Ball.Instance.Rb.isKinematic)
+            return;
+        
+        Animator animator = fsm.GetComponent<Animator>();
+        animator.SetBool("Catched",true);
+        
+        
+
+        Ball ball = Ball.Instance;
+        ball.Rb.isKinematic = true;
+
+        fsm.StartCoroutine(SendBallToHands2(fsm,0.1f));
+
+    }
+
 
     public static void GoalkeeperGoToBall(FiniteStateMachine fsm)
     {
@@ -128,29 +147,27 @@ public class ActionMethods
 
 
 
-    private static IEnumerator SendBallToHands(FiniteStateMachine fsm, Vector3 startPosition)
+    private static IEnumerator SendBallToHands(FiniteStateMachine fsm, float duration)
     {
         Debug.Log("start");
 
         float T = 0;
-
+        Ball.Instance.GetComponent<Collider>().isTrigger = true;
         while (true)
         {
 
             T += Time.deltaTime;
-            float duration = 0.8f;
             float t01 = T / duration;
 
-            Vector3 A = startPosition;
-            Vector3 B = fsm.GetComponent<Goalkeeper>().RightHand.transform.position;
-            Vector3 pos = Vector3.Lerp(A, B, t01);
+            Vector3 startPosition = Ball.Instance.transform.position;
+            Vector3 endPosition = fsm.GetComponent<Goalkeeper>().RightHand.transform.position;
+            Vector3 pos = Vector3.Lerp(startPosition, endPosition, t01);
 
             Ball.Instance.transform.position = pos;
 
             if (t01 >= 1)
             {
                 //fsm.GetComponent<Goalkeeper>().RightHand
-                Ball.Instance.transform.SetParent(fsm.GetComponent<Goalkeeper>().RightHand.transform);
                 break;
             }
 
@@ -170,12 +187,94 @@ public class ActionMethods
 
     }
 
-
-    public static void EmptyMethod(FiniteStateMachine fsm)
+    private static IEnumerator SendBallToHands2(FiniteStateMachine fsm, float duration)
     {
+        Debug.Log("start");
+
+        Ball.Instance.GetComponent<Collider>().isTrigger = true;
+
+        float T = 0;
+
+        while (true)
+        {
+
+            T += Time.deltaTime;
+            float t01 = T / duration;
+
+            Vector3 startPosition = Ball.Instance.transform.position;
+            Vector3 endPosition = fsm.GetComponent<Goalkeeper>().RightHand.transform.position;
+            Vector3 pos = Vector3.Lerp(startPosition, endPosition, t01);
+
+            Ball.Instance.transform.position = pos;
+
+            if (t01 >= 1)
+            {
+                //fsm.GetComponent<Goalkeeper>().RightHand
+                break;
+            }
+
+            yield return new WaitForEndOfFrame();
+
+        }
+        
+
 
     }
 
+
+
+    public static void GoalkeeperThrowBall(FiniteStateMachine fsm)
+    {
+
+
+        Ball.Instance.GetComponent<Collider>().isTrigger = false;
+
+        if(ThrowBallRunning==false)
+            fsm.StartCoroutine(ThrowBall(fsm));
+
+    }
+
+
+    public static void GoalkeeperLookRivalGoalPost(FiniteStateMachine fsm)
+    {
+        Movement.SpinToObject(fsm.GetComponent<Movable>(), fsm.GetComponent<Goalkeeper>().GoalpostCenterRival.gameObject, 15f);
+    }
+
+    private static bool ThrowBallRunning = false;
+    private static IEnumerator ThrowBall(FiniteStateMachine fsm)
+    {
+        Debug.Log("start");
+        ThrowBallRunning = true;
+        Vector3 velocity = fsm.transform.forward;
+        velocity.y = 0.2f;
+        Debug.Log("vel : "+velocity);
+        velocity = velocity.normalized * 30f;
+        int times = 0;
+        
+        while (times<=30)
+        {
+            Ball.Instance.transform.Translate(velocity*Time.deltaTime,Space.World);
+            yield return new WaitForEndOfFrame();
+            times++;
+        }
+        Debug.Log("over");
+        Ball.Instance.Rb.isKinematic = false;
+        yield return new WaitForEndOfFrame();
+        Shot.ForceShot(fsm.GetComponent<Shotable>(), 1, 0, 0);
+        ThrowBallRunning = false;
+        fsm.GetComponent<Rigidbody>().isKinematic = false;
+    }
+
+
+
+    public static void GoalkeeperHoldTheBall(FiniteStateMachine fsm)
+    {
+        if (!Ball.Instance.GetComponent<Collider>().isTrigger)
+            return;
+        Goalkeeper goalkeeper = fsm.GetComponent<Goalkeeper>();
+        Ball.Instance.transform.position = goalkeeper.RightHand.transform.position;
+
+    }
 
 
 }

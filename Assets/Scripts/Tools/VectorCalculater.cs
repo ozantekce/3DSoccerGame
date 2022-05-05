@@ -6,6 +6,49 @@ public class VectorCalculater
 {
 
 
+    public static bool PositionIs_(Transform transform, Vector3 targetPos,Direction direction)
+    {
+
+        Vector3 localDir 
+            = Quaternion.Inverse(transform.rotation) * (targetPos - transform.position);
+
+        bool isForward = localDir.z > 0;
+        bool isUp = localDir.y > 0;
+        bool isRight = localDir.x > 0;
+        
+        if(direction == Direction.forward)
+        {
+            return isForward;
+        }
+        else if(direction == Direction.backward)
+        {
+            return !isForward;
+        }
+        else if(direction == Direction.right)
+        {
+            return isRight;
+        }
+        else if(direction == Direction.left)
+        {
+            return !isRight;
+        }
+        else if(direction == Direction.up)
+        {
+            return isUp;
+        }
+        else if(direction == Direction.down)
+        {
+            return !isUp;
+        }
+        else
+        {
+            return false;
+        }
+
+
+    }
+
+
 
     public static bool CheckVectorXFrontOfVectorY(Vector3 vectorX,Vector3 vectorY)
     {

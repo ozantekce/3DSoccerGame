@@ -7,12 +7,13 @@ public abstract class Player : MonoBehaviour, Movable,Shotable,Passable,Dribblin
 
     [SerializeField]
     protected float movementSpeed,spinSpeed,shotPower,passPower,slidePower, maxDistanceToDribbling,dribblingPower, trackingSpeed, shotCD,passCD,dribblingCD, slideCD;
-    [SerializeField]
-    Rigidbody rb;
 
-    [SerializeField]
+
+    private Rigidbody rb;
+
+
     BallVision ballVision;
-    [SerializeField]
+
     protected Animator animator;
 
     private Cooldown shotCooldown,passCooldown, dribblingCooldown,slideCooldown;

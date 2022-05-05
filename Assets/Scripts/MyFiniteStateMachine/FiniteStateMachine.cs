@@ -13,7 +13,9 @@ public abstract class FiniteStateMachine : MonoBehaviour
     private Dictionary<MyAction,bool> actionData = new Dictionary<MyAction, bool>();
 
     public State CurrentState { get => currentState; set => currentState = value; }
+    public float EnterTimeCurrentState { get => enterTimeCurrentState; set => enterTimeCurrentState = value; }
 
+    private float enterTimeCurrentState;
 
 
 
@@ -31,6 +33,7 @@ public abstract class FiniteStateMachine : MonoBehaviour
         CurrentState.Exit(this);
         CurrentState = state;
         CurrentState.Enter(this);
+        enterTimeCurrentState = Time.time;
 
     }
 
@@ -129,6 +132,12 @@ public abstract class FiniteStateMachine : MonoBehaviour
 
     }
 
+
+    public float ElapsedTimeInCurrentState()
+    {
+        return Time.time - enterTimeCurrentState;
+    }
+    
 
 
 }

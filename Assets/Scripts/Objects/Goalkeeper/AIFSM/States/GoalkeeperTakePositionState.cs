@@ -21,16 +21,13 @@ public class GoalkeeperTakePositionState : State
 
         AddTransition(GoalkeeperIdleState.Instance,ConditionMethods.GoalkeeperRightPosition);
         AddTransition(GoalkeeperGrabBallState.Instance, ConditionMethods.BallSoClose);
-        AddTransition(GoalkeeperJumpState.Instance, ConditionMethods.GoalkeeperMeetingWithBall);
+        AddTransition(GoalkeeperJumpState.Instance, ConditionMethods.BallShotedAndGoalkeeperMeetingWithBall);
 
     }
 
     public override void Enter(FiniteStateMachine fsm)
     {
         Debug.Log("Enter GoalkeeperTakePositionState");
-
-        Animator animator = fsm.GetComponent<Animator>();
-        //animator.SetBool("IsRunning", true);
 
     }
 

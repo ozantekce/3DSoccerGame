@@ -51,14 +51,27 @@ public class GoalkeeperCalculater
     }
 
 
-    private static Vector3 FindMeetingPosition(Vector3 goalkeeperPosition,Vector3 ballPosition,Vector3 ballVelocity)
+    public static Vector3 FindMeetingPosition(Vector3 goalkeeperPosition,Vector3 ballPosition,Vector3 ballVelocity)
     {
 
+        float meetingTime = FindMeetingTime(goalkeeperPosition, ballPosition, ballVelocity);
+        Vector3 meetingPosition = ballPosition + ballVelocity * meetingTime;
 
-        Vector3 meetingPosition =  ballPosition + ballVelocity * FindMeetingTime(goalkeeperPosition,ballPosition,ballVelocity);
+        /*
+        Debug.Log("Time : "+meetingTime);
+        Debug.Log("old : " + meetingPosition);
+        */
+        meetingPosition.y -= (meetingTime * meetingTime * (Gravity.GLOBAL_GRAVITY/0.02f))/2f;
+        if(meetingPosition.y < 0)
+            meetingPosition.y = 0;
+
+
+        //Debug.Log("new : " + meetingPosition);
+
         return meetingPosition;
 
     }
+
 
 
     public static float FindMeetingTime(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)

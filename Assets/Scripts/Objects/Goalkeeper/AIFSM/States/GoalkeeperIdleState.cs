@@ -19,7 +19,7 @@ public class GoalkeeperIdleState : State
 
         AddTransition(GoalkeeperTakePositionState.Instance,ConditionMethods.GoalkeeperWrongPosition);
         AddTransition(GoalkeeperGrabBallState.Instance, ConditionMethods.BallSoClose);
-        AddTransition(GoalkeeperJumpState.Instance, ConditionMethods.GoalkeeperMeetingWithBall);
+        AddTransition(GoalkeeperJumpState.Instance, ConditionMethods.BallShotedAndGoalkeeperMeetingWithBall);
 
 
     }
@@ -27,14 +27,12 @@ public class GoalkeeperIdleState : State
     public override void Enter(FiniteStateMachine fsm)
     {
         Debug.Log("Enter GoalkeeperIdleState");
-        Animator animator = fsm.GetComponent<Animator>();
-        //animator.SetBool("IsRunning", false);
 
     }
 
     public override void Exit(FiniteStateMachine fsm)
     {
-        Debug.Log("Exit GoalkeeperIdleState");
+        Debug.Log("Exit GoalkeeperIdleState ");
 
 
     }

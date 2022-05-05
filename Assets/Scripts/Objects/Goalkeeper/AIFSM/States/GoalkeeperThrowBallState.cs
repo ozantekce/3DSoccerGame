@@ -17,7 +17,11 @@ public class GoalkeeperThrowBallState : State
     public override void Init(FiniteStateMachine fsm)
     {
 
+        AddAction(ActionMethods.GoalkeeperLookRivalGoalPost);
+        AddAction(ActionMethods.GoalkeeperThrowBall,ConditionMethods.Shooting, 1.6f, 2f);
+        AddAction(ActionMethods.GoalkeeperHoldTheBall);
 
+        AddTransition(GoalkeeperIdleState.Instance, ConditionMethods.Elapsed4SecondInState);
 
     }
 
@@ -26,6 +30,9 @@ public class GoalkeeperThrowBallState : State
 
         Debug.Log("Enter GoalkeeperThrowBallState");
 
+        Animator animator = fsm.GetComponent<Animator>();
+        animator.SetTrigger("Throw");
+        fsm.GetComponent<Shotable>().IsShooting = true;
 
 
     }

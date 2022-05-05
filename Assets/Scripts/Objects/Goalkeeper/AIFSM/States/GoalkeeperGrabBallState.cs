@@ -17,7 +17,7 @@ public class GoalkeeperGrabBallState : State
     public override void Init(FiniteStateMachine fsm)
     {
 
-        AddAction(ActionMethods.GoalkeeperGoToBall, ConditionMethods.BallNotGrabbed);
+        AddAction(ActionMethods.GoalkeeperGoToBall, ConditionMethods.NoBallGrabbed);
         AddAction(ActionMethods.GoalkeeperGrabBall, ConditionMethods.BallGrabbableAndBallNotGrabbed);
 
         AddTransition(GoalkeeperIdleState.Instance, ConditionMethods.NoBallSoClose);
@@ -40,9 +40,6 @@ public class GoalkeeperGrabBallState : State
     {
         Debug.Log("Exit GoalkeeperGrabBallState");
 
-
-        Rigidbody rigidbody = fsm.GetComponent<Rigidbody>();
-        rigidbody.velocity = Vector3.zero;
 
 
     }
