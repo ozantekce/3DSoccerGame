@@ -29,6 +29,7 @@ Footballer:
 ![FSM_Footballer](Footballer_FSM.png)
 Goalkeeper:
 ![FSM_Goalkeeper](Goalkeeper_FSM.png)
+![Jump](Goalkeeper.png)
 
 
 21/03/2022:
