@@ -15,35 +15,38 @@ public class FootballerSlideState : State
 
 
     MyAction slideAction;
-    public override void Init(FiniteStateMachine fsm)
+    public override void Init()
     {
 
         slideAction = new MyAction(ActionMethods.SlideMethod, ConditionMethods.Sliding, 0.2f, 1f);
 
-        AddTransition(FootballerIdleState.Instance, (fsm) => {
+        AddTransition(new Transition(FootballerIdleState.Instance, (fsm) => {
 
-            return fsm.ActionOver(slideAction);
+            return slideAction.ActionOver(fsm);
         }
+        )
         );
 
-        AddAction(slideAction);
+        AddAction(slideAction,RunTimeOfAction.runOnEnter);
 
 
     }
 
 
 
-    public override void Enter(FiniteStateMachine fsm)
+    public override void Enter_(FiniteStateMachine fsm)
     {
         //Debug.Log("Enter FootballerSlideState");
+
         Footballer player = fsm.GetComponent<Footballer>();
         player.IsSliding = true;
         Animator animator = fsm.GetComponent<Animator>();
         animator.SetTrigger("Slide");
         player.GetComponentInChildren<Dropper>().IsActive = true;
+
     }
 
-    public override void Exit(FiniteStateMachine fsm)
+    public override void Exit_(FiniteStateMachine fsm)
     {
         //Debug.Log("Exit FootballerSlideState");
         fsm.GetComponent<Rigidbody>().velocity = Vector3.zero;

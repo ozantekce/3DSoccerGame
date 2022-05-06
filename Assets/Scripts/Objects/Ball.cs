@@ -17,9 +17,12 @@ public class Ball : MonoBehaviour
         }
     }
 
+    private Collider collider;
+
     private Rigidbody rb;
     public Rigidbody Rb { get => rb; set => rb = value; }
     public bool IsShoted { get => isShoted; set => isShoted = value; }
+    public Collider Collider { get => collider; set => collider = value; }
 
     private bool isShoted;
 
@@ -36,7 +39,7 @@ public class Ball : MonoBehaviour
     }
 
 
-    private const float resetIsShotedDelay = 1f;
+    private const float resetIsShotedDelay = 4f;
     private float resetIsShotedDelayTimer = 0;
     private void FixedUpdate()
     {
@@ -61,9 +64,8 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-
         rb = GetComponent<Rigidbody>();
-
+        collider = GetComponent<Collider>();
     }
 
 

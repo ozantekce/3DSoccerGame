@@ -14,7 +14,7 @@ public abstract class Player : MonoBehaviour, Movable,Shotable,Passable,Dribblin
 
     BallVision ballVision;
 
-    protected Animator animator;
+    private Animator animator;
 
     private Cooldown shotCooldown,passCooldown, dribblingCooldown,slideCooldown;
 
@@ -45,6 +45,7 @@ public abstract class Player : MonoBehaviour, Movable,Shotable,Passable,Dribblin
     public bool IsShooting { get => shooting; set => shooting = value; }
     public bool IsPassing { get => passing; set => passing = value; }
     public bool IsSliding { get => sliding; set => sliding = value; }
+    public Animator Animator { get => animator; set => animator = value; }
 
     public void Start()
     {

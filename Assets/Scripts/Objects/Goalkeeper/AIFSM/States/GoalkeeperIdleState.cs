@@ -10,29 +10,16 @@ public class GoalkeeperIdleState : State
     public static GoalkeeperIdleState Instance => instance;
     private GoalkeeperIdleState()
     {
-        Debug.Log("GoalkeeperIdleState created");
+        //Debug.Log("GoalkeeperIdleState created");
     }
 
-    public override void Init(FiniteStateMachine fsm)
+    public override void Init()
     {
         
 
-        AddTransition(GoalkeeperTakePositionState.Instance,ConditionMethods.GoalkeeperWrongPosition);
-        AddTransition(GoalkeeperGrabBallState.Instance, ConditionMethods.BallSoClose);
-        AddTransition(GoalkeeperJumpState.Instance, ConditionMethods.BallShotedAndGoalkeeperMeetingWithBall);
-
-
-    }
-
-    public override void Enter(FiniteStateMachine fsm)
-    {
-        Debug.Log("Enter GoalkeeperIdleState");
-
-    }
-
-    public override void Exit(FiniteStateMachine fsm)
-    {
-        Debug.Log("Exit GoalkeeperIdleState ");
+        AddTransition(new Transition(GoalkeeperTakePositionState.Instance,ConditionMethods.GoalkeeperWrongPosition));
+        AddTransition(new Transition(GoalkeeperGrabBallState.Instance, ConditionMethods.BallSoClose));
+        AddTransition(new Transition(GoalkeeperJumpState.Instance, ConditionMethods.BallShotedAndGoalkeeperMeetingWithBall));
 
 
     }

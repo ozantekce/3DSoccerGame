@@ -52,7 +52,8 @@ public class Movement
             directionVector = directionVector.normalized;
             //float speed = Mathf.Clamp(speed_, 0, distanceWithTargetPosition);
 
-            movable.Rigidbody.velocity = directionVector * speed_;
+            movable.Rigidbody.velocity = directionVector * speed_ + new Vector3(0,movable.Rigidbody.velocity.y,0);
+
         }
         else
         {

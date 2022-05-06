@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoalkeeperAIFSM : GoalkeeperFSM
+public class FootballerControlFSM : FootballerFSM
 {
+
+
 
     public void Start()
     {
         base.Start();
-        ChangeCurrentState(GoalkeeperIdleState.Instance);
-
+        ChangeCurrentState(FootballerIdleState.Instance);
 
     }
-
 
 
 

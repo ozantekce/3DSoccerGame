@@ -9,7 +9,7 @@ public class ConditionMethods
 
     public static bool VerticalOrHorizontalInput(FiniteStateMachine fsm)
     {
-        Footballer footballer = fsm.GetComponent<Footballer>();
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
 
         return footballer.verticalInput != 0 || footballer.horizontalInput != 0;
 
@@ -17,7 +17,7 @@ public class ConditionMethods
 
     public static bool NoVerticalOrHorizontalInput(FiniteStateMachine fsm)
     {
-        Footballer footballer = fsm.GetComponent<Footballer>();
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
 
         return !(footballer.verticalInput != 0 || footballer.horizontalInput != 0);
 
@@ -25,7 +25,7 @@ public class ConditionMethods
 
     public static bool ControlBall(FiniteStateMachine fsm) {
 
-        Player player = fsm.GetComponent<Player>();
+        Player player = ((PlayerFSM)fsm).Player;
         return player.BallVision.ControlBall();
 
     }
@@ -73,7 +73,7 @@ public class ConditionMethods
 
     public static bool SlideInput(FiniteStateMachine fsm)
     {
-        Footballer footballer = fsm.GetComponent<Footballer>();
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
 
         return footballer.slideInput != 0;
 
@@ -82,14 +82,14 @@ public class ConditionMethods
 
     public static bool ShotInput(FiniteStateMachine fsm)
     {
-        Footballer footballer = fsm.GetComponent<Footballer>();
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
         return footballer.shotInput!=0;
 
     }
 
     public static bool PassInput(FiniteStateMachine fsm)
     {
-        Footballer footballer = fsm.GetComponent<Footballer>();
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
         return footballer.passInput != 0;
 
     }
@@ -98,8 +98,8 @@ public class ConditionMethods
 
     public static bool Shooting(FiniteStateMachine fsm)
     {
-        Shotable shotable = fsm.GetComponent<Shotable>();
-        return shotable.IsShooting;
+        Player player = ((PlayerFSM)fsm).Player;
+        return player.IsShooting;
     }
     public static bool NoShooting(FiniteStateMachine fsm)
     {
@@ -109,7 +109,7 @@ public class ConditionMethods
 
     public static bool Passing(FiniteStateMachine fsm)
     {
-        Footballer player = fsm.GetComponent<Footballer>();
+        Player player = ((PlayerFSM)fsm).Player;
         return player.IsPassing;
     }
     public static bool NoPassing(FiniteStateMachine fsm)
@@ -119,7 +119,7 @@ public class ConditionMethods
 
     public static bool Sliding(FiniteStateMachine fsm)
     {
-        Footballer player = fsm.GetComponent<Footballer>();
+        Player player = ((PlayerFSM)fsm).Player;
         return player.IsSliding;
     }
     public static bool NoSliding(FiniteStateMachine fsm)
@@ -130,8 +130,8 @@ public class ConditionMethods
 
     public static bool Falling(FiniteStateMachine fsm)
     {
-        Footballer player = fsm.GetComponent<Footballer>();
-        return player.IsFalling;
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
+        return footballer.IsFalling;
     }
 
     public static bool NoFalling(FiniteStateMachine fsm)
@@ -142,15 +142,15 @@ public class ConditionMethods
 
     public static bool FallCommand(FiniteStateMachine fsm)
     {
-        Footballer player = fsm.GetComponent<Footballer>();
-        return player.FallCommand;
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
+        return footballer.FallCommand;
 
     }
 
 
     public static bool GoalkeeperRightPosition(FiniteStateMachine fsm)
     {
-        Goalkeeper goalkeeper = fsm.GetComponent<Goalkeeper>();
+        Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
         return goalkeeper.RightPosition();
 
     }
@@ -165,7 +165,7 @@ public class ConditionMethods
 
     public static bool BallSoClose(FiniteStateMachine fsm)
     {
-        Transform transform = fsm.GetComponent<Transform>();
+        Transform transform = fsm.transform;
 
         float distance 
             = Vector3.Distance(transform.position,Ball.Instance.transform.position);
@@ -195,10 +195,29 @@ public class ConditionMethods
     public static bool GoalkeeperMeetingWithBall(FiniteStateMachine fsm)
     {
 
-        Goalkeeper goalkeeper = fsm.GetComponent<Goalkeeper>();
+        Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
+
         Vector3 meetingPosition
-            = GoalkeeperCalculater.FindMeetingPosition(goalkeeper.transform.position, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
-        //Debug.Log("mt : " + meetingPosition);
+            = GoalkeeperCalculater.FindMeetingPosition(goalkeeper, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
+
+
+        Vector3 vel = GoalkeeperCalculater.FindRequiredVelocity(goalkeeper, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
+
+        /*
+        if (Mathf.Abs(vel.x) > goalkeeper.JumpPowerX)
+        {
+            Debug.Log("vel :"+vel+" x : "+goalkeeper.JumpPowerX);
+            return false;
+        }
+
+        if (vel.y > goalkeeper.JumpPowerY||vel.y<0)
+        {
+            Debug.Log("vel :" + vel + " x : " + goalkeeper.JumpPowerY);
+            return false;
+        }
+            
+        */
+
 
         return goalkeeper.Other.IntersectWithMeetingPosition(meetingPosition);
 
@@ -235,7 +254,7 @@ public class ConditionMethods
 
     public static bool BallGrabbable(FiniteStateMachine fsm)
     {
-        Transform transform = fsm.GetComponent<Transform>();
+        Transform transform = fsm.transform;
 
         float distance
             = Vector3.Distance(transform.position, Ball.Instance.transform.position);
@@ -252,9 +271,9 @@ public class ConditionMethods
         if (Ball.Instance.Rb.isKinematic)
             return false;
 
-        Collider[] intersecting = Physics.OverlapSphere(Ball.Instance.transform.position, 3.5f);
+        Collider[] intersecting = Physics.OverlapSphere(Ball.Instance.transform.position, 3f);
 
-        GameObject catchArea = fsm.GetComponent<Goalkeeper>().CatchArea;
+        GameObject catchArea = ((GoalkeeperFSM)fsm).Goalkeeper.CatchArea;
 
         foreach (Collider c in intersecting)
         {

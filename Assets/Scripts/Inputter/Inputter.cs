@@ -184,11 +184,11 @@ public abstract class Inputter : MonoBehaviour
 
         if (keyMinus)
         {
-            currentValue -= sensivity;
+            currentValue -= sensivity * Time.deltaTime;
         }
         else if (currentValue < 0)
         {
-            currentValue += sensivity;
+            currentValue += sensivity * Time.deltaTime;
             if (currentValue >= -sensivity && currentValue <= sensivity)
             {
                 currentValue = 0;
@@ -198,11 +198,11 @@ public abstract class Inputter : MonoBehaviour
 
         if (keyPlus)
         {
-            currentValue += sensivity;
+            currentValue += sensivity * Time.deltaTime;
         }
         else if (currentValue > 0)
         {
-            currentValue -= sensivity;
+            currentValue -= sensivity * Time.deltaTime;
             if (currentValue >= -sensivity && currentValue <= sensivity)
             {
                 currentValue = 0;
@@ -221,11 +221,11 @@ public abstract class Inputter : MonoBehaviour
 
         if (keyPressed)
         {
-            currentValue += posSensivity;
+            currentValue += posSensivity * Time.deltaTime;
         }
         else
         {
-            currentValue -= negSensivity;
+            currentValue -= negSensivity * Time.deltaTime;
         }
 
 

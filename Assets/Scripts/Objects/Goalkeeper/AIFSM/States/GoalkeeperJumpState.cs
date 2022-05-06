@@ -9,26 +9,27 @@ public class GoalkeeperJumpState : State
     public static GoalkeeperJumpState Instance => instance;
     private GoalkeeperJumpState()
     {
-        Debug.Log("GoalkeeperJumpState created");
+
 
 
     }
 
 
-    public override void Init(FiniteStateMachine fsm)
+    public override void Init()
     {
 
-        AddAction(ActionMethods.GoalkeeperCatchBall, ConditionMethods.GoalkeeperBallCatchable);
+        AddAction(new MyAction(ActionMethods.GoalkeeperCatchBall, ConditionMethods.GoalkeeperBallCatchable));
 
-        AddTransition(GoalkeeperIdleState.Instance, ConditionMethods.Elapsed2SecondInState);
+        AddTransition(new Transition(GoalkeeperIdleState.Instance, ConditionMethods.Elapsed4SecondInState));
 
-        AddTransition(GoalkeeperIdleWithBallState.Instance, ConditionMethods.BallCatched);
+        AddTransition(new Transition(GoalkeeperIdleWithBallState.Instance, ConditionMethods.BallCatched)
+            ,RunTimeOfTransition.runOnPreExecution);
 
 
 
     }
 
-    public override void Enter(FiniteStateMachine fsm)
+    public override void Enter_(FiniteStateMachine fsm)
     {
 
         Debug.Log("Enter GoalkeeperJumpState");
@@ -36,10 +37,13 @@ public class GoalkeeperJumpState : State
 
 
         Goalkeeper goalkeeper = fsm.GetComponent<Goalkeeper>();
+
+
         Vector3 meetingPosition
-            = GoalkeeperCalculater.FindMeetingPosition(goalkeeper.transform.position, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
+            = GoalkeeperCalculater.FindMeetingPosition(goalkeeper, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
 
         Animator animator = fsm.GetComponent<Animator>();
+
         
 
         if (goalkeeper.CenterUp.IntersectWithMeetingPosition(meetingPosition))
@@ -81,15 +85,15 @@ public class GoalkeeperJumpState : State
         }
         else
         {
-
+            
             if (VectorCalculater.PositionIs_(fsm.transform, meetingPosition, Direction.right))
             {
-                Debug.Log("RightDown and mt : " + meetingPosition);
-                animator.SetInteger("JumpVal", 4);
+                Debug.Log("other right and mt : " + meetingPosition);
+                animator.SetInteger("JumpVal", 3);
             }
             else if(VectorCalculater.PositionIs_(fsm.transform, meetingPosition, Direction.left)){
-                Debug.Log("LeftDown and mt : " + meetingPosition);
-                animator.SetInteger("JumpVal", 6);
+                Debug.Log("other left and mt : " + meetingPosition);
+                animator.SetInteger("JumpVal", 5);
             }
 
 
@@ -98,15 +102,38 @@ public class GoalkeeperJumpState : State
 
         animator.SetTrigger("Jump");
 
-        goalkeeper.Rigidbody.velocity = GoalkeeperCalculater.FindRequiredVelocity(goalkeeper.transform.position, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
+        goalkeeper.Rigidbody.velocity = GoalkeeperCalculater.FindRequiredVelocity(goalkeeper, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
+
+        Debug.Log("old goalkeeper pos : " + fsm.transform.position + " meeting pos : " + meetingPosition
+    + " velocity : " + goalkeeper.Rigidbody.velocity);
+        
+        Vector3 velocity = goalkeeper.Rigidbody.velocity;
+
+
+        if (velocity.x < 0)
+        {
+            velocity.x = Mathf.Clamp(velocity.x, -goalkeeper.JumpPowerX, 0);
+        }
+        else
+        {
+            velocity.x = Mathf.Clamp(velocity.x, 0, goalkeeper.JumpPowerX);
+        }
+
+        velocity.y = Mathf.Clamp(velocity.y, 1f, goalkeeper.JumpPowerY);
+
+
+        goalkeeper.Rigidbody.velocity = Deformation.Deform(velocity,10f,30f);
+
+        Debug.Log("new goalkeeper pos : " + fsm.transform.position + " meeting pos : " + meetingPosition
++ " velocity : " + goalkeeper.Rigidbody.velocity);
+        
 
     }
 
-    public override void Exit(FiniteStateMachine fsm)
+    public override void Exit_(FiniteStateMachine fsm)
     {
-        Debug.Log("Exit GoalkeeperJumpState");
 
-
+        
     }
 
 

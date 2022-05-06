@@ -9,37 +9,19 @@ public class GoalkeeperGrabBallState : State
     public static GoalkeeperGrabBallState Instance => instance;
     private GoalkeeperGrabBallState()
     {
-        Debug.Log("GoalkeeperGrabBallState created");
 
 
     }
 
-    public override void Init(FiniteStateMachine fsm)
+    public override void Init()
     {
 
-        AddAction(ActionMethods.GoalkeeperGoToBall, ConditionMethods.NoBallGrabbed);
-        AddAction(ActionMethods.GoalkeeperGrabBall, ConditionMethods.BallGrabbableAndBallNotGrabbed);
-
-        AddTransition(GoalkeeperIdleState.Instance, ConditionMethods.NoBallSoClose);
-
-        AddTransition(GoalkeeperIdleWithBallState.Instance, ConditionMethods.BallGrabbed);
+        AddAction(new MyAction(ActionMethods.GoalkeeperGoToBall, ConditionMethods.NoBallGrabbed));
+        AddAction(new MyAction(ActionMethods.GoalkeeperGrabBall, ConditionMethods.BallGrabbableAndBallNotGrabbed));
 
 
-    }
-
-    public override void Enter(FiniteStateMachine fsm)
-    {
-
-        Debug.Log("Enter GoalkeeperGrabBallState");
-
-
-
-    }
-
-    public override void Exit(FiniteStateMachine fsm)
-    {
-        Debug.Log("Exit GoalkeeperGrabBallState");
-
+        AddTransition(new Transition(GoalkeeperIdleState.Instance, ConditionMethods.NoBallSoClose));
+        AddTransition(new Transition(GoalkeeperIdleWithBallState.Instance, ConditionMethods.BallGrabbed));
 
 
     }

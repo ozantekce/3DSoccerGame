@@ -17,7 +17,7 @@ public class GoalkeeperJumpArea : MonoBehaviour
     public bool IntersectWithMeetingPosition(Vector3 meetingPosition)
     {
 
-        Collider[] intersecting = Physics.OverlapSphere(meetingPosition, 0.1f);
+        Collider[] intersecting = Physics.OverlapSphere(meetingPosition, 0.5f);
 
         foreach (var intersect in intersecting)
         {

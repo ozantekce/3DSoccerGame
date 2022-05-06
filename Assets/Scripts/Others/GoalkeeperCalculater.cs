@@ -6,19 +6,14 @@ public class GoalkeeperCalculater
 {
 
 
-    private static Vector3 meetingPosition;
-
-
-    public static Vector3 FindRequiredVelocity(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
+    public static Vector3 FindRequiredVelocity(Goalkeeper goalkeeper, Vector3 ballPosition, Vector3 ballVelocity)
     {
 
+        Vector3 meetingPosition = FindMeetingPosition(goalkeeper, ballPosition, ballVelocity);
 
-        meetingPosition = FindMeetingPosition(goalkeeperPosition, ballPosition, ballVelocity);
+        float meetingTime = FindMeetingTime(goalkeeper, ballPosition, ballVelocity);
 
-        //if (meetingPosition.z != goalkeeperPosition.z) return Vector3.zero;
-
-        Vector3 velocity = FindRequiredVelocity(meetingPosition, goalkeeperPosition, FindMeetingTime(goalkeeperPosition, ballPosition, ballVelocity));
-        
+        Vector3 velocity = FindRequiredVelocity(goalkeeper, meetingPosition, meetingTime);
 
 
         if (
@@ -31,7 +26,7 @@ public class GoalkeeperCalculater
         }
         else
         {
-            Debug.Log(velocity+" mt : " + FindMeetingTime(goalkeeperPosition, ballPosition, ballVelocity));
+            
             return velocity;
         }
 
@@ -40,33 +35,50 @@ public class GoalkeeperCalculater
 
 
 
-    private static Vector3 FindRequiredVelocity(Vector3 meetingPosition, Vector3 goalkeeperPoisiton, float meetingTime)
+    public static Vector3 FindRequiredVelocity(Goalkeeper goalkeeper, Vector3 meetingPosition, float meetingTime)
     {
 
-        Vector3 velocity = (meetingPosition - goalkeeperPoisiton) / meetingTime;
-        
+        Vector3 catchAreaPosition = goalkeeper.CatchArea.transform.position;
 
-        return velocity;
+        Vector3 velocity = (meetingPosition - catchAreaPosition) / meetingTime;
+        
+        
+        Vector3 vel = Vector3.zero;
+
+        vel.x = (meetingPosition.x - catchAreaPosition.x) / meetingTime;
+
+        float distanceY = (meetingPosition.y-catchAreaPosition.y);
+
+        vel.y = distanceY / meetingTime;
+        vel.y += (meetingTime * (Gravity.GLOBAL_GRAVITY / 0.02f)) / 2f;
+
+
+        //Debug.Log("old : " + velocity + " new : " + vel+" y : "+meetingPosition.y+" mt : " +meetingTime);
+        return vel;
 
     }
 
 
-    public static Vector3 FindMeetingPosition(Vector3 goalkeeperPosition,Vector3 ballPosition,Vector3 ballVelocity)
+    public static Vector3 FindMeetingPosition(Goalkeeper goalkeeper, Vector3 ballPosition,Vector3 ballVelocity)
     {
 
-        float meetingTime = FindMeetingTime(goalkeeperPosition, ballPosition, ballVelocity);
+        Vector3 catchAreaPosition = goalkeeper.CatchArea.transform.position;
+
+        float meetingTime = FindMeetingTime(goalkeeper, ballPosition, ballVelocity);
+
         Vector3 meetingPosition = ballPosition + ballVelocity * meetingTime;
 
-        /*
-        Debug.Log("Time : "+meetingTime);
-        Debug.Log("old : " + meetingPosition);
-        */
+
+        //Debug.Log("old : " + meetingPosition);
+
         meetingPosition.y -= (meetingTime * meetingTime * (Gravity.GLOBAL_GRAVITY/0.02f))/2f;
-        if(meetingPosition.y < 0)
-            meetingPosition.y = 0;
 
+        if(meetingPosition.y < 1)
+        {
+            meetingPosition.y = 1;
+        }
+            
 
-        //Debug.Log("new : " + meetingPosition);
 
         return meetingPosition;
 
@@ -74,12 +86,17 @@ public class GoalkeeperCalculater
 
 
 
-    public static float FindMeetingTime(Vector3 goalkeeperPosition, Vector3 ballPosition, Vector3 ballVelocity)
+    public static float FindMeetingTime(Goalkeeper goalkeeper, Vector3 ballPosition, Vector3 ballVelocity)
     {
-
-        return (goalkeeperPosition.z - ballPosition.z) / ballVelocity.z;
+        Vector3 catchAreaPosition = goalkeeper.CatchArea.transform.position;
+        float meetingTime = (catchAreaPosition.z - ballPosition.z) / ballVelocity.z;
+        return meetingTime;
 
     }
+
+
+
+
 
 
 

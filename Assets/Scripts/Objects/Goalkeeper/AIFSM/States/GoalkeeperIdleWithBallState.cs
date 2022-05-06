@@ -10,34 +10,18 @@ public class GoalkeeperIdleWithBallState : State
     public static GoalkeeperIdleWithBallState Instance => instance;
     private GoalkeeperIdleWithBallState()
     {
-        Debug.Log("GoalkeeperIdleWithBallState created");
+
     }
 
-    public override void Init(FiniteStateMachine fsm)
+    public override void Init()
     {
 
-        AddAction(ActionMethods.GoalkeeperHoldTheBall);
+        AddAction(new MyAction(ActionMethods.GoalkeeperHoldTheBall));
 
-        AddTransition(GoalkeeperThrowBallState.Instance,ConditionMethods.Elapsed2SecondInState);
-
-
-    }
-
-    public override void Enter(FiniteStateMachine fsm)
-    {
-        Debug.Log("Enter GoalkeeperIdleWithBallState");
-        Animator animator = fsm.GetComponent<Animator>();
-        //animator.SetBool("IsRunning", false);
-
-    }
-
-    public override void Exit(FiniteStateMachine fsm)
-    {
-        Debug.Log("Exit GoalkeeperIdleWithBallState");
+        AddTransition(new Transition(GoalkeeperThrowBallState.Instance,ConditionMethods.Elapsed4SecondInState));
 
 
     }
-
 
 
 

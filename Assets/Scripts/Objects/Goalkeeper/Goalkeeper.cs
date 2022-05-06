@@ -5,13 +5,18 @@ using UnityEngine;
 public class Goalkeeper : Player, Jumpable
 {
 
+    [SerializeField]
+    private float jumpPowerX, jumpPowerY,jumpCD;
 
+    private Animator animator;
 
-    public float JumpPowerY { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-    public float JumpPowerX { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-    public float JumpPowerZ { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    private Cooldown jumpCooldown;
 
-    public Cooldown JumpCooldown => throw new System.NotImplementedException();
+    public float JumpPowerY { get { return jumpPowerY; } set { jumpPowerY = value; } }
+    public float JumpPowerX { get { return jumpPowerX; } set { jumpPowerX = value; } }
+    public float JumpPowerZ { get { return movementSpeed; } set { movementSpeed = value; } }
+
+    public Cooldown JumpCooldown { get { return jumpCooldown; } }
 
 
     [SerializeField]
@@ -32,6 +37,7 @@ public class Goalkeeper : Player, Jumpable
     public GameObject CatchArea { get => catchArea; set => catchArea = value; }
     public Transform GoalpostCenter { get => goalpostCenter; set => goalpostCenter = value; }
     public Transform GoalpostCenterRival { get => goalpostCenterRival; set => goalpostCenterRival = value; }
+    public Animator Animator { get => animator; set => animator = value; }
 
     private GoalkeeperJumpArea centerUp,center,centerDown, rightUp, rightDown,leftUp,leftDown,other;
 
@@ -39,6 +45,10 @@ public class Goalkeeper : Player, Jumpable
     public void Start()
     {
         base.Start();
+
+        jumpCooldown = new Cooldown(jumpCD);
+
+        animator = GetComponent<Animator>();
 
         Transform areas = transform.Find("Areas");
         CenterUp = areas.Find("CenterUp").gameObject.GetComponent<GoalkeeperJumpArea>();

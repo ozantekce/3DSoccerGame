@@ -9,26 +9,35 @@ public class GoalkeeperThrowBallState : State
     public static GoalkeeperThrowBallState Instance => instance;
     private GoalkeeperThrowBallState()
     {
-        Debug.Log("GoalkeeperThrowBallState created");
 
 
     }
 
-    public override void Init(FiniteStateMachine fsm)
+    MyAction throwTheBall;
+    public override void Init()
     {
 
-        AddAction(ActionMethods.GoalkeeperLookRivalGoalPost);
-        AddAction(ActionMethods.GoalkeeperThrowBall,ConditionMethods.Shooting, 1.6f, 2f);
-        AddAction(ActionMethods.GoalkeeperHoldTheBall);
+        AddAction(new MyAction(ActionMethods.GoalkeeperLookRivalGoalPost));
 
-        AddTransition(GoalkeeperIdleState.Instance, ConditionMethods.Elapsed4SecondInState);
+        throwTheBall = new MyAction(ActionMethods.GoalkeeperThrowBall, ConditionMethods.Shooting, 1.6f, 2f);
+
+        AddAction(throwTheBall, RunTimeOfAction.runOnEnter);
+
+        AddAction(new MyAction(ActionMethods.GoalkeeperHoldTheBall),RunTimeOfAction.runOnPreExecution);
+
+
+        AddTransition(new Transition(GoalkeeperIdleState.Instance, (fsm) =>
+        {
+            return throwTheBall.ActionOver(fsm);
+        }
+        ));
+
 
     }
 
-    public override void Enter(FiniteStateMachine fsm)
+    public override void Enter_(FiniteStateMachine fsm)
     {
 
-        Debug.Log("Enter GoalkeeperThrowBallState");
 
         Animator animator = fsm.GetComponent<Animator>();
         animator.SetTrigger("Throw");
@@ -37,9 +46,8 @@ public class GoalkeeperThrowBallState : State
 
     }
 
-    public override void Exit(FiniteStateMachine fsm)
+    public override void Exit_(FiniteStateMachine fsm)
     {
-        Debug.Log("Exit GoalkeeperThrowBallState");
 
 
 

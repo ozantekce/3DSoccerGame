@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         SetStatus(GameStatus.opening);
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 90;
+
     }
 
 
