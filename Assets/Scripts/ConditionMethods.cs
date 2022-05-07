@@ -198,25 +198,7 @@ public class ConditionMethods
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
 
         Vector3 meetingPosition
-            = GoalkeeperCalculater.FindMeetingPosition(goalkeeper, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
-
-
-        Vector3 vel = GoalkeeperCalculater.FindRequiredVelocity(goalkeeper, Ball.Instance.transform.position, Ball.Instance.Rb.velocity);
-
-        /*
-        if (Mathf.Abs(vel.x) > goalkeeper.JumpPowerX)
-        {
-            Debug.Log("vel :"+vel+" x : "+goalkeeper.JumpPowerX);
-            return false;
-        }
-
-        if (vel.y > goalkeeper.JumpPowerY||vel.y<0)
-        {
-            Debug.Log("vel :" + vel + " x : " + goalkeeper.JumpPowerY);
-            return false;
-        }
-            
-        */
+            = GoalkeeperCalculater.Meeting_Position(goalkeeper);
 
 
         return goalkeeper.Other.IntersectWithMeetingPosition(meetingPosition);

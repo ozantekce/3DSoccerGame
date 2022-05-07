@@ -296,7 +296,8 @@ public class ActionMethods
     public static void SetAnimatorRunningParameterToFalse(FiniteStateMachine fsm)
     {
         Animator animator = ((PlayerFSM)fsm).Player.Animator;
-        animator.SetBool("IsRunning", false);
+        if(animator != null)
+            animator.SetBool("IsRunning", false);
 
     }
 

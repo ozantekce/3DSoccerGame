@@ -39,7 +39,7 @@ public class Ball : MonoBehaviour
     }
 
 
-    private const float resetIsShotedDelay = 4f;
+    private const float resetIsShotedDelay = 2f;
     private float resetIsShotedDelayTimer = 0;
     private void FixedUpdate()
     {
