@@ -23,7 +23,7 @@ public class BallVision : MonoBehaviour
 
     public bool ControlBall()
     {
-        return ballTransform != null && !Ball.Instance.Rb.isKinematic;
+        return ballTransform != null && !Ball.Instance.Rigidbody.isKinematic;
     }
 
     public bool NoControlBall()

@@ -129,5 +129,19 @@ public class VectorCalculater
         return new Vector2(vector.x, vector.z).normalized;
     }
 
+    /// <summary>
+    /// make vector.x,z = 0
+    /// </summary>
+    /// <param name="vector"></param>
+    /// <returns></returns>
+    public static Vector3 VectorZeroWithoutY(Vector3 vector)
+    {
+
+        vector.x = 0;
+        vector.z = 0;
+        return vector;
+
+    }
+
 
 }

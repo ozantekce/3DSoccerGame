@@ -6,7 +6,7 @@ public class Shot
 {
     public static void Shot_(Shotable shotable, float shotInput, float verticalInput, float horizontalInput)
     {
-        shotable.IsShooting = false;
+
         if (shotable.BallVision.NoControlBall() || shotable.ShotCooldown.NotReady())
         {
             return;
@@ -24,7 +24,6 @@ public class Shot
 
     public static void ForceShot(Shotable shotable, float shotInput, float verticalInput, float horizontalInput)
     {
-        shotable.IsShooting = false;
 
         GameObject gameObject = shotable.GameObject;
         Vector3 shotVector

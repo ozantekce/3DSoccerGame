@@ -45,8 +45,8 @@ public class ShotTest : MonoBehaviour
     private void Test_1()
     {
 
-        shotVector.x = Random.value * 10f * (Random.value < 0.5f ? 1 : -1);
-        shotVector.y = Random.value * 15f;
+        shotVector.x = Random.value * 15f * (Random.value < 0.5f ? 1 : -1);
+        shotVector.y = Random.value * 3f;
         shotVector.z = -35 - Random.value * 60f;
         Ball.Instance.Shot(shotVector);
 
@@ -65,7 +65,7 @@ public class ShotTest : MonoBehaviour
                 ready = false;
 
                 shotVector.x = Random.value * 16f * (Random.value < 0.5f ? 1 : -1);
-                shotVector.y = Random.value * 16f;
+                shotVector.y = Random.value * 7f;
                 shotVector.z = -35 - Random.value * 60f;
                 Ball.Instance.Shot(shotVector);
 
@@ -112,7 +112,7 @@ public class ShotTest : MonoBehaviour
         float z;    //-60|0
 
         x = Random.value*20f * (Random.value < 0.5f ? 1 : -1);
-        z = Random.value * -60;
+        z = Random.value * -63;
 
         Vector3 pos = new Vector3(x, 0, z);
 

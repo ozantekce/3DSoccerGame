@@ -6,7 +6,8 @@ using UnityEngine;
 public class GoalkeeperCalculater
 {
 
-    private const float EXPERIMENTAL_LIMIT = 5;
+    private const float EXPERIMENTAL_LIMIT = 30;
+    private const float EXPERIMENTAL_INCREASE_RATE = 0.3f;
 
     public static Vector3 Meeting_Position(Goalkeeper goalkeeper)
     {
@@ -14,7 +15,7 @@ public class GoalkeeperCalculater
         Ball ball = Ball.Instance;
         Vector3 ballPos = ball.transform.position;
         Vector3 catchAreaPos = goalkeeper.CatchArea.transform.position;
-        Vector3 ballVelocity = ball.Rb.velocity;
+        Vector3 ballVelocity = ball.Rigidbody.velocity;
 
         float estimatedMeetingTime = (catchAreaPos.z - ballPos.z) / ballVelocity.z;
         float estimatedBallY_ZeroTime = (ballVelocity.y * 2) / (Gravity.GLOBAL_GRAVITY / 0.02f);
@@ -44,7 +45,7 @@ public class GoalkeeperCalculater
         Debug.Log("CASE - 2");
         Debug.Log("ball y :" + ballVelocity.y);
         */
-        ballVelocity.y += 1; 
+        ballVelocity.y += EXPERIMENTAL_INCREASE_RATE; 
 
         return Meeting_Position_Experimental(goalkeeper, ballVelocity,0);
 
@@ -59,7 +60,7 @@ public class GoalkeeperCalculater
     {
 
         times++;
-
+        Debug.Log("time : "+ times);
         if (times >= EXPERIMENTAL_LIMIT)
             return Vector3.negativeInfinity;
 
@@ -94,7 +95,7 @@ public class GoalkeeperCalculater
         }
 
 
-        ballVelocity.y += 1f;
+        ballVelocity.y += EXPERIMENTAL_INCREASE_RATE;
 
         return Meeting_Position_Experimental(goalkeeper, ballVelocity,times);
 
@@ -109,7 +110,7 @@ public class GoalkeeperCalculater
         Ball ball = Ball.Instance;
         Vector3 ballPos = ball.transform.position;
         Vector3 catchAreaPos = goalkeeper.CatchArea.transform.position;
-        Vector3 ballVelocity = ball.Rb.velocity;
+        Vector3 ballVelocity = ball.Rigidbody.velocity;
 
         // if ball position y not equal 0 before meeting
         float estimatedMeetingTime = (catchAreaPos.z - ballPos.z) / ballVelocity.z;
@@ -159,15 +160,20 @@ public class GoalkeeperCalculater
             Debug.Log("Vel     : " + requiredVelocity);
 
 
-            if(t>0 && requiredVelocity.y > 0)
-                return new Vector3[]{meetingPos,requiredVelocity};
+            if (requiredVelocity.y < 0)
+            {
+                requiredVelocity.y = 0;
+            }
+
+            if (t > 0)
+                return new Vector3[] { meetingPos, requiredVelocity };
 
         }
 
         Debug.Log("CASE - 2");
         Debug.Log("ball y :" + ball.transform.position.y);
 
-        ballVelocity.y += 1f;
+        ballVelocity.y += EXPERIMENTAL_INCREASE_RATE;
         return CalculateAllExperimental(goalkeeper,ballVelocity,0);
 
 
@@ -235,7 +241,12 @@ public class GoalkeeperCalculater
             Debug.Log("Time    : " + t + " meeting Time : " + meetingTime);
             Debug.Log("Vel     : " + requiredVelocity);
 
-            if (t > 0 && requiredVelocity.y > 0)
+            if(requiredVelocity.y < 0)
+            {
+                requiredVelocity.y = 0;
+            }
+
+            if (t > 0)
                 return new Vector3[] { meetingPos, requiredVelocity };
 
         }
@@ -244,7 +255,7 @@ public class GoalkeeperCalculater
         Debug.Log("CASE - 2");
         Debug.Log("ball y :" + ball.transform.position.y);
         */
-        ballVelocity.y += 1f;
+        ballVelocity.y += EXPERIMENTAL_INCREASE_RATE;
         Debug.Log("times : "+times+" "+ballVelocity);
         return CalculateAllExperimental(goalkeeper, ballVelocity,times);
 
@@ -264,7 +275,7 @@ public class GoalkeeperCalculater
         Ball ball = Ball.Instance;
         Vector3 ballPos = ball.transform.position;
         Vector3 catchAreaPos = goalkeeper.CatchArea.transform.position;
-        Vector3 ballVelocity = ball.Rb.velocity;
+        Vector3 ballVelocity = ball.Rigidbody.velocity;
 
         // if ball position y not equal 0 before meeting
         float estimatedMeetingTime = (catchAreaPos.z - ballPos.z) / ballVelocity.z;
@@ -335,7 +346,7 @@ public class GoalkeeperCalculater
         Ball ball = Ball.Instance;
         Vector3 ballPos = ball.transform.position;
         Vector3 catchAreaPos = goalkeeper.CatchArea.transform.position;
-        Vector3 ballVelocity = ball.Rb.velocity;
+        Vector3 ballVelocity = ball.Rigidbody.velocity;
 
         // if ball position y not equal 0 before meeting
         float estimatedMeetingTime = (catchAreaPos.z - ballPos.z) / ballVelocity.z;

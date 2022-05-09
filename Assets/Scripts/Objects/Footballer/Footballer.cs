@@ -19,14 +19,18 @@ public abstract class Footballer : Player, Fallable
     public bool IsFalling { get => falling; set => falling = value; }
     public Player TeamMate { get => teamMate; set => teamMate = value; }
     public bool FallCommand { get => fallCommand; set => fallCommand = value; }
+    public Dropper Dropper { get => dropper; set => dropper = value; }
 
     [SerializeField]
     private Player teamMate;
 
+    private Dropper dropper;
+
+
     public void Start()
     {
         base.Start();
-
+        dropper = GetComponentInChildren<Dropper>();
     }
 
     public void Update()

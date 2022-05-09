@@ -45,7 +45,7 @@ public abstract class State
             first = false;
         }
 
-        Enter_(fsm);
+        EnterOptional(fsm);
 
         foreach (MyAction action in enterActions)
         {
@@ -60,7 +60,7 @@ public abstract class State
     private void PreExecute(FiniteStateMachine fsm)
     {
 
-        PreExecute_(fsm);
+        PreExecuteOptional(fsm);
 
         foreach (MyAction action in preActions)
         {
@@ -89,7 +89,7 @@ public abstract class State
 
         PreExecute(fsm);
 
-        Execute_(fsm);
+        ExecuteOptional(fsm);
 
         foreach (MyAction action in actions)
         {
@@ -118,7 +118,7 @@ public abstract class State
     private void PostExecute(FiniteStateMachine fsm)
     {
 
-        PostExecute_(fsm);
+        PostExecuteOptional(fsm);
 
         foreach (MyAction action in postActions)
         {
@@ -151,7 +151,7 @@ public abstract class State
             action.ExecuteAction(fsm);
         }
 
-        Exit_(fsm);
+        ExitOptional(fsm);
     }
 
 
@@ -162,28 +162,28 @@ public abstract class State
 
 
 
-    public virtual void Enter_(FiniteStateMachine fsm)
+    public virtual void EnterOptional(FiniteStateMachine fsm)
     {
 
     }
 
-    protected virtual void PreExecute_(FiniteStateMachine fsm)
+    protected virtual void PreExecuteOptional(FiniteStateMachine fsm)
     {
 
     }
 
-    protected virtual void Execute_(FiniteStateMachine fsm)
+    protected virtual void ExecuteOptional(FiniteStateMachine fsm)
     {
 
 
     }
 
-    protected virtual void PostExecute_(FiniteStateMachine fsm)
+    protected virtual void PostExecuteOptional(FiniteStateMachine fsm)
     {
 
     }
 
-    public virtual void Exit_(FiniteStateMachine fsm)
+    public virtual void ExitOptional(FiniteStateMachine fsm)
     {
 
     }

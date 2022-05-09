@@ -188,9 +188,10 @@ public abstract class Inputter : MonoBehaviour
         }
         else if (currentValue < 0)
         {
-            currentValue += sensivity * Time.deltaTime;
-            if (currentValue >= -sensivity && currentValue <= sensivity)
+            currentValue += sensivity * Time.deltaTime * 2;
+            if (currentValue > 0)
             {
+
                 currentValue = 0;
             }
         }
@@ -202,9 +203,11 @@ public abstract class Inputter : MonoBehaviour
         }
         else if (currentValue > 0)
         {
-            currentValue -= sensivity * Time.deltaTime;
-            if (currentValue >= -sensivity && currentValue <= sensivity)
+
+            currentValue -= sensivity * Time.deltaTime * 2;
+            if (currentValue < 0 )
             {
+
                 currentValue = 0;
             }
         }

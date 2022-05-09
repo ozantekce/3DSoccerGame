@@ -8,7 +8,7 @@ public class Fall
     public static void Fall_(Fallable fallable)
     {
 
-        fallable.IsFalling = false;
+
 
     }
 

@@ -18,11 +18,10 @@ public class FoorballerFallState : State
     public override void Init()
     {
 
-        fallAction = new MyAction(ActionMethods.FallMethod, ConditionMethods.Falling, 1.5f, 0.1f);
+        fallAction = new MyAction(FootballerActionMethods.FallMethod
+            ,1.5f, 0.1f);
 
         AddAction(fallAction,RunTimeOfAction.runOnEnter);
-
-
 
 
         AddTransition(new Transition(FootballerIdleState.Instance, (fsm) => {
@@ -37,24 +36,29 @@ public class FoorballerFallState : State
 
 
 
-    public override void Enter_(FiniteStateMachine fsm)
+    public override void EnterOptional(FiniteStateMachine fsm)
     {
         //Debug.Log("Enter FoorballerFallState");
-        
-        Footballer player = fsm.GetComponent<Footballer>();
-        player.IsFalling = true;
-        player.FallCommand = false;
-        Animator animator = fsm.GetComponent<Animator>();
+
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
+
+        footballer.IsFalling = true;
+        footballer.FallCommand = false;
+
+        Animator animator = footballer.Animator;
         animator.SetTrigger("Fall");
-        player.Rigidbody.isKinematic = true;
+
+        footballer.Rigidbody.isKinematic = true;
 
     }
 
-    public override void Exit_(FiniteStateMachine fsm)
+    public override void ExitOptional(FiniteStateMachine fsm)
     {
-        //Debug.Log("Exit FoorballerFallState");
-        Footballer player = fsm.GetComponent<Footballer>();
-        player.Rigidbody.isKinematic = false;
+
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
+
+        footballer.Rigidbody.isKinematic = false;
+        footballer.IsFalling = false;
 
     }
 

@@ -18,7 +18,12 @@ public class FootballerSlideState : State
     public override void Init()
     {
 
-        slideAction = new MyAction(ActionMethods.SlideMethod, ConditionMethods.Sliding, 0.2f, 1f);
+        slideAction = new MyAction(FootballerActionMethods.SlideMethod, 0.2f, 1f);
+
+        AddAction(slideAction, RunTimeOfAction.runOnEnter);
+
+        AddAction(new MyAction(FootballerActionMethods.SetAnimatorSlideParameter)
+            , RunTimeOfAction.runOnEnter);
 
         AddTransition(new Transition(FootballerIdleState.Instance, (fsm) => {
 
@@ -27,31 +32,25 @@ public class FootballerSlideState : State
         )
         );
 
-        AddAction(slideAction,RunTimeOfAction.runOnEnter);
-
 
     }
 
 
 
-    public override void Enter_(FiniteStateMachine fsm)
+    public override void EnterOptional(FiniteStateMachine fsm)
     {
-        //Debug.Log("Enter FootballerSlideState");
 
-        Footballer player = fsm.GetComponent<Footballer>();
-        player.IsSliding = true;
-        Animator animator = fsm.GetComponent<Animator>();
-        animator.SetTrigger("Slide");
-        player.GetComponentInChildren<Dropper>().IsActive = true;
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
+        footballer.Dropper.IsActive = true;
 
     }
 
-    public override void Exit_(FiniteStateMachine fsm)
+    public override void ExitOptional(FiniteStateMachine fsm)
     {
-        //Debug.Log("Exit FootballerSlideState");
-        fsm.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        Footballer player = fsm.GetComponent<Footballer>();
-        player.GetComponentInChildren<Dropper>().IsActive = false;
+
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
+        footballer.Rigidbody.velocity = VectorCalculater.VectorZeroWithoutY(footballer.Rigidbody.velocity);
+        footballer.Dropper.IsActive = false;
 
     }
 

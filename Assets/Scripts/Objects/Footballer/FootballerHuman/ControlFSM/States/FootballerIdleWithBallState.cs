@@ -24,16 +24,17 @@ public class FootballerIdleWithBallState : State
 
         AddTransition(new Transition(FootballerIdleState.Instance, ConditionMethods.NoControlBall));
 
-        AddTransition(new Transition(FootballerDribblingState.Instance, ConditionMethods.ControlBallAndVerticalOrHorizontalInput));
+        AddTransition(new Transition(FootballerDribblingState.Instance, ConditionMethods.VerticalOrHorizontalInput));
 
         AddTransition(new Transition(FootballerShotState.Instance, ConditionMethods.ShotInput));
 
         AddTransition(new Transition(FootballerPassState.Instance, ConditionMethods.PassInput));
 
 
-        AddAction(new MyAction(ActionMethods.SetAnimatorRunningParameterToFalse), RunTimeOfAction.runOnEnter);
-        
+        AddAction(new MyAction(FootballerActionMethods.SetAnimatorRunningParameterToFalse)
+            , RunTimeOfAction.runOnEnter);
 
+        AddAction(new MyAction(FootballerActionMethods.SetVelocityToZero));
 
 
     }

@@ -18,36 +18,29 @@ public class FootballerPassState : State
     public override void Init()
     {
 
+        passAction = new MyAction(FootballerActionMethods.PassMethod,0.2f, 0.5f);
+
+        AddAction(passAction, RunTimeOfAction.runOnEnter);
+
+        AddAction(new MyAction(FootballerActionMethods.SetAnimatorPassParameter),RunTimeOfAction.runOnEnter);
+
         AddTransition(new Transition(FoorballerFallState.Instance, ConditionMethods.FallCommand));
 
-        passAction = new MyAction(ActionMethods.PassMethod, ConditionMethods.Passing, 0.2f, 0.5f);
 
         AddTransition(new Transition(FootballerIdleState.Instance, (fsm) => {
             return passAction.ActionOver(fsm);
         }));
 
-        AddAction(passAction,RunTimeOfAction.runOnEnter);
-
 
     }
 
 
 
-    public override void Enter_(FiniteStateMachine fsm)
+    public override void EnterOptional(FiniteStateMachine fsm)
     {
-        //Debug.Log("Enter FootballerPassState");
-        Footballer player = fsm.GetComponent<Footballer>();
-        player.IsPassing = true;
-        player.Animator.SetTrigger("Pass");
+        base.EnterOptional(fsm);
+        Debug.Log("PASS");
 
     }
-
-    public override void Exit_(FiniteStateMachine fsm)
-    {
-
-        //Debug.Log("Exit FootballerPassState");
-
-    }
-
 
 }

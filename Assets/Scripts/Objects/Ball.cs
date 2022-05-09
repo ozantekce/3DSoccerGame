@@ -19,8 +19,8 @@ public class Ball : MonoBehaviour
 
     private Collider collider;
 
-    private Rigidbody rb;
-    public Rigidbody Rb { get => rb; set => rb = value; }
+    private Rigidbody rigidbody;
+    public Rigidbody Rigidbody { get => rigidbody; set => rigidbody = value; }
     public bool IsShoted { get => isShoted; set => isShoted = value; }
     public Collider Collider { get => collider; set => collider = value; }
 
@@ -64,7 +64,7 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
     }
 
@@ -73,25 +73,25 @@ public class Ball : MonoBehaviour
     public void HitTheBall(Vector3 vector)
     {
 
-        Rb.AddForce(vector, ForceMode.VelocityChange);
+        Rigidbody.AddForce(vector, ForceMode.VelocityChange);
     }
     
     public void HitTheBall_(Vector3 vector)
     {
-        rb.AddForce(vector, ForceMode.VelocityChange);
+        rigidbody.AddForce(vector, ForceMode.VelocityChange);
     }
 
 
     public void Shot(Vector3 vector) {
 
         
-        rb.velocity += vector;
+        rigidbody.velocity += vector;
         isShoted = true;
     }
 
     public Vector3 GetVelocity()
     {
-        return rb.velocity;
+        return rigidbody.velocity;
     }
 
     

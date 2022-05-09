@@ -18,8 +18,6 @@ public abstract class Player : MonoBehaviour, Movable,Shotable,Passable,Dribblin
 
     private Cooldown shotCooldown,passCooldown, dribblingCooldown,slideCooldown;
 
-    private bool shooting, passing, sliding;
-
     public float MovementSpeed { get { return movementSpeed; } set { movementSpeed = value; } }
     public float SpinSpeed { get { return spinSpeed; } set { spinSpeed = value; } }
     public float ShotPower { get { return shotPower; } set { shotPower = value; } }
@@ -42,9 +40,7 @@ public abstract class Player : MonoBehaviour, Movable,Shotable,Passable,Dribblin
     public Rigidbody Rigidbody { get => rb; set => rb = value; }
     
     public BallVision BallVision { get => ballVision; set => ballVision = value; }
-    public bool IsShooting { get => shooting; set => shooting = value; }
-    public bool IsPassing { get => passing; set => passing = value; }
-    public bool IsSliding { get => sliding; set => sliding = value; }
+
     public Animator Animator { get => animator; set => animator = value; }
 
     public void Start()

@@ -17,9 +17,14 @@ public class GoalkeeperIdleState : State
     {
         
 
-        AddTransition(new Transition(GoalkeeperTakePositionState.Instance,ConditionMethods.GoalkeeperWrongPosition));
-        AddTransition(new Transition(GoalkeeperGrabBallState.Instance, ConditionMethods.BallSoClose));
-        AddTransition(new Transition(GoalkeeperJumpState.Instance, ConditionMethods.BallShotedAndGoalkeeperMeetingWithBall));
+        AddTransition(new Transition(GoalkeeperTakePositionState.Instance,
+            ConditionMethods.GoalkeeperWrongPosition));
+
+        AddTransition(new Transition(GoalkeeperRunToBallState.Instance,
+            ConditionMethods.BallSoCloseAndGoalpostNotSoFar));
+
+        AddTransition(new Transition(GoalkeeperJumpState.Instance,
+            ConditionMethods.BallShotedAndGoalkeeperMeetingWithBall));
 
 
     }

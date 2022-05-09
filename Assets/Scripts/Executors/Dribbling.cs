@@ -59,7 +59,7 @@ public class Dribbling
 
         Vector3 rtn = dribblingable.DribblingPower * ballTargetForwardVector.normalized;
 
-        if ((Ball.Instance.Rb.velocity + rtn).magnitude > max)
+        if ((Ball.Instance.Rigidbody.velocity + rtn).magnitude > max)
         {
             return rtn * 0.75f;
         }

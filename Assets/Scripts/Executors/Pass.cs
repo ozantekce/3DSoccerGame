@@ -8,7 +8,7 @@ public class Pass
     public static void Pass_(Passable passable, float passInput, Transform target)
     {
 
-        passable.IsPassing = false;
+
         GameObject gameObject = passable.GameObject;
         Vector3 directionVector = target.position - Ball.Instance.transform.position;
         directionVector = directionVector.normalized;
@@ -21,11 +21,11 @@ public class Pass
                 (target.position - gameObject.transform.position).normalized
             ))
         {
-            Ball.Instance.Rb.velocity += addVelocity;
+            Ball.Instance.Rigidbody.velocity += addVelocity;
         }
         else
         {
-            Ball.Instance.Rb.velocity += gameObject.transform.forward * 15f;
+            Ball.Instance.Rigidbody.velocity += gameObject.transform.forward * 15f;
         }
         
     }

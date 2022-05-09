@@ -6,7 +6,6 @@ public class ConditionMethods
 {
 
 
-
     public static bool VerticalOrHorizontalInput(FiniteStateMachine fsm)
     {
         Footballer footballer = ((FootballerFSM)fsm).Footballer;
@@ -96,37 +95,6 @@ public class ConditionMethods
 
 
 
-    public static bool Shooting(FiniteStateMachine fsm)
-    {
-        Player player = ((PlayerFSM)fsm).Player;
-        return player.IsShooting;
-    }
-    public static bool NoShooting(FiniteStateMachine fsm)
-    {
-        return !Shooting(fsm);
-    }
-
-
-    public static bool Passing(FiniteStateMachine fsm)
-    {
-        Player player = ((PlayerFSM)fsm).Player;
-        return player.IsPassing;
-    }
-    public static bool NoPassing(FiniteStateMachine fsm)
-    {
-        return !Passing(fsm);
-    }
-
-    public static bool Sliding(FiniteStateMachine fsm)
-    {
-        Player player = ((PlayerFSM)fsm).Player;
-        return player.IsSliding;
-    }
-    public static bool NoSliding(FiniteStateMachine fsm)
-    {
-        return !Sliding(fsm);
-    }
-
 
     public static bool Falling(FiniteStateMachine fsm)
     {
@@ -162,6 +130,14 @@ public class ConditionMethods
 
     }
 
+
+
+    public static bool BallSoCloseAndGoalpostNotSoFar(FiniteStateMachine fsm)
+    {
+        
+        return BallSoClose(fsm) && !GoalpostFar(fsm);
+
+    }
 
     public static bool BallSoClose(FiniteStateMachine fsm)
     {
@@ -223,14 +199,14 @@ public class ConditionMethods
     public static bool NoBallGrabbed(FiniteStateMachine fsm)
     {
 
-        return !Ball.Instance.Rb.isKinematic;
+        return !Ball.Instance.Rigidbody.isKinematic;
 
     }
 
     public static bool BallGrabbed(FiniteStateMachine fsm)
     {
 
-        return Ball.Instance.Rb.isKinematic;
+        return Ball.Instance.Rigidbody.isKinematic;
 
     }
 
@@ -245,12 +221,25 @@ public class ConditionMethods
     }
 
 
+    public static bool GoalpostFar(FiniteStateMachine fsm)
+    {
+
+        Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
+        Transform goalpost = goalkeeper.GoalpostCenter;
+
+        float distance
+            = Vector3.Distance(goalkeeper.transform.position, goalpost.position);
+
+        return distance > 30f;
+
+    }
+
 
 
     public static bool GoalkeeperBallCatchable(FiniteStateMachine fsm)
     {
 
-        if (Ball.Instance.Rb.isKinematic)
+        if (Ball.Instance.Rigidbody.isKinematic)
             return false;
 
         Collider[] intersecting = Physics.OverlapSphere(Ball.Instance.transform.position, 3f);
@@ -272,7 +261,7 @@ public class ConditionMethods
     public static bool BallCatched(FiniteStateMachine fsm)
     {
 
-        return Ball.Instance.Rb.isKinematic;
+        return Ball.Instance.Collider.isTrigger;
 
     }
 

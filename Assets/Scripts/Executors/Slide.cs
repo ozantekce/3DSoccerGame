@@ -8,7 +8,6 @@ public class Slide
     public static void Slide_(Slideable slideable,float slideInput)
     {
 
-        slideable.IsSliding = false;
         if (slideable.SlideCooldown.NotReady())
             return;
 

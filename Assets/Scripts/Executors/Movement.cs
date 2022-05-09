@@ -28,6 +28,7 @@ public class Movement
 
         Vector3 directionVector
             = new Vector3(verticalInput, 0, horizontalInput).normalized;
+        
 
         directionVector *= movable.MovementSpeed;    // hýz vektörü oluþturuldu
 
@@ -67,7 +68,7 @@ public class Movement
     public static void SpinAndMoveForward(Movable movable, float verticalInput, float horizontalInput)
     {
 
-        Spin(movable, verticalInput, horizontalInput,15f);
+        Spin(movable, verticalInput, horizontalInput,2f);
         if(verticalInput !=0 || horizontalInput !=0)
             MoveForward(movable);
 

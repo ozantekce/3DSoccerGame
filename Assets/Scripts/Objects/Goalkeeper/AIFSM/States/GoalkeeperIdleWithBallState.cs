@@ -16,7 +16,7 @@ public class GoalkeeperIdleWithBallState : State
     public override void Init()
     {
 
-        AddAction(new MyAction(ActionMethods.GoalkeeperHoldTheBall));
+        AddAction(new MyAction(GoalkeeperActionMethods.GoalkeeperHoldTheBall));
 
         AddTransition(new Transition(GoalkeeperThrowBallState.Instance,ConditionMethods.Elapsed4SecondInState));
 

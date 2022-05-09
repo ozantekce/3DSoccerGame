@@ -18,42 +18,23 @@ public class FootballerShotState : State
     public override void Init()
     {
 
+        shotAction = new MyAction(FootballerActionMethods.ShotMethod,0.2f, 0.75f);
+        AddAction(shotAction, RunTimeOfAction.runOnEnter);
+
+        AddAction(new MyAction(FootballerActionMethods.SetAnimatorShotParameter)
+            , RunTimeOfAction.runOnEnter);
+
+        
         AddTransition(new Transition(FoorballerFallState.Instance, ConditionMethods.FallCommand));
+        
 
-        shotAction = new MyAction(ActionMethods.ShotMethod,ConditionMethods.Shooting,0.2f,0.75f);
-
-        AddAction(shotAction,RunTimeOfAction.runOnEnter);
-
-        AddTransition(new Transition(FootballerIdleState.Instance,(fsm)=>{
-
+        AddTransition(new Transition(FootballerIdleState.Instance, (fsm) => {
             return shotAction.ActionOver(fsm);
-        })
-        );
-
-
+        }));
+        
 
     }
-
-
-
-    public override void Enter_(FiniteStateMachine fsm)
-    {
-        //Debug.Log("Enter FootballerShotState");
-
-        Footballer player = fsm.GetComponent<Footballer>();
-        player.IsShooting = true;
-
-        Animator animator = fsm.GetComponent<Animator>();
-        animator.SetTrigger("Shot");
-
-    }
-
-    public override void Exit_(FiniteStateMachine fsm)
-    {
-        //Debug.Log("Exit FootballerShotState");
-
-
-    }
+    
 
 
 }

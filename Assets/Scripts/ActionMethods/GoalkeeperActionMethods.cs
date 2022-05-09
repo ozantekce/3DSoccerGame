@@ -2,77 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionMethods
+public class GoalkeeperActionMethods
 {
     
-
-
-    public static void FootballerRunMethod(FiniteStateMachine fsm)
-    {
-
-        Footballer footballer = ((FootballerFSM)fsm).Footballer;
-        
-        float verticalInput = footballer.verticalInput;
-        float horizontalInput = footballer.horizontalInput;
-        Movement.SpinAndMoveForward(footballer, verticalInput, horizontalInput);
-
-    }
-
-    public static void FootballerDribblingMethod(FiniteStateMachine fsm)
-    {
-        Footballer footballer = ((FootballerFSM)fsm).Footballer;
-
-        float verticalInput = footballer.verticalInput;
-        float horizontalInput = footballer.horizontalInput;
-
-
-        Dribbling.Dribbling_(footballer, verticalInput, horizontalInput);
-
-    }
-
-
-    public static void ShotMethod(FiniteStateMachine fsm)
-    {
-
-        Footballer footballer = ((FootballerFSM)fsm).Footballer;
-        float verticalInput = footballer.verticalInput;
-        float horizontalInput = footballer.horizontalInput;
-        float shotInput = footballer.shotInput;
-        Shot.Shot_(footballer, shotInput, verticalInput, horizontalInput);
-        
-
-    }
-
-    public static void PassMethod(FiniteStateMachine fsm)
-    {
-
-        Footballer footballer = ((FootballerFSM)fsm).Footballer;
-        float passInput = footballer.passInput;
-        Pass.Pass_(footballer, passInput, footballer.TeamMate.transform);
-        
-    }
-
-    public static void SlideMethod(FiniteStateMachine fsm)
-    {
-
-        Footballer footballer = ((FootballerFSM)fsm).Footballer;
-        Slide.Slide_(footballer, 1);
-        
-
-    }
-
-    public static void FallMethod(FiniteStateMachine fsm)
-    {
-
-        Footballer footballer = ((FootballerFSM)fsm).Footballer;
-        Fall.Fall_(footballer);
-
-
-    }
-
-
-
-    public static void GoalkeeperTakePosition(FiniteStateMachine fsm)
+    public static void TakePosition(FiniteStateMachine fsm)
     {
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
 
@@ -87,26 +20,46 @@ public class ActionMethods
         bool isUp = localDir.y > 0;
         bool isRight = localDir.x > 0;
         */
-        if (VectorCalculater.PositionIs_(goalkeeper.transform,targetPos,Direction.right))
+
+
+
+
+
+
+        Movement.MovePosition(goalkeeper, targetPos, 0.5f,goalkeeper.MovementSpeed);
+        Movement.SpinToObject(goalkeeper, Ball.Instance.gameObject, 15f);
+
+
+        Rigidbody rigidbody = goalkeeper.Rigidbody;
+        Vector3 velocityDirection = rigidbody.velocity.normalized;
+        Vector3 goalkeeperForward = goalkeeper.transform.forward;
+
+        float angleBetween = Vector3.Angle(goalkeeperForward, velocityDirection);
+
+        if (angleBetween > 120f)
         {
-            animator.SetBool("WalkingLeft", true);
+            animator.SetInteger("Walking", 2);
         }
         else
         {
-            animator.SetBool("WalkingRight", true);
+            if (VectorCalculater.PositionIs_(goalkeeper.transform, targetPos, Direction.right))
+            {
+                animator.SetInteger("Walking", 3);
+            }
+            else
+            {
+                animator.SetInteger("Walking", 4);
+            }
         }
-
-        Movement.MovePosition(goalkeeper, targetPos, 1.5f,goalkeeper.MovementSpeed);
-        Movement.SpinToObject(goalkeeper, Ball.Instance.gameObject, 15f);
 
 
 
     }
 
-    public static void GoalkeeperGrabBall(FiniteStateMachine fsm)
+    public static void GrabBall(FiniteStateMachine fsm)
     {
 
-        if (Ball.Instance.Rb.isKinematic)
+        if (Ball.Instance.Rigidbody.isKinematic)
             return;
 
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
@@ -117,17 +70,17 @@ public class ActionMethods
         goalkeeper.Rigidbody.isKinematic = true;
 
         Ball ball = Ball.Instance;
-        ball.Rb.isKinematic = true;
+        ball.Rigidbody.isKinematic = true;
 
-        fsm.StartCoroutine(SendBallToHands(fsm,0.8f));
+        fsm.StartCoroutine(GrabBall_(fsm,3f));
 
 
     }
 
 
-    public static void GoalkeeperCatchBall(FiniteStateMachine fsm)
+    public static void CatchBall(FiniteStateMachine fsm)
     {
-        if (Ball.Instance.Rb.isKinematic)
+        if (Ball.Instance.Rigidbody.isKinematic)
             return;
 
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
@@ -138,31 +91,45 @@ public class ActionMethods
         Debug.Log("catch");
 
         Ball ball = Ball.Instance;
-        ball.Rb.isKinematic = true;
+        ball.Rigidbody.isKinematic = true;
 
-        fsm.StartCoroutine(SendBallToHands2(fsm,0.1f));
+        fsm.StartCoroutine(SendBallToHands2(fsm,0.8f));
 
     }
 
 
-    public static void GoalkeeperGoToBall(FiniteStateMachine fsm)
+    public static void GoToBall(FiniteStateMachine fsm)
     {
 
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
+
+        Animator animator = goalkeeper.Animator;
+        animator.SetInteger("Walking", 1);
+        
 
         Movement.SpinToObject(goalkeeper, Ball.Instance.gameObject, 10f);
         Movement.MovePosition(goalkeeper, Ball.Instance.transform.position, 0.5f, goalkeeper.MovementSpeed);
 
+
+
+
     }
 
 
+    public static void LookTheBall(FiniteStateMachine fsm)
+    {
+        Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
+        Movement.SpinToObject(goalkeeper, Ball.Instance.gameObject, 8f);
 
-    private static IEnumerator SendBallToHands(FiniteStateMachine fsm, float duration)
+    }
+
+
+    private static IEnumerator GrabBall_(FiniteStateMachine fsm, float duration)
     {
         Debug.Log("start");
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
         float T = 0;
-        Ball.Instance.Collider.isTrigger = true;
+        
         while (true)
         {
 
@@ -177,6 +144,7 @@ public class ActionMethods
 
             if (t01 >= 1)
             {
+                Ball.Instance.Collider.isTrigger = true;
                 //fsm.GetComponent<Goalkeeper>().RightHand
                 break;
             }
@@ -199,9 +167,10 @@ public class ActionMethods
 
     private static IEnumerator SendBallToHands2(FiniteStateMachine fsm, float duration)
     {
+
         Debug.Log("start");
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
-        Ball.Instance.Collider.isTrigger = true;
+        
 
         float T = 0;
 
@@ -219,6 +188,7 @@ public class ActionMethods
 
             if (t01 >= 1)
             {
+                Ball.Instance.Collider.isTrigger = true;
                 //fsm.GetComponent<Goalkeeper>().RightHand
                 break;
             }
@@ -273,7 +243,7 @@ public class ActionMethods
             times++;
         }
         //Debug.Log("over");
-        Ball.Instance.Rb.isKinematic = false;
+        Ball.Instance.Rigidbody.isKinematic = false;
         yield return new WaitForEndOfFrame();
         Shot.ForceShot(goalkeeper, 1, 0, 0);
         ThrowBallRunning = false;
@@ -293,27 +263,7 @@ public class ActionMethods
     }
 
 
-    public static void SetAnimatorRunningParameterToFalse(FiniteStateMachine fsm)
-    {
-        Animator animator = ((PlayerFSM)fsm).Player.Animator;
-        if(animator != null)
-            animator.SetBool("IsRunning", false);
 
-    }
-
-    public static void SetAnimatorRunningParameterToTrue(FiniteStateMachine fsm)
-    {
-        Animator animator = ((PlayerFSM)fsm).Player.Animator;
-        animator.SetBool("IsRunning", true);
-
-    }
-
-
-    public static void StopThePlayer(FiniteStateMachine fsm)
-    {
-        PlayerFSM playerFSM = (PlayerFSM)fsm;
-        playerFSM.Player.Rigidbody.velocity = Vector3.zero;
-    }
 
 
 

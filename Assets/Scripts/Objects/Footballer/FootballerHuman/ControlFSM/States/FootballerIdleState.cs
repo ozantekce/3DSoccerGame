@@ -21,13 +21,19 @@ public class FootballerIdleState : State
     {
 
         AddTransition(new Transition(FoorballerFallState.Instance, ConditionMethods.FallCommand));
-        AddTransition(new Transition(FootballerRunState.Instance, ConditionMethods.VerticalOrHorizontalInput));
+
         AddTransition(new Transition(FootballerIdleWithBallState.Instance, ConditionMethods.ControlBall));
-        AddTransition(new Transition(FootballerSlideState.Instance, ConditionMethods.NoControlBallAndSlideInput));
+
+        AddTransition(new Transition(FootballerRunState.Instance, ConditionMethods.VerticalOrHorizontalInput));
+
+        AddTransition(new Transition(FootballerSlideState.Instance, ConditionMethods.SlideInput));
 
 
-        AddAction(new MyAction(ActionMethods.SetAnimatorRunningParameterToFalse), RunTimeOfAction.runOnEnter);
-        AddAction(new MyAction(ActionMethods.StopThePlayer));
+        AddAction(new MyAction(FootballerActionMethods.SetAnimatorRunningParameterToFalse)
+            , RunTimeOfAction.runOnEnter);
+
+        AddAction(new MyAction(FootballerActionMethods.SetVelocityToZero));
+
 
 
     }

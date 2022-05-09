@@ -18,7 +18,7 @@ public class GoalkeeperJumpState : State
     public override void Init()
     {
 
-        AddAction(new MyAction(ActionMethods.GoalkeeperCatchBall, ConditionMethods.GoalkeeperBallCatchable));
+        AddAction(new MyAction(GoalkeeperActionMethods.CatchBall, ConditionMethods.GoalkeeperBallCatchable));
 
         AddTransition(new Transition(GoalkeeperIdleState.Instance, ConditionMethods.Elapsed4SecondInState));
 
@@ -29,7 +29,7 @@ public class GoalkeeperJumpState : State
 
     }
 
-    public override void Enter_(FiniteStateMachine fsm)
+    public override void EnterOptional(FiniteStateMachine fsm)
     {
 
         Debug.Log("Enter GoalkeeperJumpState");
@@ -125,7 +125,7 @@ public class GoalkeeperJumpState : State
 
     }
 
-    public override void Exit_(FiniteStateMachine fsm)
+    public override void ExitOptional(FiniteStateMachine fsm)
     {
 
         
