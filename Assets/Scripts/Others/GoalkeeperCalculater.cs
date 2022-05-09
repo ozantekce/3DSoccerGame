@@ -18,6 +18,7 @@ public class GoalkeeperCalculater
         Vector3 ballVelocity = ball.Rigidbody.velocity;
 
         float estimatedMeetingTime = (catchAreaPos.z - ballPos.z) / ballVelocity.z;
+
         float estimatedBallY_ZeroTime = (ballVelocity.y * 2) / (Gravity.GLOBAL_GRAVITY / 0.02f);
 
         bool case1;

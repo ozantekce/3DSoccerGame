@@ -5,19 +5,19 @@ https://www.youtube.com/watch?v=enlmuBypcPo
 
 DONE
 	Some features added : 
-		Dribbling
 		Jump
 		Movement
 		Pass
 		Shoot
 		Slide
+		Animations
 
 DOING
 	Bug fixing
-
-
+	Goalkeeper AI
+	Dribbling
 TODO
-	Animations
+	Footballer AI
 
 
 challenges: dribbling correctly

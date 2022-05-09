@@ -693,6 +693,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Soccer Ball
       objectReference: {fileID: 0}
+    - target: {fileID: 4962952929581770717, guid: 507591cfe78551f4fa16a4f6658a3309, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 507591cfe78551f4fa16a4f6658a3309, type: 3}
 --- !u!1 &1164297514
@@ -1039,6 +1043,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 427441016, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6551242515568518000, guid: 8f2ce798fe7c071469c5ae3eb060e1ec, type: 3}
       propertyPath: goalpostCenter
       value: 

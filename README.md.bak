@@ -1,25 +1,25 @@
 # ComputerGraphicsProject
 
-
-https://user-images.githubusercontent.com/32203867/166862252-ef73dceb-f4c1-417f-a67e-d1869476e0c3.mp4
-
-
+Goalkeeper AI Test :
+https://www.youtube.com/watch?v=enlmuBypcPo
 
 DONE
 	Some features added : 
-		Dribbling
 		Jump
 		Movement
 		Pass
 		Shoot
 		Slide
+		Animations
 
 DOING
 	Bug fixing
-
-
+	Goalkeeper AI
+	Dribbling
 TODO
-	Animations
+	Better Goalkeeper AI
+	Better Dribbling
+	Footballer AI
 
 
 challenges: dribbling correctly
