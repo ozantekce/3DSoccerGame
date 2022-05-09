@@ -3835,8 +3835,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6db5eebc40331d4899f5ba3c1bf3b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 12
-  spinSpeed: 700
+  movementSpeed: 22
+  spinSpeed: 250
   shotPower: 30
   passPower: 30
   slidePower: 20
@@ -3847,8 +3847,8 @@ MonoBehaviour:
   passCD: 500
   dribblingCD: 100
   slideCD: 500
-  jumpPowerX: 10
-  jumpPowerY: 10
+  jumpPowerX: 15
+  jumpPowerY: 15
   jumpCD: 100
   rightHand: {fileID: 773869970}
   catchArea: {fileID: 945065320}

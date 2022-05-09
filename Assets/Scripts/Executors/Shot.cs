@@ -15,7 +15,7 @@ public class Shot
         GameObject gameObject = shotable.GameObject;
         Vector3 shotVector
             = (shotInput + 0.4f) * shotable.ShotPower
-            * (gameObject.transform.forward + new Vector3(verticalInput, 0.3f, horizontalInput)).normalized;
+            * (gameObject.transform.forward + new Vector3(verticalInput, 0.4f, horizontalInput)).normalized;
 
         Ball.Instance.Shot(Deformation.Deform(shotVector, 1f, 10f));
 

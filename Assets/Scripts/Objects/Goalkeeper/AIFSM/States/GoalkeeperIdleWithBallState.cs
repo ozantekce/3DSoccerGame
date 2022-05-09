@@ -16,14 +16,43 @@ public class GoalkeeperIdleWithBallState : State
     public override void Init()
     {
 
-        AddAction(new MyAction(GoalkeeperActionMethods.GoalkeeperHoldTheBall));
+        //  TRANSITIONS
+        //  #1
+        AddTransition(new Transition(GoalkeeperThrowBallState.Instance
+            , GoalkeeperConditionMethods.Elapsed2Seconds));
 
-        AddTransition(new Transition(GoalkeeperThrowBallState.Instance,ConditionMethods.Elapsed4SecondInState));
+
+        //  ACTIONS
+        //  #1
+        AddAction(new MyAction(GoalkeeperActionMethods.LookRivalGoalpost));
+        //  #2
+        AddAction(new MyAction(GoalkeeperActionMethods.HoldTheBall));
+        //  #3
+        AddAction(new MyAction(GoalkeeperActionMethods.Stop));
 
 
     }
 
 
+    public override void EnterOptional(FiniteStateMachine fsm)
+    {
+        base.ExitOptional(fsm);
+
+        Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
+        Animator animator = goalkeeper.Animator;
+        animator.SetBool("Catched", true);
+
+    }
+
+    public override void ExitOptional(FiniteStateMachine fsm)
+    {
+        base.ExitOptional(fsm);
+
+        Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
+        Animator animator = goalkeeper.Animator;
+        animator.SetBool("Catched", false);
+
+    }
 
 
 }

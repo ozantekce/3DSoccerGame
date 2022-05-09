@@ -6,7 +6,7 @@ using UnityEngine;
 public class GoalkeeperCalculater
 {
 
-    private const float EXPERIMENTAL_LIMIT = 30;
+    private const float EXPERIMENTAL_LIMIT = 10;
     private const float EXPERIMENTAL_INCREASE_RATE = 0.3f;
 
     public static Vector3 Meeting_Position(Goalkeeper goalkeeper)
@@ -60,7 +60,7 @@ public class GoalkeeperCalculater
     {
 
         times++;
-        Debug.Log("time : "+ times);
+
         if (times >= EXPERIMENTAL_LIMIT)
             return Vector3.negativeInfinity;
 
@@ -162,7 +162,7 @@ public class GoalkeeperCalculater
 
             if (requiredVelocity.y < 0)
             {
-                requiredVelocity.y = 0;
+                requiredVelocity.y = 0.1f;
             }
 
             if (t > 0)
@@ -243,7 +243,7 @@ public class GoalkeeperCalculater
 
             if(requiredVelocity.y < 0)
             {
-                requiredVelocity.y = 0;
+                requiredVelocity.y = 0.1f;
             }
 
             if (t > 0)
@@ -261,6 +261,8 @@ public class GoalkeeperCalculater
 
 
     }
+
+
 
 
 

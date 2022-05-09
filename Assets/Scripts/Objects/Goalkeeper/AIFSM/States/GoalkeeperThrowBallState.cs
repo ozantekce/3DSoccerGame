@@ -17,15 +17,10 @@ public class GoalkeeperThrowBallState : State
     public override void Init()
     {
 
-        AddAction(new MyAction(GoalkeeperActionMethods.GoalkeeperLookRivalGoalPost));
+        throwTheBall = new MyAction(GoalkeeperActionMethods.ThrowBall, 1.6f, 2f);
 
-        throwTheBall = new MyAction(GoalkeeperActionMethods.GoalkeeperThrowBall, 1.6f, 2f);
-
-        AddAction(throwTheBall, RunTimeOfAction.runOnEnter);
-
-        AddAction(new MyAction(GoalkeeperActionMethods.GoalkeeperHoldTheBall),RunTimeOfAction.runOnPreExecution);
-
-
+        //  TRANSITIONS
+        //  #1
         AddTransition(new Transition(GoalkeeperIdleState.Instance, (fsm) =>
         {
             return throwTheBall.ActionOver(fsm);
@@ -33,25 +28,23 @@ public class GoalkeeperThrowBallState : State
         ));
 
 
-    }
+        //  ACTIONS
+        //  #1
+        AddAction(throwTheBall
+            , RunTimeOfAction.runOnEnter);
 
-    public override void EnterOptional(FiniteStateMachine fsm)
-    {
+        //  #2
+        AddAction(new MyAction(GoalkeeperActionMethods.HoldTheBall)
+            ,RunTimeOfAction.runOnPreExecution);
 
-
-        Animator animator = fsm.GetComponent<Animator>();
-        animator.SetTrigger("Throw");
-
-
-    }
-
-    public override void ExitOptional(FiniteStateMachine fsm)
-    {
-
+        //  #1:OnEnter
+        AddAction(new MyAction(GoalkeeperActionMethods.PlayThrowAnim)
+            , RunTimeOfAction.runOnEnter);
 
 
 
     }
+
 
 
 

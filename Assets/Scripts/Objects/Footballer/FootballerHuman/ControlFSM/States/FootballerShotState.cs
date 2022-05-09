@@ -25,7 +25,7 @@ public class FootballerShotState : State
             , RunTimeOfAction.runOnEnter);
 
         
-        AddTransition(new Transition(FoorballerFallState.Instance, ConditionMethods.FallCommand));
+        AddTransition(new Transition(FoorballerFallState.Instance, FootballerConditionMethods.FallCommand));
         
 
         AddTransition(new Transition(FootballerIdleState.Instance, (fsm) => {

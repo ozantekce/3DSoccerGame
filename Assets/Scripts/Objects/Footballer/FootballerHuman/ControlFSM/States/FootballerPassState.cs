@@ -24,7 +24,7 @@ public class FootballerPassState : State
 
         AddAction(new MyAction(FootballerActionMethods.SetAnimatorPassParameter),RunTimeOfAction.runOnEnter);
 
-        AddTransition(new Transition(FoorballerFallState.Instance, ConditionMethods.FallCommand));
+        AddTransition(new Transition(FoorballerFallState.Instance, FootballerConditionMethods.FallCommand));
 
 
         AddTransition(new Transition(FootballerIdleState.Instance, (fsm) => {
@@ -39,7 +39,6 @@ public class FootballerPassState : State
     public override void EnterOptional(FiniteStateMachine fsm)
     {
         base.EnterOptional(fsm);
-        Debug.Log("PASS");
 
     }
 

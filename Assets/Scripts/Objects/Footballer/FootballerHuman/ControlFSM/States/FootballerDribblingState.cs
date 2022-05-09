@@ -18,17 +18,17 @@ public class FootballerDribblingState : State
     public override void Init()
     {
 
-        AddTransition(new Transition(FoorballerFallState.Instance, ConditionMethods.FallCommand));
+        AddTransition(new Transition(FoorballerFallState.Instance, FootballerConditionMethods.FallCommand));
 
-        AddTransition(new Transition(FootballerRunState.Instance, ConditionMethods.NoControlBallAndVerticalOrHorizontalInput));
+        AddTransition(new Transition(FootballerRunState.Instance, FootballerConditionMethods.NoControlBallAndVerticalOrHorizontalInput));
         
-        AddTransition(new Transition(FootballerIdleState.Instance, ConditionMethods.NoControlBallAndNoVerticalOrHorizontalInput));
+        AddTransition(new Transition(FootballerIdleState.Instance, FootballerConditionMethods.NoControlBallAndNoVerticalOrHorizontalInput));
         
-        AddTransition(new Transition(FootballerIdleWithBallState.Instance, ConditionMethods.ControlBallAndNoVerticalOrHorizontalInput));
+        AddTransition(new Transition(FootballerIdleWithBallState.Instance, FootballerConditionMethods.ControlBallAndNoVerticalOrHorizontalInput));
         
-        AddTransition(new Transition(FootballerShotState.Instance, ConditionMethods.ShotInput));
+        AddTransition(new Transition(FootballerShotState.Instance, FootballerConditionMethods.ShotInput));
         
-        AddTransition(new Transition(FootballerPassState.Instance, ConditionMethods.PassInput));
+        AddTransition(new Transition(FootballerPassState.Instance, FootballerConditionMethods.PassInput));
 
         AddAction(new MyAction(FootballerActionMethods.DribblingMethod));
 

@@ -20,15 +20,15 @@ public class FootballerIdleWithBallState : State
     public override void Init()
     {
 
-        AddTransition(new Transition(FoorballerFallState.Instance, ConditionMethods.FallCommand));
+        AddTransition(new Transition(FoorballerFallState.Instance, FootballerConditionMethods.FallCommand));
 
-        AddTransition(new Transition(FootballerIdleState.Instance, ConditionMethods.NoControlBall));
+        AddTransition(new Transition(FootballerIdleState.Instance, FootballerConditionMethods.NoControlBall));
 
-        AddTransition(new Transition(FootballerDribblingState.Instance, ConditionMethods.VerticalOrHorizontalInput));
+        AddTransition(new Transition(FootballerDribblingState.Instance, FootballerConditionMethods.VerticalOrHorizontalInput));
 
-        AddTransition(new Transition(FootballerShotState.Instance, ConditionMethods.ShotInput));
+        AddTransition(new Transition(FootballerShotState.Instance, FootballerConditionMethods.ShotInput));
 
-        AddTransition(new Transition(FootballerPassState.Instance, ConditionMethods.PassInput));
+        AddTransition(new Transition(FootballerPassState.Instance, FootballerConditionMethods.PassInput));
 
 
         AddAction(new MyAction(FootballerActionMethods.SetAnimatorRunningParameterToFalse)

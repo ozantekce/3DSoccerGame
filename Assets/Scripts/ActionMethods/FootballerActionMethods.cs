@@ -108,7 +108,7 @@ public class FootballerActionMethods
 
     public static void SetAnimatorPassParameter(FiniteStateMachine fsm)
     {
-        Debug.Log("trigger");
+
         Animator animator = ((PlayerFSM)fsm).Player.Animator;
         animator.SetTrigger("Pass");
 

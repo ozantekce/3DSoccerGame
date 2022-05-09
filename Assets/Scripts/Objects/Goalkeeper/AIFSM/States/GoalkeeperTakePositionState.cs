@@ -16,32 +16,23 @@ public class GoalkeeperTakePositionState : State
 
     public override void Init()
     {
-        AddAction(new MyAction(GoalkeeperActionMethods.LookTheBall));
-        AddAction(new MyAction(GoalkeeperActionMethods.TakePosition));
 
-        AddTransition(new Transition(GoalkeeperIdleState.Instance,ConditionMethods.GoalkeeperRightPosition));
-
-
-        AddTransition(new Transition(GoalkeeperJumpState.Instance, ConditionMethods.BallShotedAndGoalkeeperMeetingWithBall));
-
-    }
-
-    public override void EnterOptional(FiniteStateMachine fsm)
-    {
+        //  TRANSITIONS
+        //  #1
+        AddTransition(new Transition(GoalkeeperJumpState.Instance
+            , GoalkeeperConditionMethods.BallShotedAndMeetingWithThis));
+        //  #2
+        AddTransition(new Transition(GoalkeeperIdleState.Instance
+            , GoalkeeperConditionMethods.RightPosition));
 
 
-    }
-
-    public override void ExitOptional(FiniteStateMachine fsm)
-    {
-
-        Rigidbody rigidbody = fsm.GetComponent<Rigidbody>();
-        rigidbody.velocity = Vector3.zero;
-
-        Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
-        Animator animator = goalkeeper.Animator;
-
-        animator.SetInteger("Walking", 0);
+        //  ACTIONS
+        //  #1
+        AddAction(new MyAction(GoalkeeperActionMethods.GoRightPosition));
+        //  #2
+        AddAction(new MyAction(GoalkeeperActionMethods.Stop)
+            ,RunTimeOfAction.runOnExit);
+        
 
     }
 

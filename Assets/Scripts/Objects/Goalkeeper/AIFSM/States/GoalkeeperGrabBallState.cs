@@ -16,14 +16,25 @@ public class GoalkeeperGrabBallState : State
     public override void Init()
     {
 
-        AddAction(new MyAction(GoalkeeperActionMethods.GrabBall),RunTimeOfAction.runOnEnter);
 
-        AddTransition(new Transition(GoalkeeperIdleWithBallState.Instance, ConditionMethods.BallGrabbed));
+        //  TRANSITIONS
+        //  #1
+        AddTransition(new Transition(GoalkeeperIdleWithBallState.Instance
+            , GoalkeeperConditionMethods.BallIsTrigger));
+
+
+        //  ACTIONS
+        //  #1
+        AddAction(new MyAction(GoalkeeperActionMethods.GrabBall)
+            ,RunTimeOfAction.runOnEnter);
+
+        
         
 
     }
 
 
+    
 
 
 }
