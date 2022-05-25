@@ -34,21 +34,34 @@ public class BallVision : MonoBehaviour
     void Start()
     {
         targetMask.value = 64;
-        StartCoroutine("FindTargetsWithDelay", .1f);
+        StartCoroutine("FindTargetsWithDelay", delay);
         cooldownWaitToTakeBall = new CooldownManualReset(cdToTakeBall);
     }
 
 
-    
+    bool last;
+    float delay;
+    private void FixedUpdate()
+    {
+
+        if(last==true && ControlBall()==false)
+        {
+            delay = 1;
+        }
+
+        last = ControlBall();
+
+    }
+
 
     public CooldownManualReset CooldownWaitToTakeBall { get => cooldownWaitToTakeBall; set => cooldownWaitToTakeBall = value; }
 
-    IEnumerator FindTargetsWithDelay(float delay)
+    IEnumerator FindTargetsWithDelay()
     {
         while (true)
         {
             yield return new WaitForSeconds(delay);
-
+            delay = 0.2f;
             if(cooldownWaitToTakeBall.TimeOver())
                 FindVisibleTargets();
         
@@ -74,7 +87,10 @@ public class BallVision : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, dirToTarget, distanceToTarget, obstacleMask))
                 {
-                    ballTransform = target;
+                    float disY = Mathf.Abs(transform.position.y-target.position.y);
+                    //Debug.Log("disY : " + disY);
+                    if(disY < 1.5f)
+                        ballTransform = target;
 
                 }
 

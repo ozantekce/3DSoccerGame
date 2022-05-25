@@ -84,9 +84,10 @@ public class Ball : MonoBehaviour
 
     public void Shot(Vector3 vector) {
 
-        
+
         rigidbody.velocity += vector;
         isShoted = true;
+
     }
 
     public Vector3 GetVelocity()

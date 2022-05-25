@@ -5,6 +5,17 @@ using UnityEngine;
 public abstract class State
 {
 
+
+    private static List<State> ALL_STATES
+    = new List<State>();
+
+
+    public State()
+    {
+        ALL_STATES.Add(this);
+    }
+
+
     /// <summary>
     /// Determines when the Action will run
     /// </summary>

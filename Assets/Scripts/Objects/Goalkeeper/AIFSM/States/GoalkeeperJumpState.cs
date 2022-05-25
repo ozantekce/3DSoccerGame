@@ -35,8 +35,6 @@ public class GoalkeeperJumpState : State
             ,RunTimeOfAction.runOnEnter);
 
 
-
-
     }
 
 

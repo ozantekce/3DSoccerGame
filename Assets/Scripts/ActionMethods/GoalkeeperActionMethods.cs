@@ -83,7 +83,7 @@ public class GoalkeeperActionMethods
         Ball ball = Ball.Instance;
         ball.Rigidbody.isKinematic = true;
 
-        fsm.StartCoroutine(CatchBall_(fsm,0.8f));
+        fsm.StartCoroutine(CatchBall_(fsm,1.8f));
 
     }
 
@@ -294,18 +294,21 @@ public class GoalkeeperActionMethods
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
         Rigidbody rigidbody = goalkeeper.Rigidbody;
 
-        Vector3[] info = GoalkeeperCalculater.CalculateAll(goalkeeper);
+        Vector3[] info = GoalkeeperCalculater.CalculateAll_(goalkeeper);
+
+
 
         Vector3 meetingPosition = info[0];
         Vector3 requiredVelocity = info[1];
 
         Animator animator = fsm.GetComponent<Animator>();
 
-
+        
 
         if (goalkeeper.CenterUp.IntersectWithMeetingPosition(meetingPosition))
         {
             //Debug.Log("CenterUp and mt : " + meetingPosition);
+
             animator.SetInteger("JumpVal", 0);
 
         }
@@ -362,6 +365,8 @@ public class GoalkeeperActionMethods
 
         float Vx = requiredVelocity.x;
         float Vy = requiredVelocity.y;
+        rigidbody.velocity = requiredVelocity;
+        
         if (goalkeeper.JumpPowerY < Vy)
         {
             Vy = goalkeeper.JumpPowerY;
@@ -374,7 +379,8 @@ public class GoalkeeperActionMethods
         requiredVelocity.y = Vy;
 
         rigidbody.velocity = requiredVelocity;
-
+        rigidbody.velocity = Deformation.Deform(requiredVelocity,10f,40f);
+        
 
 
 

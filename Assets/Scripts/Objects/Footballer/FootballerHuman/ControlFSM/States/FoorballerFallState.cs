@@ -19,7 +19,7 @@ public class FoorballerFallState : State
     {
 
         fallAction = new MyAction(FootballerActionMethods.FallMethod
-            ,1.5f, 0.1f);
+            ,1.5f, 1f);
 
         AddAction(fallAction,RunTimeOfAction.runOnEnter);
 

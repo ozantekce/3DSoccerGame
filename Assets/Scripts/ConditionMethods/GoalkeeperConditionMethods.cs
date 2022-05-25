@@ -19,7 +19,7 @@ public class GoalkeeperConditionMethods : MonoBehaviour
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
 
         Vector3 meetingPosition
-            = GoalkeeperCalculater.Meeting_Position(goalkeeper);
+            = GoalkeeperCalculater.CalculateAll_(goalkeeper)[0];
 
         return goalkeeper.Other.IntersectWithMeetingPosition(meetingPosition);
 
@@ -65,9 +65,11 @@ public class GoalkeeperConditionMethods : MonoBehaviour
         if (Ball.Instance.Rigidbody.isKinematic)
             return false;
 
-        Collider[] intersecting = Physics.OverlapSphere(Ball.Instance.transform.position, 3f);
+        Collider[] intersecting 
+            = Physics.OverlapSphere(Ball.Instance.transform.position, 2f);
 
-        GameObject catchArea = ((GoalkeeperFSM)fsm).Goalkeeper.CatchArea;
+        GameObject catchArea
+            = ((GoalkeeperFSM)fsm).Goalkeeper.CatchArea;
 
         foreach (Collider c in intersecting)
         {
@@ -75,10 +77,12 @@ public class GoalkeeperConditionMethods : MonoBehaviour
             {
                 return true;
             }
+
         }
 
         return false;
     }
+
 
 
     /// <summary>

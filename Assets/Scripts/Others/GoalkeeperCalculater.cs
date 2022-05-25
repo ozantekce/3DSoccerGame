@@ -9,100 +9,6 @@ public class GoalkeeperCalculater
     private const float EXPERIMENTAL_LIMIT = 10;
     private const float EXPERIMENTAL_INCREASE_RATE = 0.3f;
 
-    public static Vector3 Meeting_Position(Goalkeeper goalkeeper)
-    {
-
-        Ball ball = Ball.Instance;
-        Vector3 ballPos = ball.transform.position;
-        Vector3 catchAreaPos = goalkeeper.CatchArea.transform.position;
-        Vector3 ballVelocity = ball.Rigidbody.velocity;
-
-        float estimatedMeetingTime = (catchAreaPos.z - ballPos.z) / ballVelocity.z;
-
-        float estimatedBallY_ZeroTime = (ballVelocity.y * 2) / (Gravity.GLOBAL_GRAVITY / 0.02f);
-
-        bool case1;
-        case1 = estimatedBallY_ZeroTime > estimatedMeetingTime;
-
-        if (case1)
-        {
-            float t;            //  Time
-            float g = (Gravity.GLOBAL_GRAVITY / 0.02f);
-            float Mx, My, Mz;   //  Meeting Pos
-
-            t = estimatedMeetingTime;
-
-            Mx = ballPos.x + (t * ballVelocity.x);
-            My = ballPos.y + (t * ballVelocity.y) - ((g * t * t) / 2f); //X(t) = V*t - (g * t^2)/2
-            Mz = catchAreaPos.z;
-
-            Vector3 meetingPos = new Vector3(Mx, My, Mz);
-            if (t > 0)
-                return meetingPos;
-
-        }
-
-        /*
-        Debug.Log("CASE - 2");
-        Debug.Log("ball y :" + ballVelocity.y);
-        */
-        ballVelocity.y += EXPERIMENTAL_INCREASE_RATE; 
-
-        return Meeting_Position_Experimental(goalkeeper, ballVelocity,0);
-
-
-
-
-    }
-
-
-
-    private static Vector3 Meeting_Position_Experimental(Goalkeeper goalkeeper,Vector3 ballVel,int times)
-    {
-
-        times++;
-
-        if (times >= EXPERIMENTAL_LIMIT)
-            return Vector3.negativeInfinity;
-
-        Ball ball = Ball.Instance;
-        Vector3 ballPos = ball.transform.position;
-        Vector3 catchAreaPos = goalkeeper.CatchArea.transform.position;
-        Vector3 ballVelocity = ballVel;
-
-        float estimatedMeetingTime = (catchAreaPos.z - ballPos.z) / ballVelocity.z;
-        float estimatedBallY_ZeroTime = (ballVelocity.y * 2) / (Gravity.GLOBAL_GRAVITY / 0.02f);
-
-        bool case1;
-        case1 = estimatedBallY_ZeroTime > estimatedMeetingTime;
-
-        if (case1)
-        {
-            float t;            //  Time
-            float g = (Gravity.GLOBAL_GRAVITY / 0.02f);
-            float Mx, My, Mz;   //  Meeting Pos
-
-            t = estimatedMeetingTime;
-
-            Mx = ballPos.x + (t * ballVelocity.x);
-            My = ballPos.y + (t * ballVelocity.y) - ((g * t * t) / 2f); //X(t) = V*t - (g * t^2)/2
-            Mz = catchAreaPos.z;
-            
-            Vector3 meetingPos = new Vector3(Mx, My, Mz);
-
-            if (t > 0)
-                return meetingPos;
-
-        }
-
-
-        ballVelocity.y += EXPERIMENTAL_INCREASE_RATE;
-
-        return Meeting_Position_Experimental(goalkeeper, ballVelocity,times);
-
-
-
-    }
 
 
     public static Vector3[] CalculateAll(Goalkeeper goalkeeper)
@@ -267,12 +173,7 @@ public class GoalkeeperCalculater
 
 
 
-
-
-
-
-
-    private static void CalculateAll_(Goalkeeper goalkeeper)
+    public static Vector3[] CalculateAll_(Goalkeeper goalkeeper)
     {
 
         Ball ball = Ball.Instance;
@@ -287,58 +188,64 @@ public class GoalkeeperCalculater
         //  X(t) = 0 when t = (V_y * 2) / g
         float estimatedBallY_ZeroTime = (ballVelocity.y * 2) / (Gravity.GLOBAL_GRAVITY / 0.02f);
 
-        //  CASE - 1 : Ball pos_y > 0 until meeting 
-        bool case1;
-        //  CASE - 2 : Ball pos_y = 0 before meeting
-        bool case2;
-        
 
-        case1 = estimatedBallY_ZeroTime > estimatedMeetingTime;
-        case2 = !case1; // it's trivial
 
-        if (case1)
+        float t;            //  Time
+        float g = (Gravity.GLOBAL_GRAVITY / 0.02f);
+        float Mx, My, Mz;   //  Meeting Pos
+        float Dx, Dy, Dz;   //  Distance with goalkeeper
+        float Vx, Vy, Vz;   //  required velocity of goalkeeper
+
+        t = estimatedMeetingTime;
+
+        Mx = ballPos.x + (t * ballVelocity.x);
+
+        My = ballPos.y + (t * ballVelocity.y) - ((g * t * t) / 2f); //X(t) = V*t - (g * t^2)/2
+
+        Mz = catchAreaPos.z;
+
+        if (My < 0)
         {
-            float t;            //  Time
-            float g = (Gravity.GLOBAL_GRAVITY / 0.02f);
-            float Mx, My, Mz;   //  Meeting Pos
-            float Dx, Dy, Dz;   //  Distance with goalkeeper
-            float Vx, Vy, Vz;   //  required velocity of goalkeeper
-
-            t = estimatedMeetingTime;
-
-            Mx = ballPos.x + (t * ballVelocity.x);
-            My = ballPos.y + (t * ballVelocity.y) - ((g * t * t) / 2f); //X(t) = V*t - (g * t^2)/2
-            Mz = catchAreaPos.z;
-
-            Dx = Mx - catchAreaPos.x;
-            Dy = Mz - catchAreaPos.z;
-            Dz = 0;
-
-            Vx = Dx / t;
-            Vy = (Dy / t) + ((g * t)/2); // V(0) = (d/t) + ((g*t)/2)
-            Vz = 0;
-
-            Vector3 meetingPos = new Vector3(Mx,My,Mz);
-            float meetingTime = Time.time + t;
-            Vector3 requiredVelocity = new Vector3(Vx,Vy,Vz);
-
-            Debug.Log("CASE - 1");
-            Debug.Log("Meeting : " + meetingPos);
-            Debug.Log("Time    : " + meetingTime);
-            Debug.Log("Vel     : " + requiredVelocity);
-
-
+            My = 0f;
         }
         else
         {
 
-
         }
+        
+        
+
+        Dx = Mx - catchAreaPos.x;
+        Dy = My - catchAreaPos.y;
+        Dz = Mz - catchAreaPos.z;
 
 
+        Vx = Dx / t;
+        Vy = (Dy / t) + ((g * t) / 2); // V(0) = (d/t) + ((g*t)/2)
+        Vz = Dz / t;
 
+        Vector3 meetingPos = new Vector3(Mx, My, Mz);
+        DateTime dt1 = DateTime.Now;
+        
+        Debug.Log("t : "+t);
+        if(t != float.NegativeInfinity && t!=float.PositiveInfinity)
+            dt1 = dt1.AddSeconds(t);
+        string meetingTime = dt1.ToString("hh.mm.ss.fffffff");
+
+        Vector3 requiredVelocity = new Vector3(Vx, Vy, Vz);
+
+/*
+        Debug.Log("Meeting : " + meetingPos);
+        Debug.Log("Meeting Time : " + meetingTime);
+        Debug.Log("Vel     : " + requiredVelocity);
+*/
+
+        return new Vector3[] { meetingPos, requiredVelocity };
 
     }
+
+
+
 
 
 

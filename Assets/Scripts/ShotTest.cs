@@ -27,16 +27,16 @@ public class ShotTest : MonoBehaviour
 
     public void Shot()
     {
-        //Test_1();
+        Test_2();
 
-        
+        /*
         if (running)
             return;
 
         running = true;
 
         StartCoroutine(Testter());
-        
+        */
 
     }
 
@@ -45,9 +45,23 @@ public class ShotTest : MonoBehaviour
     private void Test_1()
     {
 
+
+
         shotVector.x = Random.value * 15f * (Random.value < 0.5f ? 1 : -1);
         shotVector.y = Random.value * 3f;
         shotVector.z = -35 - Random.value * 60f;
+        Ball.Instance.Shot(shotVector);
+
+
+
+
+    }
+
+
+    private void Test_2()
+    {
+
+        Time.timeScale = 0.5f;
         Ball.Instance.Shot(shotVector);
 
     }

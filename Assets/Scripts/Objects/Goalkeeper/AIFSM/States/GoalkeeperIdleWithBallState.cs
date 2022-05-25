@@ -40,7 +40,7 @@ public class GoalkeeperIdleWithBallState : State
 
         Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
         Animator animator = goalkeeper.Animator;
-        animator.SetBool("Catched", true);
+        animator.SetTrigger("IdleWithBall");
 
     }
 
@@ -48,9 +48,6 @@ public class GoalkeeperIdleWithBallState : State
     {
         base.ExitOptional(fsm);
 
-        Goalkeeper goalkeeper = ((GoalkeeperFSM)fsm).Goalkeeper;
-        Animator animator = goalkeeper.Animator;
-        animator.SetBool("Catched", false);
 
     }
 

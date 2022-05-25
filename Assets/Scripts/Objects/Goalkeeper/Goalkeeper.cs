@@ -14,15 +14,16 @@ public class Goalkeeper : Player, Jumpable
 
     public float JumpPowerY { get { return jumpPowerY; } set { jumpPowerY = value; } }
     public float JumpPowerX { get { return jumpPowerX; } set { jumpPowerX = value; } }
-    public float JumpPowerZ { get { return movementSpeed; } set { movementSpeed = value; } }
 
     public Cooldown JumpCooldown { get { return jumpCooldown; } }
 
 
     [SerializeField]
-    private GameObject rightHand,catchArea;
+    private GameObject rightHand,leftHand,catchArea;
 
     public GameObject RightHand { get => rightHand; set => rightHand = value; }
+    public GameObject LeftHand { get => leftHand; set => leftHand = value; }
+    
 
 
     public GoalkeeperJumpArea CenterUp { get => centerUp; set => centerUp = value; }
@@ -34,10 +35,13 @@ public class Goalkeeper : Player, Jumpable
     public GoalkeeperJumpArea LeftUp { get => leftUp; set => leftUp = value; }
     public GoalkeeperJumpArea LeftDown { get => leftDown; set => leftDown = value; }
     public GoalkeeperJumpArea Other { get => other; set => other = value; }
-    public GameObject CatchArea { get => catchArea; set => catchArea = value; }
+    public GameObject CatchArea  { get => catchArea; set => catchArea = value; }
     public Transform GoalpostCenter { get => goalpostCenter; set => goalpostCenter = value; }
     public Transform GoalpostCenterRival { get => goalpostCenterRival; set => goalpostCenterRival = value; }
     public Animator Animator { get => animator; set => animator = value; }
+
+
+
 
     private GoalkeeperJumpArea centerUp,center,centerDown, rightUp, rightDown,leftUp,leftDown,other;
 
@@ -79,7 +83,7 @@ public class Goalkeeper : Player, Jumpable
 
         float distance = Vector3.Distance(rightPosition, transform.position);
 
-        return distance<3f;
+        return distance<1.5f;
 
     }
 
@@ -93,8 +97,8 @@ public class Goalkeeper : Player, Jumpable
         Vector3 directionVector = (ball.transform.position - goalpostCenter.transform.position).normalized;
 
         Vector3 target = goalpostCenter.position + directionVector * radius;
-
-        if (goalpostCenter.position.z > target.z)
+        
+        if (Mathf.Abs(goalpostCenter.position.z) < Mathf.Abs(target.z))
             target.z = goalpostCenter.position.z;
 
         return target;
