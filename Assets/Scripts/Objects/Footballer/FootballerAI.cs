@@ -35,4 +35,14 @@ public class FootballerAI : Footballer
 
 
 
+    private bool open;
+    public void Open_Close_AI()
+    {
+        inputter.enabled = !inputter.enabled;
+        horizontalInput = 0;
+        verticalInput = 0;
+        shotInput = 0;
+    }
+
+
 }

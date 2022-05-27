@@ -54,16 +54,44 @@ public abstract class Player : MonoBehaviour, Movable,Shotable,Passable,Dribblin
         BallVision = GetComponent<BallVision>();
         animator = GetComponent<Animator>();
 
+        rMS = MovementSpeed;
+        rDP = dribblingPower;
+        rTS = trackingSpeed;
+        rMD = maxDistanceToDribbling;
+
     }
+
+    public int slowDown =0;
 
     public void Update()
     {
 
     }
 
+    private float rMS;
+    private float rDP;
+    private float rTS;
+    private float rMD;
+
     public void FixedUpdate()
     {
+        if(slowDown > 0)
+        {
+            slowDown--;
 
+            MovementSpeed =rMS/2;
+            dribblingPower = rDP/2;
+            trackingSpeed = rTS/2;
+            maxDistanceToDribbling = rMD/2;
+        }
+        else
+        {
+
+            MovementSpeed = rMS;
+            dribblingPower = rDP;
+            trackingSpeed = rTS;
+            maxDistanceToDribbling = rMD;
+        }
 
     }
 

@@ -18,7 +18,7 @@ public class FootballerShotState : State
     public override void Init()
     {
 
-        shotAction = new MyAction(FootballerActionMethods.ShotMethod,0.2f, 0.75f);
+        shotAction = new MyAction(FootballerActionMethods.ShotMethod,0.0f, 0.75f);
         AddAction(shotAction, RunTimeOfAction.runOnEnter);
 
         AddAction(new MyAction(FootballerActionMethods.SetAnimatorShotParameter)

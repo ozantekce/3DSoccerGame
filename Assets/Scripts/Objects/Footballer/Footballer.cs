@@ -49,7 +49,19 @@ public abstract class Footballer : Player, Fallable
 
     }
 
-    
 
+    private void OnCollisionStay(Collision collision)
+    {
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Vector3 dir = transform.position - collision.transform.position;
+            dir.Normalize();
+            Rigidbody.AddForce(dir * 10000f);
+
+        }
+
+
+    }
 
 }

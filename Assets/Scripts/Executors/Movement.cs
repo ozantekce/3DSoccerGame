@@ -29,7 +29,7 @@ public class Movement
         Vector3 directionVector
             = new Vector3(verticalInput, 0, horizontalInput).normalized;
         
-
+        
         directionVector *= movable.MovementSpeed;    // hýz vektörü oluþturuldu
 
         directionVector.y = movable.Rigidbody.velocity.y;   // y'nin deðiþmesini istemiyorum

@@ -15,11 +15,17 @@ public class AIInputter : Inputter
         footballer = GetComponent<Footballer>();
     }
 
+
+    int timer;
     // Update is called once per frame
+
+
     void Update()
     {
         base.Update();
 
+
+        footballer.shotInput = 0f;
 
 
         if (footballer.BallVision.ControlBall())
@@ -60,6 +66,8 @@ public class AIInputter : Inputter
         }
 
     }
+
+
 
 
     private void FixedUpdate()

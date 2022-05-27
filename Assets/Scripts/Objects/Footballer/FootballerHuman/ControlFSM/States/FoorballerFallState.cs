@@ -49,6 +49,7 @@ public class FoorballerFallState : State
         animator.SetTrigger("Fall");
 
         footballer.Rigidbody.isKinematic = true;
+        footballer.GetComponent<Collider>().isTrigger = true;
 
     }
 
@@ -59,6 +60,7 @@ public class FoorballerFallState : State
 
         footballer.Rigidbody.isKinematic = false;
         footballer.IsFalling = false;
+        footballer.GetComponent<Collider>().isTrigger = false;
 
     }
 

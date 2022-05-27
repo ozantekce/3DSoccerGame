@@ -43,7 +43,7 @@ public class Ball : MonoBehaviour
     private float resetIsShotedDelayTimer = 0;
     private void FixedUpdate()
     {
-
+        limit--;
         if (isShoted)
         {
             resetIsShotedDelayTimer += Time.deltaTime;
@@ -69,16 +69,26 @@ public class Ball : MonoBehaviour
     }
 
 
-
+    private int limit = 30;
     public void HitTheBall(Vector3 vector)
     {
-
-        Rigidbody.AddForce(vector, ForceMode.VelocityChange);
+        if(limit <= 0)
+        {
+            Rigidbody.AddForce(vector, ForceMode.VelocityChange);
+            limit = 30;
+        }
+        
     }
-    
+
+    private int limit_ = 60;
+
     public void HitTheBall_(Vector3 vector)
     {
-        rigidbody.AddForce(vector, ForceMode.VelocityChange);
+        if (limit <= 0)
+        {
+            Rigidbody.AddForce(vector, ForceMode.VelocityChange);
+            limit = 60;
+        }
     }
 
 
@@ -95,7 +105,36 @@ public class Ball : MonoBehaviour
         return rigidbody.velocity;
     }
 
-    
+
+
+
+    public List<Footballer> controllers;
+
+
+
+    public void AddController(Footballer footballer)
+    {
+        /*
+        if(footballer.slowDown==0)
+        foreach (Footballer controller in controllers)
+        {
+
+            controller.slowDown = 100;
+
+        }
+        */
+        controllers.Add(footballer);
+
+
+    }
+
+    public void RemoveController(Footballer footballer)
+    {
+
+        controllers.Remove(footballer);
+
+
+    }
 
 
 

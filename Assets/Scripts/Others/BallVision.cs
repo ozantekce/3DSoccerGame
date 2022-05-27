@@ -16,7 +16,7 @@ public class BallVision : MonoBehaviour
     private LayerMask targetMask; // it must be only ball layer
     public LayerMask obstacleMask;
 
-    private CooldownManualReset cooldownWaitToTakeBall;
+    private Cooldown cooldownWaitToTakeBall;
     public float cdToTakeBall = 1000f;
 
     public Transform ballTransform;
@@ -31,11 +31,14 @@ public class BallVision : MonoBehaviour
         return !ControlBall();
     }
 
+    Footballer footballer;
+
     void Start()
     {
+        footballer = GetComponent<Footballer>();
         targetMask.value = 64;
         StartCoroutine("FindTargetsWithDelay", delay);
-        cooldownWaitToTakeBall = new CooldownManualReset(cdToTakeBall);
+        cooldownWaitToTakeBall = new Cooldown(cdToTakeBall);
     }
 
 
@@ -44,9 +47,15 @@ public class BallVision : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if(last==true && ControlBall()==false)
+        if(ControlBall())
         {
-            delay = 1;
+            if(!Ball.Instance.controllers.Contains(footballer))
+                Ball.Instance.AddController(footballer);
+        }
+        else
+        {
+            if (Ball.Instance.controllers.Contains(footballer))
+                Ball.Instance.RemoveController(footballer);
         }
 
         last = ControlBall();
@@ -54,7 +63,7 @@ public class BallVision : MonoBehaviour
     }
 
 
-    public CooldownManualReset CooldownWaitToTakeBall { get => cooldownWaitToTakeBall; set => cooldownWaitToTakeBall = value; }
+    public Cooldown CooldownWaitToTakeBall { get => cooldownWaitToTakeBall; set => cooldownWaitToTakeBall = value; }
 
     IEnumerator FindTargetsWithDelay()
     {
@@ -62,7 +71,7 @@ public class BallVision : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
             delay = 0.2f;
-            if(cooldownWaitToTakeBall.TimeOver())
+            //if(cooldownWaitToTakeBall.Ready())
                 FindVisibleTargets();
         
         }

@@ -20,6 +20,18 @@ public class FootballerActionMethods
 
     }
 
+
+    public static void Spin(FiniteStateMachine fsm)
+    {
+        Footballer footballer = ((FootballerFSM)fsm).Footballer;
+
+        float verticalInput = footballer.verticalInput;
+        float horizontalInput = footballer.horizontalInput;
+        Movement.Spin(footballer, verticalInput, horizontalInput, 15f);
+        //Movement.SpinAndMoveForward(footballer, verticalInput, horizontalInput);
+
+    }
+
     public static void DribblingMethod(FiniteStateMachine fsm)
     {
         Footballer footballer = ((FootballerFSM)fsm).Footballer;

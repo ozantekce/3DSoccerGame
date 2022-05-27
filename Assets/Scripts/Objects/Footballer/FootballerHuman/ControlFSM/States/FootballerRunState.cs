@@ -27,7 +27,7 @@ public class FootballerRunState : State
         AddTransition(new Transition(FootballerSlideState.Instance, FootballerConditionMethods.SlideInput));
 
         AddAction(new MyAction(FootballerActionMethods.RunMethod));
-
+        AddAction(new MyAction(FootballerActionMethods.Spin));
 
         AddAction(new MyAction(FootballerActionMethods.SetAnimatorRunningParameterToTrue)
             , RunTimeOfAction.runOnEnter);

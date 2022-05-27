@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         SetStatus(GameStatus.opening);
-        //Application.targetFrameRate = 90;
+        Application.targetFrameRate = 60;
 
     }
 
@@ -46,6 +46,19 @@ public class GameManager : MonoBehaviour
     {
         this.status = status;
         print(status);
+
+    }
+
+
+    public void Goal(GoalTrigger goalTrigger)
+    {
+        Footballer [] footballers = FindObjectsOfType<Footballer>();
+        for (int i = 0; i < footballers.Length; i++)
+        {
+
+            footballers[i].transform.position = Vector3.zero;
+        }
+        Ball.Instance.transform.position = Vector3.zero;
 
     }
 
