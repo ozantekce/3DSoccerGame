@@ -48,5 +48,3 @@ Goalkeeper:
 	Better goalkeeper ai<br />
 	Better interactions between objects like goalkeeper catches and throws the ball  (still not so good, there are some visual distortion)<br />
 <br />
-Situation Assessment :
-	I learned a lot with this project, but still there are some problems in the application part, I think I can solve many problems in 1-2 weeks. I rewrote my code because it had become unmaintainable because I didn't have enough knowledge when start.
