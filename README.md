@@ -1,5 +1,3 @@
-# ComputerGraphicsProject
-
 Goalkeeper AI Test :
 https://www.youtube.com/watch?v=enlmuBypcPo
 
